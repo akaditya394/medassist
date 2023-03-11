@@ -46,6 +46,7 @@ const LoginPage = () => {
 
     const handleInputChange = (id, value) => {
         setFormData({ ...formData, [id]: value })
+        console.log(formData)
     }
 
     const handleSubmit = async (e) => {

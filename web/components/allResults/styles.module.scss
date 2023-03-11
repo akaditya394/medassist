@@ -1,0 +1,39 @@
+@import "../../shared/variables.scss";
+
+.gridContainer {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-gap: 1rem;
+    grid-auto-flow: dense;
+
+    .box {
+        background: $secondary;
+        padding: 20px;
+        transition: ease .2s;
+        cursor: pointer;
+        border-radius: 0.5rem;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        box-shadow: $box-shadow_2;
+
+        .name {
+            color: $primary;
+        }
+
+        .verified {
+            width: auto;
+            height: auto;
+
+            img {
+                width: 1.5rem;
+                height: 1.5rem;
+            }
+        }
+    }
+
+    .box:hover {
+        background: $tertiary;
+    }
+}

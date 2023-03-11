@@ -2,43 +2,29 @@ import { useState } from "react"
 import { useRouter } from "next/router"
 
 import Notice from "../notice"
-import Input from "../input"
-
-const form = {
-    id: "upload",
-    inputs: [
-        {
-            id: "file_name",
-            type: "file_name",
-            label: "Name of file",
-            required: true,
-            value: "",
-        },
-        {
-            id: "file",
-            type: "file",
-            label: "",
-            required: true,
-            value: "",
-        },
-    ],
-    submitButton: {
-        type: "submit",
-        label: "Upload",
-    },
-}
+import styles from "./styles.module.scss"
+import UploadPageIllustration from "../../images/upload_page_illustration.svg"
 
 const LoginPage = () => {
     const RESET_NOTICE = { type: "", message: "" }
     const [notice, setNotice] = useState(RESET_NOTICE)
     const router = useRouter()
 
-    const values = {}
-    form.inputs.forEach((input) => (values[input.id] = input.value))
-    const [formData, setFormData] = useState(values)
+    const [state, setState] = useState({
+        selectedPdfs: null,
+        loaded: 0,
+        subName: "",
+    })
 
-    const handleInputChange = (id, value) => {
-        setFormData({ ...formData, [id]: value })
+    const [formData, setFormData] = useState({
+        name: "",
+        type: "prescription",
+    })
+
+    const handleInputChange = (e, property) => {
+        setFormData({
+            ...formData, [property]: e.target.value
+        })
     }
 
     const maxSelectFile = (e) => {
@@ -64,37 +50,64 @@ const LoginPage = () => {
         return true
     }
 
+    const fileChangeHandler = (event) => {
+        const files = event.target.files
+        if (maxSelectFile(event)) {
+            setState({ ...state, selectedPdfs: files, loaded: 0 })
+        }
+    }
+
     const handleSubmit = async (e) => {
         e.preventDefault()
-        // a http post request to login
+        // a http post request to upload prescription
+        console.log(formData)
+        console.log(state)
     }
 
     return (
-        <>
-            <h1 className="pageHeading">Upload Prescription</h1>
-            <form id={form.id} onSubmit={handleSubmit}>
-                {form.inputs.map((input, key) => {
-                    return (
-                        <Input
-                            key={key}
-                            formId={form.id}
-                            id={input.id}
-                            type={input.type}
-                            label={input.label}
-                            required={input.required}
-                            value={formData[input.id]}
-                            setValue={(value) => handleInputChange(input.id, value)}
+        <div className="ContentContainer">
+            <div className="ContentForm">
+                <h1 className="pageHeading">Upload Prescription</h1>
+                <form id="upload" onSubmit={handleSubmit}>
+                    <div className={styles.inputWrapper}>
+                        <label form="upload" htmlFor="name">
+                            Name of file
+                        </label>
+                        <input
+                            form="upload"
+                            id="name"
+                            name="name"
+                            type="text"
+                            required={true}
+                            value={formData.name}
+                            onChange={(e) => handleInputChange(e, "name")}
                         />
-                    )
-                })}
-                {notice.message && (
-                    <Notice status={notice.type} mini>
-                        {notice.message}
-                    </Notice>
-                )}
-                <button type={form.submitButton.type}>{form.submitButton.label}</button>
-            </form>
-        </>
+                    </div>
+                    <div className={styles.inputWrapper}>
+                        <label form="upload" htmlFor="name">
+                            Upload File
+                        </label>
+                        <input
+                            form="upload"
+                            id="file"
+                            type="file"
+                            name="file"
+                            required={true}
+                            onChange={(e) => fileChangeHandler(e)}
+                        />
+                    </div>
+                    {notice.message && (
+                        <Notice status={notice.type} mini>
+                            {notice.message}
+                        </Notice>
+                    )}
+                    <button type="submit">Upload</button>
+                </form>
+            </div>
+            <div className="ContentPageIllustration">
+                <img src={UploadPageIllustration} alt="" />
+            </div>
+        </div>
     )
 }
 
