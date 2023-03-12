@@ -149,3 +149,32 @@ form {
         cursor: pointer;
     }
 }
+
+table {
+    width: 60%;
+    border-collapse: collapse;
+    border-spacing: 0;
+    box-shadow: $box-shadow_2;
+    border-radius: 0.5rem;
+    overflow: hidden;
+}
+
+td,
+th {
+    padding: 1rem;
+    text-align: center;
+}
+
+th {
+    background: $secondary;
+    font-weight: bold;
+}
+
+tr {
+    width: 100%;
+    background-color: $tertiary;
+}
+
+tr:nth-child(even) {
+    background-color: white;
+}

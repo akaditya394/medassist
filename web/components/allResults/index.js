@@ -1,4 +1,5 @@
 import { useState } from "react"
+import NextLink from 'next/link'
 
 import styles from "./styles.module.scss"
 import VerifiedIcon from "../../images/icons/verified.svg"
@@ -11,38 +12,57 @@ const AllResultsPage = () => {
         <>
             <h1 className="pageHeading">All your results</h1>
             <div className={styles.gridContainer}>
-                <div className={styles.box}>
-                    <div className={styles.name}>
-                        Hello
+                {/* <NextLink href={`/post/${encodeURIComponent(post.id)}`}> */}
+                <NextLink href={`/results/1`}>
+                    <div className={styles.box}>
+                        <div className={styles.name}>
+                            Hello
+                        </div>
+                        <div className={styles.verified}>
+                            <img src={VerifiedIcon} alt="Verified Icon" />
+                        </div>
                     </div>
-                    <div className={styles.verified}>
-                        <img src={VerifiedIcon} alt="Verified Icon" />
+                </NextLink>
+                <NextLink href={`/results/1`}>
+                    <div className={styles.box}>
+                        <div className={styles.name}>
+                            Hello
+                        </div>
+                        <div className={styles.verified}>
+                            <img src={VerifiedIcon} alt="Verified Icon" />
+                        </div>
                     </div>
-                </div>
-                <div className={styles.box}>
-                    <div className={styles.name}>
-                        Hello
+                </NextLink>
+                <NextLink href={`/results/1`}>
+                    <div className={styles.box}>
+                        <div className={styles.name}>
+                            Hello
+                        </div>
+                        <div className={styles.verified}>
+                            <img src={VerifiedIcon} alt="Verified Icon" />
+                        </div>
                     </div>
-                    <div className={styles.verified}>
-                        <img src={VerifiedIcon} alt="Verified Icon" />
+                </NextLink>
+                <NextLink href={`/results/1`}>
+                    <div className={styles.box}>
+                        <div className={styles.name}>
+                            Hello
+                        </div>
+                        <div className={styles.verified}>
+                            <img src={VerifiedIcon} alt="Verified Icon" />
+                        </div>
                     </div>
-                </div>
-                <div className={styles.box}>
-                    <div className={styles.name}>
-                        Hello
+                </NextLink>
+                <NextLink href={`/results/1`}>
+                    <div className={styles.box}>
+                        <div className={styles.name}>
+                            Hello
+                        </div>
+                        <div className={styles.verified}>
+                            <img src={VerifiedIcon} alt="Verified Icon" />
+                        </div>
                     </div>
-                    <div className={styles.verified}>
-                        <img src={VerifiedIcon} alt="Verified Icon" />
-                    </div>
-                </div>
-                <div className={styles.box}>
-                    <div className={styles.name}>
-                        Hello
-                    </div>
-                    <div className={styles.verified}>
-                        <img src={VerifiedIcon} alt="Verified Icon" />
-                    </div>
-                </div>
+                </NextLink>
             </div>
         </>
     )
