@@ -14,6 +14,8 @@
         transition: ease .2s;
         cursor: pointer;
         border-radius: 0.5rem;
+        box-shadow: $box-shadow_2;
+        color: $primary;
     }
 
     .box:hover {
