@@ -1,1 +1,0 @@
-export { UserScreen } from './user'
