@@ -1,4 +1,3 @@
-// This file is under work
 // Doing the modifications according to the designed login, signup
 
 const User = require("./../models/userModel");
@@ -6,9 +5,9 @@ const jwt = require("jsonwebtoken");
 const { promisify } = require("util");
 const crypto = require("crypto");
 const sendEmail = require("../utils/email");
-const { sendOtp, verifyOtp } = require("../utils/twilio");
 require("dotenv").config();
 
+// generates a jwt token
 function issueToken(res, user) {
   const id = user._id;
   const token = jwt.sign({ sub: id }, process.env.JWT_SECRET, {
@@ -23,32 +22,22 @@ function issueToken(res, user) {
   // return token;
 }
 
+// register function
 exports.register = async (req, res, next) => {
   try {
     const user = new User({
       name: req.body.name,
       email: req.body.email,
       password: req.body.password,
-      phone: `+91${req.body.phone}`,
     });
 
-    // sendOtp(user.phone);
     await user.save();
-
-    // let otp = ;
-    // user.otp = otp;
-    sendOtp(req.body.phone);
-    // if (await this.verifyOTP(req)) {
-    // await user.save();
-    // sendSms(user.phone, `hello from client connect.`);
-
     issueToken(res, user);
 
     // return res.status(200).json({
     //   token,
     // });
     return next();
-    // }
   } catch (err) {
     res.json(err.message);
     return;
@@ -61,6 +50,8 @@ exports.login = async (req, res, next) => {
 
     const user = await User.findOne({ email }).select("+password");
 
+    // checks if user is present or not
+    // checks if password entered matches the database password
     if (!user || !(await user.verifyPassword(password, user.password))) {
       throw new Error("Incorrect email or password!");
     }
@@ -71,10 +62,9 @@ exports.login = async (req, res, next) => {
     // return res.status(200).json({
     //   token,
     // });
-    // showAlert("success", "Logged in Succesfully");
     return next();
   } catch (error) {
-    // showAlert("error", "Some error occured");
+    console.log(error);
   }
 };
 
@@ -94,7 +84,6 @@ exports.protect = (req, res, next) => {
         console.log(err.message);
         res.redirect("/");
       } else {
-        // console.log(decodedToken);
         res.locals.id = decodedToken.sub;
         next();
       }
@@ -104,6 +93,7 @@ exports.protect = (req, res, next) => {
   }
 };
 
+// logout function
 exports.logout = (req, res, next) => {
   res.cookie("jwt", "logged out", {
     expires: new Date(Date.now() + 10 * 1000), //expires in 10 seconds
@@ -119,8 +109,6 @@ exports.logout = (req, res, next) => {
 exports.forgotPassword = async (req, res, next) => {
   try {
     const user = await User.findOne({ email: req.body.email });
-    // user = user[0];
-    // console.log(user);
     if (!user) {
       throw new Error("There is no user existing with this email.");
     }
@@ -132,7 +120,6 @@ exports.forgotPassword = async (req, res, next) => {
         { title: "Reset Password", token: resetToken },
         "resetPassword"
       );
-      // console.log("hello");
       next();
       // res.status(200).json({
       //   status: "success",
@@ -168,14 +155,6 @@ exports.resetPassword = async (req, res, next) => {
   } catch (err) {
     res.json(err.message);
   }
-};
-
-exports.verifyOTP = async (req, res, next) => {
-  const { otp } = req.body;
-  // console.log(otp, res.locals.id);
-  const user = await User.findById(res.locals.id);
-  verifyOtp(user.phone, otp);
-  res.redirect("/dashboard");
 };
 
 // exports.protect = async (req, res, next) => {
