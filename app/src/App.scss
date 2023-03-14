@@ -1,13 +1,13 @@
 .container {
-    flex: 1;
-    justify-content: center;
-    align-items: center;
-    background-color: red;
-    padding: 10px;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  background-color: $bg;
+  padding: 10px;
 }
 
 .text {
-    color: white;
-    font-size: rem(24px);
-    text-align: center;
+  color: $light0;
+  font-size: rem(24px);
+  text-align: center;
 }

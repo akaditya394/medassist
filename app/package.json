@@ -3,24 +3,23 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "dev": "expo start --tunnel --clear",
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
-    "web": "expo start --web"
+    "web": "expo start --web",
+    "dev": "expo start --tunnel --clear"
   },
   "dependencies": {
-    "babel-plugin-react-native-classname-to-style": "^1.2.2",
-    "babel-plugin-react-native-platform-specific-extensions": "^1.1.1",
     "expo": "~48.0.6",
     "expo-status-bar": "~1.4.4",
-    "node-sass": "^8.0.0",
     "react": "18.2.0",
-    "react-native": "gihanrangana/react-native#v0.71.3",
-    "react-native-sass-transformer": "^2.0.0"
+    "react-native": "gihanrangana/react-native#v0.71.3"
   },
   "devDependencies": {
-    "@babel/core": "^7.20.0"
+    "@babel/core": "^7.20.0",
+    "@types/react": "~18.0.14",
+    "@types/react-native": "^0.71.3",
+    "typescript": "^4.9.4"
   },
   "private": true
 }

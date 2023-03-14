@@ -1,0 +1,140 @@
+.headerBar {
+  width: calc(100% - 2rem);
+  max-width: 1080px;
+  padding: 1rem;
+  margin: 1rem;
+  background: #EDEDED;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  border-radius: 0.5rem;
+}
+
+.logo {
+  font-family: "Nunito Sans", Arial, sans-serif;
+  font-size: 1.5rem;
+  color: #0F2E53;
+  font-weight: 700;
+}
+
+.logoText {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.logoText img {
+  width: 1.6rem;
+  height: 1.6rem;
+  margin-right: 0.5rem;
+}
+
+.content {
+  width: 100%;
+  max-width: 1080px;
+  padding: 1rem 1rem 1rem 1rem;
+  margin: 0;
+}
+
+.footerBar {
+  width: calc(100% - 2rem);
+  max-width: 1080px;
+  margin: 1rem;
+}
+
+.footerInfo {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  margin-top: 0.75rem;
+}
+
+.hr {
+  display: block;
+  width: 100%;
+  height: 1px;
+  border: 0;
+  border-top: 1px solid #F5F6FB;
+}
+
+.github {
+  width: auto;
+  height: auto;
+  margin-left: 1rem;
+}
+
+.github img {
+  width: 1.5rem;
+  height: 1.5rem;
+  opacity: 0.75;
+}
+
+.github img:hover {
+  opacity: 1;
+}
+
+.name {
+  width: auto;
+  height: auto;
+}
+
+.name name {
+  width: 1.5rem;
+  height: 1.5rem;
+  opacity: 0.75;
+}
+
+.name name:hover {
+  opacity: 1;
+}
+
+.nav {
+  position: relative;
+}
+
+.user {
+  width: auto;
+  height: auto;
+}
+
+.user img {
+  width: 1.6rem;
+  height: 1.6rem;
+  margin: 0.125rem 0.125rem 0 0;
+}
+
+.user img:hover,
+.user img:focus {
+  cursor: pointer;
+}
+/*# sourceMappingURL=styles.module.css.map */

@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "babel-plugin-react-native-classname-to-style": "^1.2.2",
+    "babel-plugin-react-native-platform-specific-extensions": "^1.1.1",
+    "node-sass": "^8.0.0",
+    "react-native-sass-transformer": "^2.0.0"
+  }
+}

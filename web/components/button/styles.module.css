@@ -1,0 +1,13 @@
+.button {
+  display: inline-block;
+  width: auto;
+  min-width: 5rem;
+  padding: .4rem 1rem;
+  border-radius: .5rem;
+  text-align: center;
+  background: #0F2E53;
+  color: white;
+  font-family: "Nunito Sans", Arial, sans-serif;
+  font-weight: 700;
+}
+/*# sourceMappingURL=styles.module.css.map */

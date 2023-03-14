@@ -1,0 +1,51 @@
+.gridContainer {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: (minmax(300px, 1fr))[auto-fit];
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-gap: 1rem;
+  grid-auto-flow: dense;
+}
+
+.gridContainer .box {
+  background: #EDEDED;
+  padding: 20px;
+  -webkit-transition: ease .2s;
+  transition: ease .2s;
+  cursor: pointer;
+  border-radius: 0.5rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-shadow: rgba(15, 15, 15, 0.05) 0px 0px 0px 1px, rgba(15, 15, 15, 0.1) 0px 2px 4px, rgba(15, 15, 15, 0.2) 0px 4px 7px;
+          box-shadow: rgba(15, 15, 15, 0.05) 0px 0px 0px 1px, rgba(15, 15, 15, 0.1) 0px 2px 4px, rgba(15, 15, 15, 0.2) 0px 4px 7px;
+}
+
+.gridContainer .box .name {
+  color: #0F2E53;
+}
+
+.gridContainer .box .verified {
+  width: auto;
+  height: auto;
+}
+
+.gridContainer .box .verified img {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.gridContainer .box:hover {
+  background: #F5F6FB;
+}
+/*# sourceMappingURL=styles.module.css.map */

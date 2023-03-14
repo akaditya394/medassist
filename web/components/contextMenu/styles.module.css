@@ -1,0 +1,59 @@
+.menuWrapper {
+  position: absolute;
+  bottom: 3rem;
+  right: 0;
+  width: auto;
+  height: auto;
+  min-width: 6rem;
+  z-index: 11;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.menu {
+  background: white;
+  -webkit-box-shadow: rgba(15, 15, 15, 0.05) 0px 0px 0px 1px, rgba(15, 15, 15, 0.1) 0px 3px 6px, rgba(15, 15, 15, 0.2) 0px 9px 24px;
+          box-shadow: rgba(15, 15, 15, 0.05) 0px 0px 0px 1px, rgba(15, 15, 15, 0.1) 0px 3px 6px, rgba(15, 15, 15, 0.2) 0px 9px 24px;
+  border-radius: 0.5rem;
+}
+
+.item {
+  font-family: "Nunito Sans", Arial, sans-serif;
+  font-size: 0.875rem;
+  font-weight: 700;
+  padding: 0.5rem 1rem;
+  border-bottom: 1px solid #EDEDED;
+}
+
+.item:last-of-type {
+  border-bottom: none;
+}
+
+.item:hover,
+.item:focus {
+  background: #F5F6FB;
+  cursor: pointer;
+}
+
+.item:first-of-type:hover,
+.item:first-of-type:focus {
+  border-top-right-radius: 0.5rem;
+  border-top-left-radius: 0.5rem;
+}
+
+.item:last-of-type:hover,
+.item:last-of-type:focus {
+  border-bottom-right-radius: 0.5rem;
+  border-bottom-left-radius: 0.5rem;
+}
+
+.selectedTag {
+  background: #F5F6FB;
+  border-radius: 0.5rem;
+}
+/*# sourceMappingURL=styles.module.css.map */
