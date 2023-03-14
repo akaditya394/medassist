@@ -1,7 +1,7 @@
 var upstreamTransformer = require("metro-react-native-babel-transformer");
 var sassTransformer = require("react-native-sass-transformer");
 
-var theme = (process.cwd() + "/src/styles/Global.scss").replace(/\\/g, "/");
+var theme = (process.cwd() + "/src/shared/global.scss").replace(/\\/g, "/");
 
 module.exports.transform = function ({ src, filename, options }) {
 	if (filename.endsWith(".scss") || filename.endsWith(".sass")) {
