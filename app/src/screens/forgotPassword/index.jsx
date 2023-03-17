@@ -25,7 +25,7 @@ import {
 } from './styles'
 import { Colors } from '../../shared/variables'
 
-const SignUpScreen = () => {
+const ForgotPasswordScreen = () => {
     const [hidePassword, setHidePassword] = useState(true)
     return (
         <StyledContainer>
@@ -37,7 +37,7 @@ const SignUpScreen = () => {
                         med<Assist>assist</Assist>
                     </PageTitle>
                 </Logo>
-                <SubTitle>Account signup</SubTitle>
+                <SubTitle>Forgot password</SubTitle>
 
                 <Formik
                     initialValues={{
@@ -108,4 +108,4 @@ const MyTextInput = ({ label, icon, isPassword, hidePassword, setHidePassword, .
     )
 }
 
-export default SignUpScreen
+export default ForgotPasswordScreen
