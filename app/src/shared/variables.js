@@ -9,4 +9,3 @@ export const Colors = {
 }
 
 export const StatusBarHeight = Constants.statusBarHeight
-
