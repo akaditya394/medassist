@@ -1,41 +1,40 @@
 import { StatusBar } from 'expo-status-bar'
-import { FlatList, View, Text } from 'react-native'
 
 import {
     StyledContainer,
-    InnerContainer
+    InnerContainer,
+    UpperContainer,
+    PageTitle,
+    Settings,
+    StyledList,
+    StyledListItem
 } from './styles'
 
-const DATA = [
-    {
-        id: '1',
-        title: 'First Item',
-    },
-    {
-        id: '2',
-        title: 'Second Item',
-    },
-    {
-        id: '3',
-        title: 'Third Item',
-    },
+const data = [
+    { id: 1, text: 'Item 1' },
+    { id: 2, text: 'Item 2' },
+    { id: 3, text: 'Item 3' },
 ]
 
-const Item = (title) => (
-    <View>
-        <Text>{title}</Text>
-    </View>
-)
-
-const AllPrescriptionsScreen = () => {
+const AllPrescriptionsScreen = ({ navigation }) => {
     return (
         <StyledContainer>
             <StatusBar style='dark' />
             <InnerContainer>
-                <FlatList
-                    data={DATA}
-                    renderItem={({ item }) => <Item title={item.title} />}
-                    keyExtractor={item => item.id}
+                <UpperContainer>
+                    <PageTitle>
+                        username
+                    </PageTitle>
+                    <Settings
+                        resizeMode="cover"
+                        source={require('../../images/icons/settings.png')}
+                        onPress={() => navigation.navigate('Settings')}
+                    />
+                </UpperContainer>
+                <StyledList
+                    data={data}
+                    renderItem={({ item }) => <StyledListItem>{`${item.text}`}</StyledListItem>}
+                    keyExtractor={(item) => item.id.toString()}
                 />
             </InnerContainer>
         </StyledContainer>

@@ -7,6 +7,7 @@ import AllPrescriptionsScreen from './screens/allPrescriptions'
 import ForgotPasswordScreen from './screens/forgotPassword'
 import AllResultsScreen from './screens/allResults'
 import OnboardingScreen from './screens/onboarding'
+import SettingsScreen from './screens/settings'
 
 const Stack = createNativeStackNavigator()
 
@@ -20,6 +21,7 @@ export default function App() {
         <Stack.Screen name="ForgotPassword" component={ForgotPasswordScreen} options={{ headerShown: false }} />
         <Stack.Screen name="AllPrescriptions" component={AllPrescriptionsScreen} options={{ headerShown: false }} />
         <Stack.Screen name="AllResults" component={AllResultsScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="Settings" component={SettingsScreen} options={{ headerShown: false }} />
       </Stack.Navigator>
     </NavigationContainer>
   )
