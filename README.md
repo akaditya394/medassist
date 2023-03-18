@@ -1,1 +1,12 @@
 # medassist
+
+### tasks:
+
+- [x] UI design
+- [x] basic code implmentation on webapp
+- [ ] server authentication logic
+- [ ] complete the handleSubmit function definitions
+- [ ] complete auth UI in app and link with server
+- [ ] explore free tier for google cloud
+- [ ] Add vision API
+- [ ] research about the model and elaboration form logic
