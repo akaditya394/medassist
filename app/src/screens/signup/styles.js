@@ -9,9 +9,9 @@ export const StyledContainer = styled.View`
     padding: 25px;
     padding-top: ${StatusBarHeight + 10}px;
     background-color: #fff;
-`
+`;
 
-export const InnnerContainer = styled.View`
+export const InnerContainer = styled.View`
     flex: 1;
     width: 100%;
     align-items: center;

@@ -7,7 +7,7 @@ import { Octicons, Ionicons } from '@expo/vector-icons'
 
 import {
     StyledContainer,
-    InnnerContainer,
+    InnerContainer,
     Logo,
     PageLogo,
     PageTitle,
@@ -30,7 +30,7 @@ const ForgotPasswordScreen = () => {
     return (
         <StyledContainer>
             <StatusBar style='dark' />
-            <InnnerContainer>
+            <InnerContainer>
                 <Logo>
                     <PageLogo resizeMode="cover" source={require('../../images/logo/logo.png')} />
                     <PageTitle>
@@ -41,7 +41,7 @@ const ForgotPasswordScreen = () => {
 
                 <Formik
                     initialValues={{
-                        username: '', email: '', password: ''
+                        email: ''
                     }}
                     onSubmit={(values) => {
                         console.log(values)
@@ -52,14 +52,6 @@ const ForgotPasswordScreen = () => {
                     }) => (
                         <StyledFormArea>
                             <MyTextInput
-                                label="Username"
-                                icon="person"
-                                onChangeText={handleChange('username')}
-                                onBlur={handleBlur('username')}
-                                value={values.username}
-                                keyboardType="default"
-                            />
-                            <MyTextInput
                                 label="Email Address"
                                 icon="mail"
                                 onChangeText={handleChange('email')}
@@ -67,26 +59,15 @@ const ForgotPasswordScreen = () => {
                                 value={values.email}
                                 keyboardType="email-address"
                             />
-                            <MyTextInput
-                                label="Password"
-                                icon="lock"
-                                onChangeText={handleChange('password')}
-                                onBlur={handleBlur('password')}
-                                value={values.password}
-                                secureTextEntry={hidePassword}
-                                isPassword={true}
-                                hidePassword={hidePassword}
-                                setHidePassword={setHidePassword}
-                            />
                             <MsgBox>...</MsgBox>
                             <StyledButton onPress={handleSubmit}>
-                                <ButtonText>Sign up</ButtonText>
+                                <ButtonText>Request Password Reset</ButtonText>
                             </StyledButton>
                             <Line />
                         </StyledFormArea>
                     )}
                 </Formik>
-            </InnnerContainer>
+            </InnerContainer>
         </StyledContainer>
     )
 }

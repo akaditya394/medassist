@@ -2,8 +2,8 @@
 
 ### tasks:
 
-- [x] UI design
-- [x] basic code implmentation on webapp
+- [x] <s>UI design</s>
+- [x] <s>basic code implmentation on webapp</s>
 - [ ] server authentication logic
 - [ ] complete the handleSubmit function definitions
 - [ ] complete auth UI in app and link with server

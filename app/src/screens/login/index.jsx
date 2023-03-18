@@ -7,7 +7,7 @@ import { Octicons, Ionicons } from '@expo/vector-icons'
 
 import {
     StyledContainer,
-    InnnerContainer,
+    InnerContainer,
     Logo,
     PageLogo,
     PageTitle,
@@ -34,7 +34,7 @@ const LoginScreen = ({ navigation }) => {
     return (
         <StyledContainer>
             <StatusBar style='dark' />
-            <InnnerContainer>
+            <InnerContainer>
                 <Logo>
                     <PageLogo resizeMode="cover" source={require('../../images/logo/logo.png')} />
                     <PageTitle>
@@ -80,10 +80,10 @@ const LoginScreen = ({ navigation }) => {
                             <StyledButton onPress={handleSubmit}>
                                 <ButtonText>Login</ButtonText>
                             </StyledButton>
-                            <StyledButton forgotPassword={true} onPress={handleSubmit}>
-                                <ButtonText forgotPassword={true}
-                                    onPress={() => navigation.navigate('ForgotPassword')}
-                                >Forgot Password ?</ButtonText>
+                            <StyledButton forgotPassword={true} onPress={() => navigation.navigate('ForgotPassword')}>
+                                <ButtonText forgotPassword={true}>
+                                    Forgot Password ?
+                                </ButtonText>
                             </StyledButton>
                             <Line />
                             <ExtraView>
@@ -97,7 +97,7 @@ const LoginScreen = ({ navigation }) => {
                         </StyledFormArea>
                     )}
                 </Formik>
-            </InnnerContainer>
+            </InnerContainer>
         </StyledContainer>
     )
 }
