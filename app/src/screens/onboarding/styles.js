@@ -14,7 +14,6 @@ export const StyledContainer = styled.View`
 export const InnerContainer = styled.View`
     flex: 1;
     width: 100%;
-    border: 1px solid black;
 `;
 
 export const BottomContainer = styled.View`
@@ -22,7 +21,7 @@ export const BottomContainer = styled.View`
     flex: 1;
     align-items: center;
     position: absolute;
-    bottom:0;
+    bottom: 0;
 `;
 
 export const PageTitle = styled.Text`
