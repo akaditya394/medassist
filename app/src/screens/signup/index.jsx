@@ -7,7 +7,7 @@ import { Octicons, Ionicons } from '@expo/vector-icons'
 
 import {
     StyledContainer,
-    InnnerContainer,
+    InnerContainer,
     Logo,
     PageLogo,
     PageTitle,
@@ -30,7 +30,7 @@ const SignUpScreen = () => {
     return (
         <StyledContainer>
             <StatusBar style='dark' />
-            <InnnerContainer>
+            <InnerContainer>
                 <Logo>
                     <PageLogo resizeMode="cover" source={require('../../images/logo/logo.png')} />
                     <PageTitle>
@@ -86,7 +86,7 @@ const SignUpScreen = () => {
                         </StyledFormArea>
                     )}
                 </Formik>
-            </InnnerContainer>
+            </InnerContainer>
         </StyledContainer>
     )
 }
