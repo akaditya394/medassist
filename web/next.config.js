@@ -5,6 +5,6 @@ module.exports = withImages({
     API_URL: process.env.API_URL,
   },
   images: {
-    disableStaticImages: true
-  }
+    disableStaticImages: true,
+  },
 });
