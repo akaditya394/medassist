@@ -71,6 +71,10 @@ export const StyledInputLabel = styled.Text`
     text-align: left;
 `;
 
+export const StyledRoleSelector = styled.TouchableOpacity`
+
+`;
+
 export const LeftIcon = styled.View`
     left: 15px;
     top: 38px;
