@@ -58,11 +58,15 @@ const SignupPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     // a http post request to signup
-    const res = await axios.post("/api/auth/signup", JSON.stringify(formData), {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    await axios.post(
+      "http://localhost:8000/api/auth/register",
+      JSON.stringify(formData),
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
     router.push("/");
   };
 

@@ -53,11 +53,15 @@ const LoginPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     // a http post request to login
-    const res = await axios.post("/api/auth/login", JSON.stringify(formData), {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    const res = await axios.post(
+      "http://localhost:8000/api/auth/login",
+      JSON.stringify(formData),
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
     router.push("/");
   };
 

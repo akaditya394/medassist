@@ -5,6 +5,7 @@ require("dotenv").config();
 const CookieSession = require("cookie-session");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
+const userRoutes = require("./routes/userRoutes");
 
 app.use(cors());
 // app.use(express.static(path.join(__dirname, "../public")));
@@ -20,6 +21,8 @@ app.use(
 app.use(cookieParser());
 
 // middleware
+
 //auth routes
-// app.use("/api/auth", userRoutes);
+app.use("/api/auth", userRoutes);
+
 module.exports = app;
