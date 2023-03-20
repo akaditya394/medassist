@@ -5,7 +5,7 @@ import PrescriptionsPage from "./prescriptions"
 
 const IndexPage = () => {
   const isAuth = true
-  const isUserDoctor = true
+  const isUserDoctor = false
 
   let body = null
 

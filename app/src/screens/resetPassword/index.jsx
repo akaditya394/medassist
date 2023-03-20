@@ -25,7 +25,7 @@ import {
 } from './styles'
 import { Colors } from '../../shared/variables'
 
-const ForgotPasswordScreen = () => {
+const ResetPasswordScreen = () => {
     const [hidePassword, setHidePassword] = useState(true)
     return (
         <StyledContainer>
@@ -37,7 +37,7 @@ const ForgotPasswordScreen = () => {
                         med<Assist>assist</Assist>
                     </PageTitle>
                 </Logo>
-                <SubTitle>Forgot Password</SubTitle>
+                <SubTitle>Reset Password</SubTitle>
 
                 <Formik
                     initialValues={{
@@ -52,16 +52,20 @@ const ForgotPasswordScreen = () => {
                     }) => (
                         <StyledFormArea>
                             <MyTextInput
-                                label="Email Address"
-                                icon="mail"
-                                onChangeText={handleChange('email')}
-                                onBlur={handleBlur('email')}
-                                value={values.email}
-                                keyboardType="email-address"
+                                label="New Password"
+                                icon="lock"
+                                placeholderTextColor={Colors.primary}
+                                onChangeText={handleChange('password')}
+                                onBlur={handleBlur('password')}
+                                value={values.password}
+                                secureTextEntry={hidePassword}
+                                isPassword={true}
+                                hidePassword={hidePassword}
+                                setHidePassword={setHidePassword}
                             />
                             <MsgBox>...</MsgBox>
                             <StyledButton onPress={handleSubmit}>
-                                <ButtonText>Request Password Reset</ButtonText>
+                                <ButtonText>Set New Password</ButtonText>
                             </StyledButton>
                             <Line />
                         </StyledFormArea>
@@ -89,4 +93,4 @@ const MyTextInput = ({ label, icon, isPassword, hidePassword, setHidePassword, .
     )
 }
 
-export default ForgotPasswordScreen
+export default ResetPasswordScreen
