@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import { View, Text, Image, TextInput, TouchableOpacity, FlatList } from 'react-native'
 
-import { Colors, BoxShadow, StatusBarHeight } from '../../shared/variables'
+import { Colors, StatusBarHeight } from '../../shared/variables'
 
 export const StyledContainer = styled.View`
     flex: 1;
@@ -30,11 +30,27 @@ export const PageTitle = styled.Text`
     font-weight: 700;
 `;
 
-export const Settings = styled.Image`
-    width: 30px;
-    height: 30px;
+export const IconsContainer = styled.View`
     position: absolute;
     right: 0;
+    display: flex;
+    flex-direction: row;
+`;
+
+export const Icon = styled.TouchableOpacity`
+    width: 37px;
+    height: 37px;
+    margin-right: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    background-color: ${Colors.primary};
+
+    ${(props) => props.settings == true && `
+        background-color: ${Colors.secondary};
+        margin-right: 0px;
+    `}
 `;
 
 export const StyledList = styled.FlatList`
@@ -56,7 +72,7 @@ export const StyledListText = styled.Text`
     font-size: 18px;
 `;
 
-export const Verified = styled.Image`
+export const Verified = styled.View`
     width: 30px;
     height: 30px;
     position: absolute;

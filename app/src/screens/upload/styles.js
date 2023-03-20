@@ -13,7 +13,6 @@ export const StyledContainer = styled.View`
 export const InnerContainer = styled.View`
     flex: 1;
     width: 100%;
-    border: 1px solid black;
 `;
 
 export const UpperContainer = styled.View`
@@ -23,7 +22,6 @@ export const UpperContainer = styled.View`
     padding-top: 10px;
     padding-bottom: 10px;
     margin-bottom: 20px;
-    border: 1px solid black;
 `;
 
 export const PageTitle = styled.Text`
@@ -32,9 +30,59 @@ export const PageTitle = styled.Text`
     font-weight: 700;
 `;
 
-export const Settings = styled.Image`
-    width: 30px;
-    height: 30px;
+export const Settings = styled.TouchableOpacity`
+    width: 37px;
+    height: 37px;
     position: absolute;
     right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    background-color: ${Colors.secondary};
+`;
+
+export const StyledImage = styled.Image`
+    width: 100%;
+    height: 200px;
+`;
+
+export const BottomContainer = styled.View`
+    width: 100%;
+`;
+
+export const StyledButton = styled.TouchableOpacity`
+    padding: 15px;
+    background-color: ${Colors.primary};
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    margin-vertical: 5px;
+    height: 60px;
+
+    ${(props) => props.upload == true && `
+        background-color: ${Colors.secondary};
+    `}
+`;
+
+export const ButtonText = styled.Text`
+    color: white;
+    font-weight: 700;
+    font-size: 16px;
+
+    ${(props) => props.upload == true && `
+        color: ${Colors.primary};
+    `}
+`;
+
+export const SelectImage = styled.View`
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+`;
+
+export const StyledText = styled.Text`
+    color: ${Colors.primary};
+    font-size: 16px;
+    font-weight: 500;
 `;

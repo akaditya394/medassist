@@ -10,6 +10,8 @@ import {
     StyledListItem
 } from './styles'
 
+import SettingsImage from '../../images/icons/settings.svg'
+
 const data = [
     { id: 1, text: 'Item 1' },
     { id: 2, text: 'Item 2' },
@@ -25,11 +27,9 @@ const AllPrescriptionsScreen = ({ navigation }) => {
                     <PageTitle>
                         Home
                     </PageTitle>
-                    <Settings
-                        resizeMode="cover"
-                        source={require('../../images/icons/settings.png')}
-                        onPress={() => navigation.navigate('Settings')}
-                    />
+                    <Settings onPress={() => navigation.navigate('Settings')}>
+                        <SettingsImage width="30px" height="30px" fill="#0F2E53" />
+                    </Settings>
                 </UpperContainer>
                 <StyledList
                     data={data}
