@@ -1,5 +1,4 @@
 import { StatusBar } from 'expo-status-bar'
-import { API_URL } from '@env'
 
 import {
     StyledContainer,
@@ -26,7 +25,7 @@ const OnboardingScreen = ({ navigation }) => {
             <StatusBar style='dark' />
             <InnerContainer>
                 <PageTitle>
-                    med<Assist>assist</Assist> {API_URL}
+                    med<Assist>assist</Assist>
                 </PageTitle>
                 <SubTitle>A Simple way to help control your health</SubTitle>
                 <StyledList
@@ -35,7 +34,7 @@ const OnboardingScreen = ({ navigation }) => {
                     keyExtractor={(item) => item.id.toString()}
                 />
                 <BottomContainer>
-                    <StyledButton onPress={() => navigation.navigate('Upload')}>
+                    <StyledButton onPress={() => navigation.navigate('Login')}>
                         <ButtonText>Get Started</ButtonText>
                     </StyledButton>
                 </BottomContainer>

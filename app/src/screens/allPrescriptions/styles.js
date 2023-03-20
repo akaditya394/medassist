@@ -31,11 +31,16 @@ export const PageTitle = styled.Text`
     font-weight: 700;
 `;
 
-export const Settings = styled.Image`
-    width: 30px;
-    height: 30px;
+export const Settings = styled.TouchableOpacity`
+    width: 37px;
+    height: 37px;
     position: absolute;
     right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    background-color: ${Colors.secondary};
 `;
 
 export const StyledList = styled.FlatList`

@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react'
 import { StatusBar } from 'expo-status-bar'
-import { Button, Image, View } from 'react-native';
-import * as ImagePicker from 'expo-image-picker';
+import * as ImagePicker from 'expo-image-picker'
 
 import {
     StyledContainer,
@@ -9,26 +8,51 @@ import {
     UpperContainer,
     PageTitle,
     Settings,
+    StyledButton,
+    ButtonText,
+    StyledImage,
+    SelectImage,
+    StyledText,
+    BottomContainer
 } from './styles'
 
+import DefaultImage from '../../images/icons/default_image.svg'
+import SettingsImage from '../../images/icons/settings.svg'
+
 const UploadScreen = ({ navigation }) => {
-    const [image, setImage] = useState(null);
+    const [hasGalleryPermission, setHasGalleryPermission] = useState(null)
+    const [image, setImage] = useState(null)
+
+    useEffect(() => {
+        (async () => {
+            const galleryStatus = await ImagePicker.requestMediaLibraryPermissionsAsync()
+            setHasGalleryPermission(galleryStatus.status === 'granted')
+        })()
+    }, [])
 
     const pickImage = async () => {
-        // No permissions request is necessary for launching the image library
         let result = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: ImagePicker.MediaTypeOptions.All,
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
             allowsEditing: true,
-            aspect: [4, 3],
+            aspect: [16, 9],
             quality: 1,
-        });
+        })
 
-        console.log(result);
+        console.log(result)
 
         if (!result.canceled) {
-            setImage(result.assets[0].uri);
+            setImage(result.assets[0].uri)
         }
-    };
+    }
+
+    if (hasGalleryPermission === false) {
+        return <StyledText>No access to internal Storage</StyledText>
+    }
+
+    const handleSubmit = async () => {
+        // a http post request to upload image
+    }
+
     return (
         <StyledContainer>
             <StatusBar style='dark' />
@@ -37,16 +61,24 @@ const UploadScreen = ({ navigation }) => {
                     <PageTitle>
                         Upload
                     </PageTitle>
-                    <Settings
-                        resizeMode="cover"
-                        source={require('../../images/icons/settings.png')}
-                        onPress={() => navigation.navigate('Settings')}
-                    />
+                    <Settings onPress={() => navigation.navigate('Settings')}>
+                        <SettingsImage width="30px" height="30px" fill="#0F2E53" />
+                    </Settings>
                 </UpperContainer>
-                <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-                    <Button title="Pick an image from camera roll" onPress={pickImage} />
-                    {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
-                </View>
+                {!image ? (
+                    <SelectImage>
+                        <DefaultImage width={200} height={200} fill="#0F2E53" opacity="0.5" />
+                        <StyledText>Selected image will appear here</StyledText>
+                    </SelectImage>
+                ) : <StyledImage source={{ uri: image }} />}
+                <BottomContainer>
+                    <StyledButton onPress={() => pickImage()}>
+                        <ButtonText>Pick an image from camera roll</ButtonText>
+                    </StyledButton>
+                    <StyledButton upload={true} onPress={handleSubmit}>
+                        <ButtonText upload={true}>Upload</ButtonText>
+                    </StyledButton>
+                </BottomContainer>
             </InnerContainer>
         </StyledContainer>
     )
