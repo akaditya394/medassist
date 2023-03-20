@@ -41,7 +41,7 @@ const LoginScreen = ({ navigation }) => {
                         med<Assist>assist</Assist>
                     </PageTitle>
                 </Logo>
-                <SubTitle>Account login</SubTitle>
+                <SubTitle>Account Login</SubTitle>
 
                 <Formik
                     initialValues={{

@@ -23,7 +23,7 @@ const AllPrescriptionsScreen = ({ navigation }) => {
             <InnerContainer>
                 <UpperContainer>
                     <PageTitle>
-                        username
+                        Home
                     </PageTitle>
                     <Settings
                         resizeMode="cover"

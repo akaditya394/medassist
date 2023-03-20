@@ -34,7 +34,7 @@ const OnboardingScreen = ({ navigation }) => {
                     keyExtractor={(item) => item.id.toString()}
                 />
                 <BottomContainer>
-                    <StyledButton onPress={() => navigation.navigate('SignUp')}>
+                    <StyledButton onPress={() => navigation.navigate('Upload')}>
                         <ButtonText>Get Started</ButtonText>
                     </StyledButton>
                 </BottomContainer>

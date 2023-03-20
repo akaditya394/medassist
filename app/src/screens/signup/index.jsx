@@ -38,7 +38,7 @@ const SignUpScreen = () => {
                         med<Assist>assist</Assist>
                     </PageTitle>
                 </Logo>
-                <SubTitle>Account signup</SubTitle>
+                <SubTitle>Account Signup</SubTitle>
 
                 <Formik
                     initialValues={{
