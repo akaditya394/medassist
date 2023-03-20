@@ -1,4 +1,5 @@
 import { StatusBar } from 'expo-status-bar'
+import { API_URL } from '@env'
 
 import {
     StyledContainer,
@@ -25,7 +26,7 @@ const OnboardingScreen = ({ navigation }) => {
             <StatusBar style='dark' />
             <InnerContainer>
                 <PageTitle>
-                    med<Assist>assist</Assist>
+                    med<Assist>assist</Assist> {API_URL}
                 </PageTitle>
                 <SubTitle>A Simple way to help control your health</SubTitle>
                 <StyledList
