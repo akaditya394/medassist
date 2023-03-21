@@ -1,4 +1,5 @@
 import { StatusBar } from 'expo-status-bar'
+import { Text } from 'react-native'
 
 import {
     StyledContainer,
@@ -7,6 +8,12 @@ import {
     IconsContainer,
     PageTitle,
     Icon,
+    SelectImage,
+    BottomContainer,
+    StyledButton,
+    ButtonText,
+    PrescriptionImage,
+    TableContainer
 } from './styles'
 
 import SettingsImage from '../../images/icons/settings.svg'
@@ -30,7 +37,19 @@ const ResultScreen = ({ navigation }) => {
                         </Icon>
                     </IconsContainer>
                 </UpperContainer>
-
+                <SelectImage>
+                    <PrescriptionImage resizeMode="cover" source={require('../../images/test/prescription.png')} />
+                </SelectImage>
+                <TableContainer>
+                    <Text>
+                        Hello
+                    </Text>
+                </TableContainer>
+                <BottomContainer>
+                    <StyledButton>
+                        <ButtonText>Add your side effects</ButtonText>
+                    </StyledButton>
+                </BottomContainer>
             </InnerContainer>
         </StyledContainer>
     )

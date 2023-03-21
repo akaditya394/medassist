@@ -10,3 +10,8 @@
 - [ ] explore free tier for google cloud
 - [ ] Add vision API
 - [ ] research about the model and elaboration form logic
+
+### resources used:
+
+- https://expo.dev/
+- https://discord.com/blog/how-discord-achieves-native-ios-performance-with-react-native

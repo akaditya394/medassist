@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { View, Text, Image, TextInput, TouchableOpacity, FlatList } from 'react-native'
+import { View, Text, Image, TextInput, TouchableOpacity, FlatList, ScrollView } from 'react-native'
 
 import { Colors, StatusBarHeight } from '../../shared/variables'
 
@@ -51,4 +51,41 @@ export const Icon = styled.TouchableOpacity`
         background-color: ${Colors.secondary};
         margin-right: 0px;
     `}
+`;
+
+export const BottomContainer = styled.View`
+    width: 100%;
+`;
+
+export const ButtonText = styled.Text`
+    color: white;
+    font-weight: 700;
+    font-size: 16px;
+`;
+
+export const SelectImage = styled.View`
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+    /* border: 1px solid ${Colors.primary};
+    border-radius: 5px; */
+`;
+
+export const PrescriptionImage = styled.Image`
+    width: 100%;
+    height: 100%;
+`;
+
+export const StyledButton = styled.TouchableOpacity`
+    padding: 15px;
+    background-color: ${Colors.primary};
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    margin-vertical: 5px;
+    height: 60px;
+`;
+
+export const TableContainer = styled.View`
+    width: 100%;
 `;
