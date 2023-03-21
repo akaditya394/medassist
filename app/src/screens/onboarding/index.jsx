@@ -16,7 +16,7 @@ import {
 const data = [
   { id: 1, text: "Item 1" },
   { id: 2, text: "Item 2" },
-  { id: 3, text: "Item 3" },
+  { id: 3, text: "One to one consultation with trained medical professionals" },
 ];
 
 const OnboardingScreen = ({ navigation }) => {
@@ -36,7 +36,7 @@ const OnboardingScreen = ({ navigation }) => {
           keyExtractor={(item) => item.id.toString()}
         />
         <BottomContainer>
-          <StyledButton onPress={() => navigation.navigate("Upload")}>
+          <StyledButton onPress={() => navigation.navigate("Result")}>
             <ButtonText>Get Started</ButtonText>
           </StyledButton>
         </BottomContainer>

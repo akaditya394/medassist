@@ -34,7 +34,7 @@ const UploadScreen = ({ navigation }) => {
         let result = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.Images,
             allowsEditing: true,
-            aspect: [16, 9],
+            aspect: [3, 4],
             quality: 1,
         })
 
@@ -46,7 +46,22 @@ const UploadScreen = ({ navigation }) => {
     }
 
     if (hasGalleryPermission === false) {
-        return <StyledText>No access to internal Storage</StyledText>
+        return (
+            <StyledContainer>
+                <StatusBar style='dark' />
+                <InnerContainer>
+                    <UpperContainer>
+                        <PageTitle>
+                            Upload
+                        </PageTitle>
+                        <Settings onPress={() => navigation.navigate('Settings')}>
+                            <SettingsImage width="30px" height="30px" fill="#0F2E53" />
+                        </Settings>
+                    </UpperContainer>
+                    <StyledText>No access to internal Storage</StyledText>
+                </InnerContainer>
+            </StyledContainer>
+        )
     }
 
     const handleSubmit = async () => {
@@ -70,7 +85,11 @@ const UploadScreen = ({ navigation }) => {
                         <DefaultImage width={200} height={200} fill="#0F2E53" opacity="0.5" />
                         <StyledText>Selected image will appear here</StyledText>
                     </SelectImage>
-                ) : <StyledImage source={{ uri: image }} />}
+                ) : (
+                    <SelectImage>
+                        <StyledImage source={{ uri: image }} />
+                    </SelectImage>
+                )}
                 <BottomContainer>
                     <StyledButton onPress={() => pickImage()}>
                         <ButtonText>Pick an image from camera roll</ButtonText>
