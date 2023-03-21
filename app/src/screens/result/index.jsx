@@ -1,5 +1,4 @@
 import { StatusBar } from 'expo-status-bar'
-import { Text } from 'react-native'
 
 import {
     StyledContainer,
@@ -17,9 +16,16 @@ import {
 } from './styles'
 
 import SettingsImage from '../../images/icons/settings.svg'
-import UploadImage from '../../images/icons/upload.svg'
+import { Table, Row, Rows } from 'react-native-table-component'
 
 const ResultScreen = ({ navigation }) => {
+    const header = ['#id', 'Drug name', 'Symptoms', 'Alternatives']
+    const data = [
+        ['1', 'Drug 1', 'Symptom 1', 'Alternative 1'],
+        ['2', 'Drug 2', 'Symptom 2', 'Alternative 2'],
+        ['3', 'Drug 3', 'Symptom 3', 'Alternative 3']
+
+    ]
     return (
         <StyledContainer>
             <StatusBar style='dark' />
@@ -29,9 +35,6 @@ const ResultScreen = ({ navigation }) => {
                         Result
                     </PageTitle>
                     <IconsContainer>
-                        <Icon onPress={() => navigation.navigate('Upload')}>
-                            <UploadImage width="26px" height="26px" fill="#fff" />
-                        </Icon>
                         <Icon settings={true} onPress={() => navigation.navigate('Settings')}>
                             <SettingsImage width="30px" height="30px" fill="#0F2E53" />
                         </Icon>
@@ -41,12 +44,18 @@ const ResultScreen = ({ navigation }) => {
                     <PrescriptionImage resizeMode="cover" source={require('../../images/test/prescription.png')} />
                 </SelectImage>
                 <TableContainer>
-                    <Text>
-                        Hello
-                    </Text>
+                    <Table
+                        borderStyle={{
+                            borderWidth: 2,
+                            borderColor: '#0F2E53'
+                        }}
+                    >
+                        <Row data={header} />
+                        <Rows data={data} />
+                    </Table>
                 </TableContainer>
                 <BottomContainer>
-                    <StyledButton>
+                    <StyledButton onPress={() => navigation.navigate('SideEffects')}>
                         <ButtonText>Add your side effects</ButtonText>
                     </StyledButton>
                 </BottomContainer>

@@ -61,7 +61,7 @@ export const StyledList = styled.FlatList`
 export const StyledListItem = styled.View`
     background-color: ${Colors.tertiary};
     flex-direction: row;
-    justify-content: flex-start;
+    justify-content: space-between;
     margin-bottom: 15px;
     padding: 15px;
     border-radius: 5px;
@@ -73,10 +73,6 @@ export const StyledListText = styled.Text`
 `;
 
 export const Verified = styled.View`
-    width: 30px;
-    height: 30px;
-    position: absolute;
-    right: 15px;
-    top: 15px;
-    bottom: 15px;
+    width: auto;
+    height: auto;
 `;

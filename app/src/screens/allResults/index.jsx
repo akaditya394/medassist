@@ -47,7 +47,7 @@ const AllResultsScreen = ({ navigation }) => {
                         <StyledListItem>
                             <StyledListText>{`${item.text}`}</StyledListText>
                             <Verified>
-                                <VerifiedImage width="30px" height="30px" fill="#0F2E53" />
+                                <VerifiedImage width="25px" height="25px" fill="#0F2E53" />
                             </Verified>
                         </StyledListItem>
                     )}

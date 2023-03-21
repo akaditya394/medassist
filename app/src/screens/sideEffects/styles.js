@@ -53,27 +53,41 @@ export const Icon = styled.TouchableOpacity`
     `}
 `;
 
-export const BottomContainer = styled.View`
+export const StyledFormArea = styled.View`
     width: 100%;
 `;
 
-export const ButtonText = styled.Text`
-    color: white;
-    font-weight: 700;
+export const StyledTextInput = styled.TextInput`
+    background-color: ${Colors.tertiary};
+    padding: 15px;
+    padding-left: 55px;
+    padding-right: 55px;
+    border-radius: 5px;
     font-size: 16px;
+    height: 60px;
+    margin-vertical: 3px;
+    margin-bottom: 10px;
+    color: ${Colors.primary};
 `;
 
-export const SelectImage = styled.View`
-    flex: 1;
-    align-items: center;
-    justify-content: center;
-    /* border: 1px solid ${Colors.primary};
-    border-radius: 5px; */
+export const StyledInputLabel = styled.Text`
+    color: ${Colors.primary};
+    font-size: 13px;
+    text-align: left;
 `;
 
-export const PrescriptionImage = styled.Image`
-    width: 100%;
-    height: 100%;
+export const LeftIcon = styled.View`
+    left: 15px;
+    top: 38px;
+    position: absolute;
+    z-index: 1;
+`;
+
+export const RightIcon = styled.TouchableOpacity`
+    right: 15px;
+    top: 38px;
+    position: absolute;
+    z-index: 1;
 `;
 
 export const StyledButton = styled.TouchableOpacity`
@@ -86,6 +100,20 @@ export const StyledButton = styled.TouchableOpacity`
     height: 60px;
 `;
 
-export const TableContainer = styled.View`
+export const ButtonText = styled.Text`
+    color: white;
+    font-weight: 700;
+    font-size: 16px;
+`;
+
+export const MsgBox = styled.Text`
+    text-align: center;
+    font-size: 13px;
+`;
+
+export const Line = styled.View`
+    height: 1px;
     width: 100%;
+    background-color: ${Colors.primary};
+    margin-vertical: 10px;
 `;
