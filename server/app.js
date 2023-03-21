@@ -7,7 +7,10 @@ const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const userRoutes = require("./routes/userRoutes");
 
+// middleware
 app.use(cors());
+// app.set("view engine", "pug");
+// app.set("views", path.join(__dirname, "/views"));
 // app.use(express.static(path.join(__dirname, "../public")));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -19,8 +22,6 @@ app.use(
   })
 );
 app.use(cookieParser());
-
-// middleware
 
 //auth routes
 app.use("/api/auth", userRoutes);

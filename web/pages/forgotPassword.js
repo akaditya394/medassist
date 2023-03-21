@@ -42,7 +42,7 @@ const ForgotPasswordPage = () => {
     e.preventDefault();
     // a http post request to send reset password email
     const res = await axios.post(
-      "/api/auth/forgotPassword",
+      "http://localhost:8000/api/auth/forgotPassword",
       JSON.stringify(formData),
       {
         headers: {
@@ -50,8 +50,17 @@ const ForgotPasswordPage = () => {
         },
       }
     );
-    // to make a reset password page
-    //   router.push("/resetPassword");
+    switch (res.data.type) {
+      case "success":
+        setNotice({ type: "SUCCESS", message: res.data.message });
+        break;
+      case "error":
+        setTimeout(() => {
+          router.replace("http://localhost:3000/forgotPassword");
+        }, 3000);
+        setNotice({ type: "ERROR", message: res.data.message });
+        break;
+    }
   };
 
   return (

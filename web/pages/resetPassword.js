@@ -1,10 +1,11 @@
-import { useState } from "react"
-import { useRouter } from "next/router"
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 
-import Notice from "../components/notice"
-import Input from "../components/input"
+import Notice from "../components/notice";
+import Input from "../components/input";
 
-import ResetPasswordPageIllustration from "../images/resetPassword_page_illustration.svg"
+import ResetPasswordPageIllustration from "../images/resetPassword_page_illustration.svg";
+import axios from "axios";
 
 const form = {
   id: "resetPassword",
@@ -21,25 +22,55 @@ const form = {
     type: "submit",
     label: "Set New Password",
   },
-}
+};
 
 const ResetPasswordPage = () => {
-  const RESET_NOTICE = { type: "", message: "" }
-  const [notice, setNotice] = useState(RESET_NOTICE)
-  const router = useRouter()
+  const RESET_NOTICE = { type: "", message: "" };
+  const [notice, setNotice] = useState(RESET_NOTICE);
+  const router = useRouter();
 
-  const values = {}
-  form.inputs.forEach((input) => (values[input.id] = input.value))
-  const [formData, setFormData] = useState(values)
+  const values = {};
+  form.inputs.forEach((input) => (values[input.id] = input.value));
+  const [formData, setFormData] = useState(values);
 
   const handleInputChange = (id, value) => {
-    setFormData({ ...formData, [id]: value })
-  }
+    setFormData({ ...formData, [id]: value });
+  };
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
-    // a http post request to change password
-  }
+    e.preventDefault();
+
+    if (!formData.password) {
+      setNotice({ type: "ERROR", message: "Password cannot be empty" });
+    } else {
+      // a http post request to change password
+      const res = await axios.post(
+        "http://localhost:8000/api/auth/resetPassword",
+        { formData, token: router.query.token },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      switch (res.data.type) {
+        case "success":
+          setTimeout(() => {
+            router.replace("http://localhost:3000/login");
+          }, 3000);
+
+          setNotice({ type: "SUCCESS", message: res.data.message });
+          break;
+        case "error":
+          setTimeout(() => {
+            router.replace("http://localhost:3000/forgotPassword");
+          }, 3000);
+          setNotice({ type: "ERROR", message: res.data.message });
+          break;
+      }
+      console.log(res.data);
+    }
+  };
 
   return (
     <div className="ContentContainer">
@@ -58,21 +89,23 @@ const ResetPasswordPage = () => {
                 value={formData[input.id]}
                 setValue={(value) => handleInputChange(input.id, value)}
               />
-            )
+            );
           })}
           {notice.message && (
             <Notice status={notice.type} mini>
               {notice.message}
             </Notice>
           )}
-          <button type={form.submitButton.type}>{form.submitButton.label}</button>
+          <button type={form.submitButton.type}>
+            {form.submitButton.label}
+          </button>
         </form>
       </div>
       <div className="ContentPageIllustration">
         <img src={ResetPasswordPageIllustration} alt="" />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ResetPasswordPage
+export default ResetPasswordPage;

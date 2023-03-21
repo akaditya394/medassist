@@ -62,7 +62,17 @@ const LoginPage = () => {
         },
       }
     );
-    router.push("/");
+    switch (res.data.type) {
+      case "success":
+        setTimeout(() => {
+          router.replace("/");
+        }, 3000);
+        setNotice({ type: "SUCCESS", message: res.data.message });
+        break;
+      case "error":
+        setNotice({ type: "ERROR", message: res.data.message });
+        break;
+    }
   };
 
   const handlePasswordReset = (e) => {

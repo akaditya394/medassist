@@ -3,6 +3,7 @@ const { promisify } = require("util");
 const crypto = require("crypto");
 const User = require("../models/User");
 const { issueToken } = require("../utils/token");
+const sendEmail = require("../utils/email");
 require("dotenv").config();
 
 exports.register = async (req, res) => {
@@ -15,11 +16,16 @@ exports.register = async (req, res) => {
 
     issueToken(res, user);
     await user.save();
+
     res.status(200).json({
-      user,
+      type: "success",
+      message: "Signed up successfully",
     });
   } catch (err) {
-    res.json(err.message);
+    res.json({
+      type: "error",
+      message: err.message,
+    });
   }
 };
 
@@ -30,18 +36,24 @@ exports.login = async (req, res, next) => {
     const user = await User.findOne({ email }).select("+password");
 
     if (!user || !(await user.verifyPassword(password, user.password))) {
-      throw new Error("Incorrect email or password!");
+      return res.json({
+        type: "error",
+        message: "Incorrect email or password!",
+      });
     }
-
     user.password = undefined;
 
     issueToken(res, user);
 
-    return res.status(200).json({
-      user,
+    res.status(200).json({
+      type: "success",
+      message: "Logged in successfully",
     });
   } catch (error) {
-    res.json(error.message);
+    res.json({
+      type: "error",
+      message: error.message,
+    });
   }
 };
 
@@ -87,30 +99,36 @@ exports.forgotPassword = async (req, res) => {
     const user = await User.findOne({ email: req.body.email });
 
     if (!user) {
-      throw new Error("There is no user existing with this email.");
+      return res.json({
+        type: "error",
+        message: "There is no user registered with this email.",
+      });
     }
 
     const resetToken = user.createResetToken();
     await user.save({ validateBeforeSave: false });
     try {
-      // await sendEmail(
-      //   user,
-      //   { title: "Reset Password", token: resetToken },
-      //   "resetPassword"
-      // );
-      console.log("hello");
-      res.status(200).json({
-        resetToken,
-        user,
+      await sendEmail(user, { title: "Reset Password", token: resetToken });
+
+      return res.status(200).json({
+        type: "success",
+        message:
+          "Email sent successfully. Check your registered email id and proceed to the given link",
       });
     } catch (err) {
       user.passwordResetToken = undefined;
       user.passwordResetExpires = undefined;
       await user.save({ validateBeforeSave: false });
-      throw new Error("There was an error sending the email.");
+      return res.json({
+        type: "error",
+        message: err.message,
+      });
     }
   } catch (err) {
-    res.json({ error: err.message });
+    res.json({
+      type: "error",
+      message: err.message,
+    });
   }
 };
 
@@ -118,23 +136,35 @@ exports.resetPassword = async (req, res) => {
   try {
     const hashedToken = crypto
       .createHash("sha256")
-      .update(req.body.resetToken)
+      .update(req.body.token)
       .digest("hex");
-    const user = await User.findOne({ passwordResetToken: hashedToken });
+    const user = await User.findOne({
+      passwordResetToken: hashedToken,
+      passwordResetExpires: { $gt: Date.now() },
+    });
+
     if (!user) {
-      throw new Error("Token is invalid or has expired. Please try again");
+      return res.json({
+        type: "error",
+        message: "Link is invalid or has expired. Please try again",
+      });
     }
-    user.password = req.body.password;
+
+    user.password = req.body.formData.password;
     user.passwordResetToken = undefined;
     user.passwordResetExpires = undefined;
 
     issueToken(res, user);
     await user.save();
     res.status(200).json({
-      status: "success",
+      type: "success",
+      message: "Password changed successfully",
     });
   } catch (err) {
-    res.json(err.message);
+    res.json({
+      type: "error",
+      message: err.message,
+    });
   }
 };
 

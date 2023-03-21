@@ -58,7 +58,7 @@ const SignupPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     // a http post request to signup
-    await axios.post(
+    const res = await axios.post(
       "http://localhost:8000/api/auth/register",
       JSON.stringify(formData),
       {
@@ -67,7 +67,17 @@ const SignupPage = () => {
         },
       }
     );
-    router.push("/");
+    switch (res.data.type) {
+      case "success":
+        setTimeout(() => {
+          router.replace("/");
+        }, 3000);
+        setNotice({ type: "SUCCESS", message: res.data.message });
+        break;
+      case "error":
+        setNotice({ type: "ERROR", message: res.data.message });
+        break;
+    }
   };
 
   return (
