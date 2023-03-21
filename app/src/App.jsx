@@ -10,6 +10,7 @@ import OnboardingScreen from './screens/onboarding'
 import SettingsScreen from './screens/settings'
 import ResetPasswordScreen from './screens/resetPassword'
 import UploadScreen from './screens/upload'
+import ResultScreen from './screens/result'
 
 const Stack = createNativeStackNavigator()
 
@@ -26,6 +27,7 @@ export default function App() {
         <Stack.Screen name="Settings" component={SettingsScreen} options={{ headerShown: false }} />
         <Stack.Screen name="ResetPassword" component={ResetPasswordScreen} options={{ headerShown: false }} />
         <Stack.Screen name="Upload" component={UploadScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="Result" component={ResultScreen} options={{ headerShown: false }} />
       </Stack.Navigator>
     </NavigationContainer>
   )
