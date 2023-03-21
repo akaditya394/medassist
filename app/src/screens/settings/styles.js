@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { View, Text, Image, TextInput, TouchableOpacity, SectionList } from 'react-native'
+import { View, Text, Image, TextInput, TouchableOpacity, FlatList } from 'react-native'
 
 import { StatusBarHeight } from '../../shared/variables'
 import { Colors } from '../../shared/variables'
@@ -12,7 +12,6 @@ export const StyledContainer = styled.View`
 `;
 
 export const InnerContainer = styled.View`
-    flex: 1;
     width: 100%;
 `;
 
@@ -24,27 +23,32 @@ export const PageTitle = styled.Text`
     font-weight: 700;
 `;
 
-export const StyledList = styled.SectionList`
-    margin: 0px;
-`;
-
-export const StyledHeader = styled.Text`
-    padding-top: 2px;
-    padding-left: 10px;
-    padding-right: 10px;
-    padding-bottom: 2px;
-    font-size: 14px;
-    font-weight: bold;
-    background-color: ${Colors.secondary};
+export const ListTitle = styled.Text`
+    font-size: 22px;
     color: ${Colors.primary};
+    font-weight: 500;
+    padding-left: 15px;
+    margin-bottom: 10px;
 `;
 
-export const StyledItem = styled.View`
-    padding: 10px;
-    margin-bottom: 5px;
+export const StyledList = styled.FlatList`
+    margin-bottom: 15px;
 `;
 
-export const StyledText = styled.Text`
-    color: ${Colors.text};
-    font-size: 18px;
+export const StyledListItem = styled.TouchableOpacity`
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 15px;
+    padding-left: 15px;
+`;
+
+export const StyledListText = styled.Text`
+    color: ${Colors.primary};
+    font-size: 17px;
+    margin-right: 5px;
+`;
+
+export const Verified = styled.View`
+    width: auto;
+    height: auto;
 `;
