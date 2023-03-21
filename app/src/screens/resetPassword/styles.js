@@ -23,11 +23,6 @@ export const Logo = styled.View`
     align-items: center;
 `;
 
-export const PageLogo = styled.Image`
-    width: 30px;
-    height: 30px;
-`;
-
 export const PageTitle = styled.Text`
     font-size: 30px;
     text-align: center;

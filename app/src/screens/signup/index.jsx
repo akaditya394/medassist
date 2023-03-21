@@ -9,7 +9,6 @@ import {
     StyledContainer,
     InnerContainer,
     Logo,
-    PageLogo,
     PageTitle,
     Assist,
     SubTitle,
@@ -26,6 +25,8 @@ import {
 } from './styles'
 import { Colors } from '../../shared/variables'
 
+import LogoImage from '../../images/logo/logo.svg'
+
 const SignUpScreen = () => {
     const [hidePassword, setHidePassword] = useState(true)
     return (
@@ -33,7 +34,7 @@ const SignUpScreen = () => {
             <StatusBar style='dark' />
             <InnerContainer>
                 <Logo>
-                    <PageLogo resizeMode="cover" source={require('../../images/logo/logo.png')} />
+                    <LogoImage width="30px" height="30px" fill="#0F2E53" />
                     <PageTitle>
                         med<Assist>assist</Assist>
                     </PageTitle>

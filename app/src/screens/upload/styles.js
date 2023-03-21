@@ -44,7 +44,7 @@ export const Settings = styled.TouchableOpacity`
 
 export const StyledImage = styled.Image`
     width: 100%;
-    height: 200px;
+    height: 100%;
 `;
 
 export const BottomContainer = styled.View`
@@ -79,6 +79,8 @@ export const SelectImage = styled.View`
     flex: 1;
     align-items: center;
     justify-content: center;
+    /* border: 1px solid ${Colors.primary};
+    border-radius: 5px; */
 `;
 
 export const StyledText = styled.Text`
