@@ -12,6 +12,7 @@ import ResetPasswordScreen from "./screens/resetPassword";
 import UploadScreen from "./screens/upload";
 import ResultScreen from "./screens/result";
 import SideEffectsScreen from "./screens/sideEffects";
+import PrescriptionScreen from "./screens/prescription";
 
 const Stack = createNativeStackNavigator();
 
@@ -72,6 +73,11 @@ export default function App() {
         <Stack.Screen
           name="SideEffects"
           component={SideEffectsScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Prescription"
+          component={PrescriptionScreen}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>

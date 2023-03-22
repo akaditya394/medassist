@@ -44,7 +44,7 @@ const AllResultsScreen = ({ navigation }) => {
                 <StyledList
                     data={data}
                     renderItem={({ item }) => (
-                        <StyledListItem>
+                        <StyledListItem onPress={() => navigation.navigate("Result")}>
                             <StyledListText>{`${item.text}`}</StyledListText>
                             <Verified>
                                 <VerifiedImage width="25px" height="25px" fill="#0F2E53" />
