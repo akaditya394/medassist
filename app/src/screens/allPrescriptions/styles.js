@@ -48,11 +48,16 @@ export const StyledList = styled.FlatList`
     /* padding: 10px; */
 `;
 
-export const StyledListItem = styled.Text`
+export const StyledListItem = styled.TouchableOpacity`
     background-color: ${Colors.tertiary};
-    color: ${Colors.text};
-    font-size: 18px;
+    flex-direction: row;
+    justify-content: space-between;
     margin-bottom: 15px;
     padding: 15px;
     border-radius: 5px;
+`;
+
+export const StyledListText = styled.Text`
+    color: ${Colors.text};
+    font-size: 18px;
 `;
