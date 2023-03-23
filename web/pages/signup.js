@@ -46,6 +46,11 @@ const SignupPage = () => {
   const RESET_NOTICE = { type: "", message: "" };
   const [notice, setNotice] = useState(RESET_NOTICE);
   const router = useRouter();
+  const [option, setOption] = useState("User")
+
+  const onOptionChange = e => {
+    setOption(e.target.value)
+  }
 
   const values = {};
   form.inputs.forEach((input) => (values[input.id] = input.value));
@@ -55,8 +60,13 @@ const SignupPage = () => {
     setFormData({ ...formData, [id]: value });
   };
 
+  const setRole = () => {
+    formData.role = option
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setRole()
     // a http post request to signup
     const res = await axios.post(
       "http://localhost:8000/api/auth/register",
@@ -105,6 +115,28 @@ const SignupPage = () => {
               />
             );
           })}
+          <h3>Select your role</h3>
+          <div className="inputWrapper">
+            <input
+              type="radio"
+              name="option"
+              value="User"
+              id="User"
+              checked={option === "User"}
+              onChange={onOptionChange}
+            />
+            <label htmlFor="User">User</label>
+
+            <input
+              type="radio"
+              name="option"
+              value="Medical_Professional"
+              id="Medical_Professional"
+              checked={option === "Medical_Professional"}
+              onChange={onOptionChange}
+            />
+            <label htmlFor="Medical_Professional">Medical Professional</label>
+          </div>
           {notice.message && (
             <Notice status={notice.type} mini>
               {notice.message}
