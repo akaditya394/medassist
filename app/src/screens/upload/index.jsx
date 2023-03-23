@@ -94,7 +94,7 @@ const UploadScreen = ({ navigation }) => {
                     <StyledButton onPress={() => pickImage()}>
                         <ButtonText>Pick an image from camera roll</ButtonText>
                     </StyledButton>
-                    <StyledButton upload={true} onPress={handleSubmit}>
+                    <StyledButton upload={true} onPress={() => navigation.navigate('Result')}>
                         <ButtonText upload={true}>Upload</ButtonText>
                     </StyledButton>
                 </BottomContainer>

@@ -18,9 +18,9 @@ import VerifiedImage from '../../images/icons/verified.svg'
 import UploadImage from '../../images/icons/upload.svg'
 
 const data = [
-    { id: 1, text: 'Item 1' },
-    { id: 2, text: 'Item 2' },
-    { id: 3, text: 'Item 3' },
+    { id: 1, name: 'Item 1', verified: true },
+    { id: 2, name: 'Item 2', verified: false },
+    { id: 3, name: 'Item 3', verified: true },
 ]
 
 const AllResultsScreen = ({ navigation }) => {
@@ -44,12 +44,20 @@ const AllResultsScreen = ({ navigation }) => {
                 <StyledList
                     data={data}
                     renderItem={({ item }) => (
-                        <StyledListItem onPress={() => navigation.navigate("Result")}>
-                            <StyledListText>{`${item.text}`}</StyledListText>
-                            <Verified>
-                                <VerifiedImage width="25px" height="25px" fill="#0F2E53" />
-                            </Verified>
-                        </StyledListItem>
+                        <>
+                            {item.verified ? (
+                                <StyledListItem onPress={() => navigation.navigate("VerifiedResult")}>
+                                    <StyledListText>{`${item.name}`}</StyledListText>
+                                    <Verified>
+                                        <VerifiedImage width="25px" height="25px" fill="#0F2E53" />
+                                    </Verified>
+                                </StyledListItem>
+                            ) : (
+                                <StyledListItem onPress={() => navigation.navigate("UnverifiedResult")}>
+                                    <StyledListText>{`${item.name}`}</StyledListText>
+                                </StyledListItem>
+                            )}
+                        </>
                     )}
                     keyExtractor={(item) => item.id.toString()}
                 />
