@@ -1,0 +1,40 @@
+@import "../../shared/variables.scss";
+
+.table {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 2rem;
+}
+
+.label {
+    margin: 0.5rem 0;
+    color: $text;
+    font-family: $regular;
+    font-size: 0.875rem;
+    letter-spacing: +0.5px;
+}
+
+.formContainer {
+    margin-top: 1rem;
+}
+
+.inputWrapper {
+    label {
+        color: $text;
+        font-family: $regular;
+        font-size: 0.875rem;
+        text-transform: uppercase;
+        letter-spacing: +0.5px;
+    }
+
+    input {
+        width: 1.5rem;
+        height: 1rem;
+        color: $text;
+    }
+
+    input:focus {
+        background: $tertiary;
+    }
+}
