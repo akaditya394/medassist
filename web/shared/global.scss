@@ -178,3 +178,18 @@ tr {
 tr:nth-child(even) {
     background-color: white;
 }
+
+div.inputWrapper {
+    label {
+        color: $text;
+        font-family: $regular;
+        font-size: 0.875rem;
+        letter-spacing: +0.5px;
+    }
+
+    input {
+        width: 1.5rem;
+        height: 1rem;
+        color: $text;
+    }
+}
