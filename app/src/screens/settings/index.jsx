@@ -8,7 +8,7 @@ import {
     StyledList,
     StyledListItem,
     StyledListText,
-    Verified,
+    Link,
     ListTitle
 } from './styles'
 
@@ -42,9 +42,9 @@ const SettingsScreen = () => {
                     renderItem={({ item }) => (
                         <StyledListItem onPress={() => WebBrowser.openBrowserAsync(item.link)}>
                             <StyledListText>{`\u2022 ${item.text}`}</StyledListText>
-                            <Verified>
+                            <Link>
                                 <LinkImage width="18px" height="18px" fill="#0F2E53" />
-                            </Verified>
+                            </Link>
                         </StyledListItem>
                     )}
                     keyExtractor={(item) => item.id.toString()}

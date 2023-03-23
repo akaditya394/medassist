@@ -48,7 +48,7 @@ export const StyledListText = styled.Text`
     margin-right: 5px;
 `;
 
-export const Verified = styled.View`
+export const Link = styled.View`
     width: auto;
     height: auto;
 `;

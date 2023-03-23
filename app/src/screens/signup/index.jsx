@@ -27,7 +27,7 @@ import { Colors } from '../../shared/variables'
 
 import LogoImage from '../../images/logo/logo.svg'
 
-const SignUpScreen = () => {
+const SignUpScreen = ({ navigation }) => {
     const [hidePassword, setHidePassword] = useState(true)
     return (
         <StyledContainer>
@@ -85,7 +85,7 @@ const SignUpScreen = () => {
                                 <RadioButton />
                             </StyledRoleSelector>
                             <MsgBox>...</MsgBox>
-                            <StyledButton onPress={handleSubmit}>
+                            <StyledButton onPress={() => navigation.navigate('MedicalHistory')}>
                                 <ButtonText>Sign up</ButtonText>
                             </StyledButton>
                             <Line />
