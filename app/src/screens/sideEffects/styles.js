@@ -124,7 +124,7 @@ export const Line = styled.View`
     margin-vertical: 10px;
 `;
 
-export const StyledSideEffects = styled.FlatList`
+export const StyledSideEffects = styled.View`
     background-color: ${Colors.tertiary};
     margin-top: 15px;
     padding: 15px;
@@ -142,6 +142,7 @@ export const StyledSideEffect = styled.View`
     height: 50px;
     padding-left: 5px;
     padding-right: 5px;
+    margin-bottom: 15px;
 `;
 
 export const SideEffectText = styled.Text`

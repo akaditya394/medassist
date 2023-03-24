@@ -117,7 +117,6 @@ const SideEffectsScreen = ({ navigation }) => {
                                     numColumns={2}
                                     keyExtractor={(item, index) => index}
                                 />
-                                <Text>Hello</Text>
                             </StyledSideEffects>
                             <MsgBox>...</MsgBox>
                             <StyledButton onPress={handleSubmit}>
