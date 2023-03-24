@@ -14,9 +14,9 @@ import {
 } from "./styles";
 
 const data = [
-  { id: 1, text: "Item 1" },
-  { id: 2, text: "Item 2" },
-  { id: 3, text: "Item 3" },
+  { id: 1, text: "Upload prescriptions to see side-effects and alternatives to drugs" },
+  { id: 2, text: "View personalized health chart accorign to your medical history" },
+  { id: 3, text: "One to one consultation with trained medical professionals" },
 ];
 
 const OnboardingScreen = ({ navigation }) => {
@@ -36,7 +36,7 @@ const OnboardingScreen = ({ navigation }) => {
           keyExtractor={(item) => item.id.toString()}
         />
         <BottomContainer>
-          <StyledButton onPress={() => navigation.navigate("Upload")}>
+          <StyledButton onPress={() => navigation.navigate("SideEffects")}>
             <ButtonText>Get Started</ButtonText>
           </StyledButton>
         </BottomContainer>

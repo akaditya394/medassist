@@ -9,7 +9,6 @@ import {
     StyledContainer,
     InnerContainer,
     Logo,
-    PageLogo,
     PageTitle,
     Assist,
     SubTitle,
@@ -26,14 +25,16 @@ import {
 } from './styles'
 import { Colors } from '../../shared/variables'
 
-const SignUpScreen = () => {
+import LogoImage from '../../images/logo/logo.svg'
+
+const SignUpScreen = ({ navigation }) => {
     const [hidePassword, setHidePassword] = useState(true)
     return (
         <StyledContainer>
             <StatusBar style='dark' />
             <InnerContainer>
                 <Logo>
-                    <PageLogo resizeMode="cover" source={require('../../images/logo/logo.png')} />
+                    <LogoImage width="30px" height="30px" fill="#0F2E53" />
                     <PageTitle>
                         med<Assist>assist</Assist>
                     </PageTitle>
@@ -84,7 +85,7 @@ const SignUpScreen = () => {
                                 <RadioButton />
                             </StyledRoleSelector>
                             <MsgBox>...</MsgBox>
-                            <StyledButton onPress={handleSubmit}>
+                            <StyledButton onPress={() => navigation.navigate('MedicalHistory')}>
                                 <ButtonText>Sign up</ButtonText>
                             </StyledButton>
                             <Line />

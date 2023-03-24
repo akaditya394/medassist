@@ -7,7 +7,8 @@ import {
     PageTitle,
     Settings,
     StyledList,
-    StyledListItem
+    StyledListItem,
+    StyledListText
 } from './styles'
 
 import SettingsImage from '../../images/icons/settings.svg'
@@ -33,7 +34,11 @@ const AllPrescriptionsScreen = ({ navigation }) => {
                 </UpperContainer>
                 <StyledList
                     data={data}
-                    renderItem={({ item }) => <StyledListItem>{`${item.text}`}</StyledListItem>}
+                    renderItem={({ item }) => (
+                        <StyledListItem onPress={() => navigation.navigate("Prescription")}>
+                            <StyledListText>{`${item.text}`}</StyledListText>
+                        </StyledListItem>
+                    )}
                     keyExtractor={(item) => item.id.toString()}
                 />
             </InnerContainer>

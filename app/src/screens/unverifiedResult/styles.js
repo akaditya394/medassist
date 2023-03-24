@@ -1,9 +1,9 @@
 import styled from 'styled-components'
-import { View, Text, Image, TextInput, TouchableOpacity, FlatList } from 'react-native'
+import { View, Text, Image, TextInput, TouchableOpacity, FlatList, ScrollView } from 'react-native'
 
 import { Colors, StatusBarHeight } from '../../shared/variables'
 
-export const StyledContainer = styled.View`
+export const StyledContainer = styled.ScrollView`
     flex: 1;
     padding: 25px;
     padding-top: ${StatusBarHeight + 10}px;
@@ -53,26 +53,41 @@ export const Icon = styled.TouchableOpacity`
     `}
 `;
 
-export const StyledList = styled.FlatList`
-    flex: 1;
-    /* padding: 10px; */
-`;
-
-export const StyledListItem = styled.TouchableOpacity`
+export const Notice = styled.View`
     background-color: ${Colors.tertiary};
-    flex-direction: row;
-    justify-content: space-between;
     margin-bottom: 15px;
     padding: 15px;
     border-radius: 5px;
 `;
 
-export const StyledListText = styled.Text`
-    color: ${Colors.text};
-    font-size: 18px;
+export const StyledText = styled.Text`
+    color: ${Colors.primary};
+    font-size: 16px;
+    font-weight: 500;
 `;
 
-export const Verified = styled.View`
-    width: auto;
-    height: auto;
+export const ListTitle = styled.Text`
+    font-size: 22px;
+    color: ${Colors.primary};
+    font-weight: 500;
+    padding-left: 15px;
+    margin-bottom: 10px;
+`;
+
+export const StyledListItem = styled.View`
+    margin-bottom: 15px;
+    padding-left: 15px;
+`;
+
+export const StyledListText = styled.Text`
+    color: ${Colors.primary};
+    font-size: 17px;
+    font-weight: 500;
+`;
+
+export const Line = styled.View`
+    height: 1px;
+    width: 100%;
+    background-color: ${Colors.primary};
+    margin-vertical: 10px;
 `;

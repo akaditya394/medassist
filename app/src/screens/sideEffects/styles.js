@@ -1,8 +1,7 @@
 import styled from 'styled-components'
-import { View, Text, Image, TextInput, TouchableOpacity } from 'react-native'
+import { View, Text, Image, TextInput, TouchableOpacity, FlatList, ScrollView } from 'react-native'
 
-import { StatusBarHeight } from '../../shared/variables'
-import { Colors } from '../../shared/variables'
+import { Colors, StatusBarHeight } from '../../shared/variables'
 
 export const StyledContainer = styled.View`
     flex: 1;
@@ -14,37 +13,54 @@ export const StyledContainer = styled.View`
 export const InnerContainer = styled.View`
     flex: 1;
     width: 100%;
-    align-items: center;
 `;
 
-export const Logo = styled.View`
+export const UpperContainer = styled.View`
     display: flex;
     flex-direction: row;
     align-items: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
 `;
 
 export const PageTitle = styled.Text`
-    font-size: 30px;
-    text-align: center;
+    font-size: 25px;
     color: ${Colors.primary};
-    padding: 10px;
     font-weight: 700;
 `;
 
-export const Assist = styled.Text`
-    font-size: 25px;
+export const IconsContainer = styled.View`
+    position: absolute;
+    right: 0;
+    display: flex;
+    flex-direction: row;
 `;
 
-export const SubTitle = styled.Text`
-    font-size: 18px;
-    margin-bottom: 20px;
-    letter-spacing: 1px;
-    font-weight: bold;
-    color: ${Colors.text};
+export const Icon = styled.TouchableOpacity`
+    width: 37px;
+    height: 37px;
+    margin-right: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    background-color: ${Colors.primary};
+
+    ${(props) => props.settings == true && `
+        background-color: ${Colors.secondary};
+        margin-right: 0px;
+    `}
+`;
+
+export const Close = styled.TouchableOpacity`
+    width: 20px;
+    height: 20px;
+    background-color: ${Colors.tertiary};
 `;
 
 export const StyledFormArea = styled.View`
-    width: 90%;
+    width: 100%;
 `;
 
 export const StyledTextInput = styled.TextInput`
@@ -60,7 +76,7 @@ export const StyledTextInput = styled.TextInput`
     color: ${Colors.primary};
 `;
 
-export const StyledInputLabel = styled.Text`
+export const StyledLabel = styled.Text`
     color: ${Colors.primary};
     font-size: 13px;
     text-align: left;
@@ -106,4 +122,33 @@ export const Line = styled.View`
     width: 100%;
     background-color: ${Colors.primary};
     margin-vertical: 10px;
+`;
+
+export const StyledSideEffects = styled.FlatList`
+    background-color: ${Colors.tertiary};
+    margin-top: 15px;
+    padding: 15px;
+    border-radius: 5px;
+`;
+
+export const StyledSideEffect = styled.View`
+    border: ${Colors.primary};
+    border-radius: 5px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 165px;
+    height: 50px;
+    padding-left: 5px;
+    padding-right: 5px;
+`;
+
+export const SideEffectText = styled.Text`
+    color: ${Colors.text};
+    font-size: 15px;
+`;
+
+export const DropDownContainer = styled.View`
+    z-index: 1;
 `;

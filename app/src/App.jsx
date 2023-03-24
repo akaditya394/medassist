@@ -10,6 +10,12 @@ import OnboardingScreen from "./screens/onboarding";
 import SettingsScreen from "./screens/settings";
 import ResetPasswordScreen from "./screens/resetPassword";
 import UploadScreen from "./screens/upload";
+import ResultScreen from "./screens/result";
+import SideEffectsScreen from "./screens/sideEffects";
+import PrescriptionScreen from "./screens/prescription";
+import VerifiedResultScreen from "./screens/verifiedResult";
+import UnverifiedResultScreen from "./screens/unverifiedResult";
+import MedicalHistoryScreen from "./screens/medicalHistory";
 
 const Stack = createNativeStackNavigator();
 
@@ -60,6 +66,36 @@ export default function App() {
         <Stack.Screen
           name="Upload"
           component={UploadScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Result"
+          component={ResultScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="SideEffects"
+          component={SideEffectsScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Prescription"
+          component={PrescriptionScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="VerifiedResult"
+          component={VerifiedResultScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="UnverifiedResult"
+          component={UnverifiedResultScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="MedicalHistory"
+          component={MedicalHistoryScreen}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>

@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { View, Text, Image, TextInput, TouchableOpacity, FlatList } from 'react-native'
+import { View, Text, Image, TextInput, TouchableOpacity, FlatList, ScrollView } from 'react-native'
 
 import { Colors, StatusBarHeight } from '../../shared/variables'
 
@@ -10,7 +10,7 @@ export const StyledContainer = styled.View`
     background-color: #fff;
 `;
 
-export const InnerContainer = styled.View`
+export const InnerContainer = styled.ScrollView`
     flex: 1;
     width: 100%;
 `;
@@ -53,26 +53,41 @@ export const Icon = styled.TouchableOpacity`
     `}
 `;
 
-export const StyledList = styled.FlatList`
-    flex: 1;
-    /* padding: 10px; */
+export const BottomContainer = styled.View`
+    width: 100%;
 `;
 
-export const StyledListItem = styled.TouchableOpacity`
-    background-color: ${Colors.tertiary};
-    flex-direction: row;
-    justify-content: space-between;
-    margin-bottom: 15px;
-    padding: 15px;
+export const ButtonText = styled.Text`
+    color: white;
+    font-weight: 700;
+    font-size: 16px;
+`;
+
+export const SelectImage = styled.View`
+    display: flex;
+    align-items: center;
+    justify-content: center; 
+    border: 1px solid ${Colors.primary};
     border-radius: 5px;
 `;
 
-export const StyledListText = styled.Text`
-    color: ${Colors.text};
-    font-size: 18px;
+export const PrescriptionImage = styled.Image`
+    width: 100%;
+    height: 600px;
 `;
 
-export const Verified = styled.View`
-    width: auto;
-    height: auto;
+export const StyledButton = styled.TouchableOpacity`
+    padding: 15px;
+    background-color: ${Colors.primary};
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    margin-top: 20px;
+    height: 60px;
+`;
+
+export const TableContainer = styled.View`
+    width: 100%;
+    background-color: white;
+    margin-top: 20px;
 `;

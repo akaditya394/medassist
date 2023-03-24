@@ -1,1 +1,1 @@
-expo app for medAssist
+expo app for medassist

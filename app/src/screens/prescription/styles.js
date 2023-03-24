@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { View, Text, Image, TextInput, TouchableOpacity, FlatList } from 'react-native'
+import { View, Text, Image, TextInput, TouchableOpacity, FlatList, ScrollView } from 'react-native'
 
 import { Colors, StatusBarHeight } from '../../shared/variables'
 
@@ -53,26 +53,5 @@ export const Icon = styled.TouchableOpacity`
     `}
 `;
 
-export const StyledList = styled.FlatList`
-    flex: 1;
-    /* padding: 10px; */
-`;
 
-export const StyledListItem = styled.TouchableOpacity`
-    background-color: ${Colors.tertiary};
-    flex-direction: row;
-    justify-content: space-between;
-    margin-bottom: 15px;
-    padding: 15px;
-    border-radius: 5px;
-`;
 
-export const StyledListText = styled.Text`
-    color: ${Colors.text};
-    font-size: 18px;
-`;
-
-export const Verified = styled.View`
-    width: auto;
-    height: auto;
-`;

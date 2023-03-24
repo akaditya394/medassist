@@ -1,1 +1,1 @@
-nextjs webclient for medAssist
+nextjs webclient for medassist

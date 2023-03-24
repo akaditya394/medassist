@@ -53,7 +53,7 @@ export const StyledList = styled.FlatList`
 
 export const StyledListItem = styled.Text`
     color: ${Colors.text};
-    font-size: 18px;
+    font-size: 17px;
     margin-bottom: 10px;
 `;
 
