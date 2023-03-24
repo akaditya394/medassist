@@ -53,6 +53,12 @@ export const Icon = styled.TouchableOpacity`
     `}
 `;
 
+export const Close = styled.TouchableOpacity`
+    width: 20px;
+    height: 20px;
+    background-color: ${Colors.tertiary};
+`;
+
 export const StyledFormArea = styled.View`
     width: 100%;
 `;
@@ -70,7 +76,7 @@ export const StyledTextInput = styled.TextInput`
     color: ${Colors.primary};
 `;
 
-export const StyledInputLabel = styled.Text`
+export const StyledLabel = styled.Text`
     color: ${Colors.primary};
     font-size: 13px;
     text-align: left;
@@ -116,4 +122,33 @@ export const Line = styled.View`
     width: 100%;
     background-color: ${Colors.primary};
     margin-vertical: 10px;
+`;
+
+export const StyledSideEffects = styled.FlatList`
+    background-color: ${Colors.tertiary};
+    margin-top: 15px;
+    padding: 15px;
+    border-radius: 5px;
+`;
+
+export const StyledSideEffect = styled.View`
+    border: ${Colors.primary};
+    border-radius: 5px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 165px;
+    height: 50px;
+    padding-left: 5px;
+    padding-right: 5px;
+`;
+
+export const SideEffectText = styled.Text`
+    color: ${Colors.text};
+    font-size: 15px;
+`;
+
+export const DropDownContainer = styled.View`
+    z-index: 1;
 `;

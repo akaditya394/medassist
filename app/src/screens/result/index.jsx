@@ -1,4 +1,5 @@
 import { StatusBar } from 'expo-status-bar'
+import { View } from 'react-native'
 
 import {
     StyledContainer,
@@ -17,15 +18,16 @@ import {
 
 import SettingsImage from '../../images/icons/settings.svg'
 import { Table, Row, Rows } from 'react-native-table-component'
+import { Colors } from '../../shared/variables'
 
 const ResultScreen = ({ navigation }) => {
-    const header = ['#id', 'Drug name', 'Symptoms', 'Alternatives']
-    const data = [
-        ['1', 'Drug 1', 'Symptom 1', 'Alternative 1'],
-        ['2', 'Drug 2', 'Symptom 2', 'Alternative 2'],
-        ['3', 'Drug 3', 'Symptom 3', 'Alternative 3']
-
+    const tableHead = ['Drug name', 'Side Effects', 'Alternatives']
+    const tableData = [
+        ['Drug 1', 'Side Effect 1', 'Alternative 1'],
+        ['Drug 2', 'Side Effect 2', 'Alternative 2'],
+        ['Drug 3', 'Side Effect 3', 'Alternative 3']
     ]
+
     return (
         <StyledContainer>
             <StatusBar style='dark' />
@@ -44,14 +46,11 @@ const ResultScreen = ({ navigation }) => {
                     <PrescriptionImage resizeMode="cover" source={require('../../images/test/prescription.png')} />
                 </SelectImage>
                 <TableContainer>
-                    <Table
-                        borderStyle={{
-                            borderWidth: 2,
-                            borderColor: '#0F2E53'
-                        }}
-                    >
-                        <Row data={header} />
-                        <Rows data={data} />
+                    <Table borderStyle={{ borderWidth: 1, borderColor: `${Colors.primary}` }}>
+                        <Row data={tableHead} style={{
+                            height: 50, backgroundColor: `${Colors.tertiary}`
+                        }} textStyle={{ margin: 6, fontWeight: 'bold' }} />
+                        <Rows data={tableData} textStyle={{ margin: 6 }} />
                     </Table>
                 </TableContainer>
                 <BottomContainer>
