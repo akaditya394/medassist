@@ -3,14 +3,14 @@ import { View, Text, Image, TextInput, TouchableOpacity, FlatList, ScrollView } 
 
 import { Colors, StatusBarHeight } from '../../shared/variables'
 
-export const StyledContainer = styled.View`
+export const StyledContainer = styled.ScrollView`
     flex: 1;
     padding: 25px;
     padding-top: ${StatusBarHeight + 10}px;
     background-color: #fff;
 `;
 
-export const InnerContainer = styled.ScrollView`
+export const InnerContainer = styled.View`
     flex: 1;
     width: 100%;
 `;
