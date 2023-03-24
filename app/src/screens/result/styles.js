@@ -10,7 +10,7 @@ export const StyledContainer = styled.View`
     background-color: #fff;
 `;
 
-export const InnerContainer = styled.View`
+export const InnerContainer = styled.ScrollView`
     flex: 1;
     width: 100%;
 `;
@@ -64,16 +64,16 @@ export const ButtonText = styled.Text`
 `;
 
 export const SelectImage = styled.View`
-    flex: 1;
+    display: flex;
     align-items: center;
-    justify-content: center;
-    /* border: 1px solid ${Colors.primary};
-    border-radius: 5px; */
+    justify-content: center; 
+    border: 1px solid ${Colors.primary};
+    border-radius: 5px;
 `;
 
 export const PrescriptionImage = styled.Image`
     width: 100%;
-    height: 100%;
+    height: 600px;
 `;
 
 export const StyledButton = styled.TouchableOpacity`
@@ -82,10 +82,12 @@ export const StyledButton = styled.TouchableOpacity`
     justify-content: center;
     align-items: center;
     border-radius: 5px;
-    margin-vertical: 5px;
+    margin-top: 20px;
     height: 60px;
 `;
 
 export const TableContainer = styled.View`
     width: 100%;
+    background-color: white;
+    margin-top: 20px;
 `;
