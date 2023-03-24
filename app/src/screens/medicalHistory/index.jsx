@@ -1,6 +1,7 @@
+import { useState } from 'react'
 import { StatusBar } from 'expo-status-bar'
 import { Formik } from 'formik'
-import { View } from 'react-native'
+import CheckBox from 'expo-checkbox'
 
 import {
     StyledContainer,
@@ -15,10 +16,65 @@ import {
     ButtonText,
     Line,
     StyledInputLabel,
-    StyledTextInput
+    StyledCheckbox,
+    ConditionsContainer,
 } from './styles'
+import { Colors } from '../../shared/variables'
 
 import SettingsImage from '../../images/icons/settings.svg'
+
+const conditionsArray = [
+    {
+        id: "1",
+        text: "Condition 1",
+        value: "",
+    },
+    {
+        id: "2",
+        text: "Condition 2",
+        value: "",
+    },
+    {
+        id: "3",
+        text: "Condition 2",
+        value: "",
+    },
+    {
+        id: "4",
+        text: "Condition 2",
+        value: "",
+    },
+    {
+        id: "5",
+        text: "Condition 2",
+        value: "",
+    },
+    {
+        id: "6",
+        text: "Condition 2",
+        value: "",
+    },
+    {
+        id: "7",
+        text: "Condition 2",
+        value: "",
+    },
+    {
+        id: "8",
+        text: "Condition 2",
+        value: "",
+    },
+    {
+        id: "9",
+        text: "Condition 2",
+        value: "",
+    },
+    {
+        id: "10",
+        text: "Condition 2",
+        value: "",
+    },
+]
 
 const MedicalHistoryScreen = ({ navigation }) => {
     return (
@@ -38,26 +94,58 @@ const MedicalHistoryScreen = ({ navigation }) => {
                 <StyledText>Please select your medical history</StyledText>
                 <Formik
                     initialValues={{
-                        username: '', email: '', password: ''
+                        conditions: [],
                     }}
-                    onSubmit={(values) => {
-                        console.log(values)
+                    onSubmit={(values, { resetForm }) => {
+                        console.log(values);
                     }}
                 >
                     {({
-                        handleChange, handleBlur, handleSubmit, values
+                        handleChange,
+                        handleSubmit,
+                        values,
+                        setFieldValue
                     }) => (
                         <StyledFormArea>
+                            <ConditionsContainer>
+                                {conditionsArray.map((condition, key) => {
+                                    return (
+                                        <CheckboxComponent
+                                            key={key}
+                                            value={condition.value}
+                                            onValueChange={nextValue => setFieldValue('financiallyResponsible', nextValue)}
+                                            label={condition.text}
+                                            name="conditions"
+                                        />
+                                    );
+                                })}
+                            </ConditionsContainer>
 
                             <Line />
-                            <StyledButton onPress={() => navigation.navigate('AllResults')}>
-                                <ButtonText>Continue</ButtonText>
+                            <StyledButton onPress={() => navigation.navigate('MedicalHistory')}>
+                                <ButtonText>Submit</ButtonText>
                             </StyledButton>
                         </StyledFormArea>
                     )}
                 </Formik>
             </InnerContainer>
         </StyledContainer>
+    )
+}
+
+const CheckboxComponent = ({ label }) => {
+    const [isChecked, setIsChecked] = useState(false)
+
+    return (
+        <StyledCheckbox>
+            <CheckBox
+                color={isChecked ? `${Colors.primary}` : undefined}
+                disabled={false}
+                value={isChecked}
+                onValueChange={(newValue) => setIsChecked(newValue)}
+            />
+            <StyledInputLabel>{label}</StyledInputLabel>
+        </StyledCheckbox>
     )
 }
 

@@ -3,7 +3,7 @@ import { View, Text, Image, TextInput, TouchableOpacity, FlatList, ScrollView } 
 
 import { Colors, StatusBarHeight } from '../../shared/variables'
 
-export const StyledContainer = styled.View`
+export const StyledContainer = styled.ScrollView`
     flex: 1;
     padding: 25px;
     padding-top: ${StatusBarHeight + 10}px;
@@ -89,19 +89,21 @@ export const Line = styled.View`
 
 export const StyledInputLabel = styled.Text`
     color: ${Colors.primary};
-    font-size: 13px;
-    text-align: left;
+    font-size: 15px;
+    margin-left: 5px;
 `;
 
-export const StyledTextInput = styled.TextInput`
-    background-color: ${Colors.tertiary};
-    padding: 15px;
-    padding-left: 55px;
-    padding-right: 55px;
-    border-radius: 5px;
-    font-size: 16px;
-    height: 60px;
-    margin-vertical: 3px;
-    margin-bottom: 10px;
-    color: ${Colors.primary};
+export const StyledCheckbox = styled.View`
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 175px;
+    height: 50px;
+`;
+
+export const ConditionsContainer = styled.View`
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
 `;
