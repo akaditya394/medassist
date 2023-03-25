@@ -123,7 +123,7 @@ const Layout = ({ children }) => {
                         {' '}
                         {'& '}
                         <a
-                            href="https://themillenniumfalcon.github.io"
+                            href="https://www.linkedin.com/in/vansh-agarwal-94069a202"
                             rel="noopener noreferrer"
                             role="link"
                             tabIndex="0"

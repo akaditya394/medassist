@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { View } from 'react-native'
 import { StatusBar } from 'expo-status-bar'
 import { Formik } from 'formik'
+import RadioButtonGroup, { RadioButtonItem } from "expo-radio-button"
 
 import { Octicons, Ionicons } from '@expo/vector-icons'
 
@@ -21,7 +22,8 @@ import {
     StyledButton,
     ButtonText,
     MsgBox,
-    Line
+    Line,
+    StyledText
 } from './styles'
 import { Colors } from '../../shared/variables'
 
@@ -29,6 +31,8 @@ import LogoImage from '../../images/logo/logo.svg'
 
 const SignUpScreen = ({ navigation }) => {
     const [hidePassword, setHidePassword] = useState(true)
+    const [current, setCurrent] = useState("user")
+
     return (
         <StyledContainer>
             <StatusBar style='dark' />
@@ -43,10 +47,11 @@ const SignUpScreen = ({ navigation }) => {
 
                 <Formik
                     initialValues={{
-                        username: '', email: '', password: ''
+                        username: '', email: '', password: '', role: ''
                     }}
                     onSubmit={(values) => {
                         console.log(values)
+                        console.log('role: ', current)
                     }}
                 >
                     {({
@@ -82,10 +87,35 @@ const SignUpScreen = ({ navigation }) => {
                             />
                             <StyledInputLabel>Select your role</StyledInputLabel>
                             <StyledRoleSelector>
-                                <RadioButton />
+                                <RadioButtonGroup
+                                    containerStyle={{
+                                        marginBottom: 10,
+                                        marginTop: 10,
+                                        display: 'flex',
+                                        flexDirection: 'row',
+                                        alignItems: 'center',
+                                        justifyContent: 'space-between'
+                                    }}
+                                    selected={current}
+                                    onSelected={(value) => setCurrent(value)}
+                                    radioBackground="#0F2E53"
+                                >
+                                    <RadioButtonItem
+                                        value="user"
+                                        label={
+                                            <StyledText>User</StyledText>
+                                        }
+                                    />
+                                    <RadioButtonItem
+                                        value="medical_professional"
+                                        label={
+                                            <StyledText>Medical Professional</StyledText>
+                                        }
+                                    />
+                                </RadioButtonGroup>
                             </StyledRoleSelector>
                             <MsgBox>...</MsgBox>
-                            <StyledButton onPress={() => navigation.navigate('MedicalHistory')}>
+                            <StyledButton onPress={handleSubmit}>
                                 <ButtonText>Sign up</ButtonText>
                             </StyledButton>
                             <Line />
@@ -112,31 +142,6 @@ const MyTextInput = ({ label, icon, isPassword, hidePassword, setHidePassword, .
             )}
         </View>
     )
-}
-
-const RadioButton = (props) => {
-    return (
-        <View style={[{
-            height: 24,
-            width: 24,
-            borderRadius: 12,
-            borderWidth: 2,
-            borderColor: '#000',
-            alignItems: 'center',
-            justifyContent: 'center',
-        }, props.style]}>
-            {
-                props.selected ?
-                    <View style={{
-                        height: 12,
-                        width: 12,
-                        borderRadius: 6,
-                        backgroundColor: '#000',
-                    }} />
-                    : null
-            }
-        </View>
-    );
 }
 
 export default SignUpScreen
