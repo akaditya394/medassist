@@ -1,8 +1,8 @@
 # MedAssist
 
-<img src="./web/images/logo/logo.svg" width="150" height="150">
+<img src="logo.svg" width="130" height="130" fill="red">
 
-<!-- ![MedAssist Logo](./web/images/logo/logo.svg) -->
+<!-- ![MedAssist Logo](logo.svg) -->
 
 MedAssist is a mobile and web application that aims to make the lives of patients and doctors easier and safer. It is designed to help patients avoid unwanted side effects caused by medications by predicting potential side effects of new drug compositions using machine learning. MedAssist also takes input from doctors and adds their approval or disapproval of the suggestions to its database. They can also add side effects that they think might show in patients with specific health conditions like heart disease, diabetes, etc.
 
