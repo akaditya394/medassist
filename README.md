@@ -47,10 +47,10 @@ To install the MedAssist app, follow these steps:
 ### For the Mobile Application (React Native with Expo)
 
 1. Clone the repository from GitHub
-2. Navigate to the `app` folder
-3. Install the dependencies using `npm install`
-4. Install Expo CLI using `npm install --global expo-cli`
-5. Navigate to the `MedAssist` folder and run `expo start`
+2. Install Expo CLI using `npm install --global expo-cli`
+3. Navigate to the `app` folder
+4. Install the dependencies using `npm install`
+5. Run `expo start` to start the application
 6. Install the Expo Go app on your mobile device
 7. Scan the QR code in the Expo DevTools web page or console to open the app on your device
 
