@@ -18,7 +18,7 @@ const devTeam = [
     { id: 1, text: 'Aditya Kumar', link: 'https://themillenniumfalcon.github.io' },
     { id: 2, text: 'Naman Agrawal', link: 'https://themillenniumfalcon.github.io' },
     { id: 3, text: 'Nishank Priydarshi', link: 'https://themillenniumfalcon.github.io' },
-    { id: 4, text: 'Vansh Agrawal', link: 'https://themillenniumfalcon.github.io' },
+    { id: 4, text: 'Vansh Agrawal', link: 'https://www.linkedin.com/in/vansh-agarwal-94069a202' },
 ]
 
 const SettingsScreen = () => {
@@ -30,9 +30,9 @@ const SettingsScreen = () => {
                     Settings
                 </PageTitle>
                 <ListTitle>Misc</ListTitle>
-                <StyledListItem onPress={() => { }}>
+                {/* <StyledListItem onPress={() => { }}>
                     <StyledListText>Change Theme (not working)</StyledListText>
-                </StyledListItem>
+                </StyledListItem> */}
                 <StyledListItem onPress={() => { }}>
                     <StyledListText>Logout</StyledListText>
                 </StyledListItem>
