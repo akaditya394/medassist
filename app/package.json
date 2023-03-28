@@ -27,6 +27,7 @@
     "react-native": "0.71.4",
     "react-native-dotenv": "^3.4.8",
     "react-native-dropdown-picker": "^5.4.6",
+    "react-native-form-component": "^2.6.8",
     "react-native-loading-spinner-overlay": "^3.0.1",
     "react-native-svg": "13.4.0",
     "react-native-svg-transformer": "^1.0.0",
