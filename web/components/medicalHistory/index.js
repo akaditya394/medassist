@@ -5,62 +5,60 @@ import { useRouter } from "next/router";
 const conditionsArray = [
     {
         id: "1",
-        text: "Condition 1",
-        value: "",
+        text: "Diabetes",
     },
     {
         id: "2",
-        text: "Condition 2",
-        value: "",
+        text: "High Blood pressure",
     },
     {
         id: "3",
-        text: "Condition 2",
-        value: "",
+        text: "Low Blood pressure",
     },
     {
         id: "4",
-        text: "Condition 2",
-        value: "",
+        text: "Respiratory Problems",
     },
     {
         id: "5",
-        text: "Condition 2",
-        value: "",
+        text: "COVID 19",
     },
     {
         id: "6",
-        text: "Condition 2",
-        value: "",
+        text: "Allergies",
     },
     {
         id: "7",
-        text: "Condition 2",
-        value: "",
+        text: "Migraine",
     },
     {
         id: "8",
-        text: "Condition 2",
-        value: "",
+        text: "Gastrointestinal distress",
     },
     {
         id: "9",
-        text: "Condition 2",
-        value: "",
+        text: "Skin Problems",
     },
     {
         id: "10",
-        text: "Condition 2",
-        value: "",
+        text: "Mental Health Problems",
     },
 ]
 
 const MedicalHistory = () => {
     const router = useRouter()
-    const [checked, setChecked] = useState(false)
+    // const [checked, setChecked] = useState(false)
+    // const handleChange = () => {
+    //     setChecked(!checked)
+    // }
+
+    const [totalSelectedCheckboxes, setTotalSelectedCheckboxes] = useState(0);
     const handleChange = () => {
-        setChecked(!checked)
+        setTotalSelectedCheckboxes(document.querySelectorAll('input[type=checkbox]:checked').length);
     }
+    // useEffect(() => {
+    //     console.log(totalSelectedCheckboxes);
+    // }, [totalSelectedCheckboxes]);
 
     const handleSubmit = () => { }
 
@@ -74,8 +72,7 @@ const MedicalHistory = () => {
                             <Checkbox
                                 key={index}
                                 label={condition.text}
-                                value={checked}
-                                onChange={handleChange}
+                                onChange={() => handleChange()}
                             />
                         </div>
                     )
@@ -88,11 +85,11 @@ const MedicalHistory = () => {
     )
 }
 
-const Checkbox = ({ label, value, onChange }) => {
+const Checkbox = ({ label, onChange }) => {
     return (
         <label>
             <div className={styles.checkboxContainer}>
-                <input type="checkbox" checked={value} onChange={onChange} />
+                <input type="checkbox" onChange={onChange} />
                 <div className={styles.label}>
                     {label}
                 </div>

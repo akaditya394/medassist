@@ -3,6 +3,13 @@ import NextLink from 'next/link'
 
 import styles from "./styles.module.scss"
 import VerifiedIcon from "../../images/icons/verified.svg"
+import UnverifiedIcon from "../../images/icons/hourglass.svg"
+
+const data = [
+    { id: 1, name: 'Item 1', verified: true },
+    { id: 2, name: 'Item 2', verified: false },
+    { id: 3, name: 'Item 3', verified: true },
+]
 
 const AllResultsPage = () => {
     const RESET_NOTICE = { type: "", message: "" }
@@ -12,57 +19,26 @@ const AllResultsPage = () => {
         <>
             <h1 className="pageHeading">All your results</h1>
             <div className={styles.gridContainer}>
-                {/* <NextLink href={`/post/${encodeURIComponent(post.id)}`}> */}
-                <NextLink href={`/results/1`}>
-                    <div className={styles.box}>
-                        <div className={styles.name}>
-                            Hello
-                        </div>
-                        <div className={styles.verified}>
-                            <img src={VerifiedIcon} alt="Verified Icon" />
-                        </div>
-                    </div>
-                </NextLink>
-                <NextLink href={`/results/1`}>
-                    <div className={styles.box}>
-                        <div className={styles.name}>
-                            Hello
-                        </div>
-                        <div className={styles.verified}>
-                            <img src={VerifiedIcon} alt="Verified Icon" />
-                        </div>
-                    </div>
-                </NextLink>
-                <NextLink href={`/results/1`}>
-                    <div className={styles.box}>
-                        <div className={styles.name}>
-                            Hello
-                        </div>
-                        <div className={styles.verified}>
-                            <img src={VerifiedIcon} alt="Verified Icon" />
-                        </div>
-                    </div>
-                </NextLink>
-                <NextLink href={`/results/1`}>
-                    <div className={styles.box}>
-                        <div className={styles.name}>
-                            Hello
-                        </div>
-                        <div className={styles.verified}>
-                            <img src={VerifiedIcon} alt="Verified Icon" />
-                        </div>
-                    </div>
-                </NextLink>
-                <NextLink href={`/results/1`}>
-                    <div className={styles.box}>
-                        <div className={styles.name}>
-                            Hello
-                        </div>
-                        <div className={styles.verified}>
-                            <img src={VerifiedIcon} alt="Verified Icon" />
-                        </div>
-                    </div>
-                </NextLink>
+                {data.map((data, key) => {
+                    return (
+                        <NextLink href={data.verified ? `/verifiedResult` : `unverfiedResult`} key={key}>
+                            <div className={styles.box}>
+                                <div className={styles.name}>
+                                    {data.name}
+                                </div>
+                                {data.verified ? (
+                                    <div className={styles.verified}>
+                                        <img src={VerifiedIcon} alt="Verified Icon" />
+                                    </div>
+                                ) : (
+                                    <div className={styles.verified}>
+                                        <img src={UnverifiedIcon} alt="Unverified Icon" />
+                                    </div>
+                                )}
+                            </div>
+                        </NextLink>
+                    );
+                })}
             </div>
         </>
     )

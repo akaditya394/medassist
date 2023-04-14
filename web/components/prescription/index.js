@@ -1,4 +1,6 @@
 import { useState } from "react"
+import { useRouter } from "next/router"
+
 import SideEffectsTable from "../sideEffectsTable"
 import styles from "./styles.module.scss"
 import Notice from "../notice"
@@ -24,6 +26,7 @@ const drugs = [
 ]
 
 const Prescription = () => {
+    const router = useRouter()
     const RESET_NOTICE = { type: "", message: "" };
     const [notice, setNotice] = useState(RESET_NOTICE);
     const [boolean, setBoolean] = useState("Yes")
@@ -99,7 +102,7 @@ const Prescription = () => {
                             {notice.message}
                         </Notice>
                     )}
-                    <button type="submit">Submit</button>
+                    <button type="submit" onClick={() => router.push("/prescriptions")}>Submit</button>
                 </form>
             </div>
         </>
