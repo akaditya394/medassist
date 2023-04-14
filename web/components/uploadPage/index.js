@@ -101,7 +101,7 @@ const LoginPage = () => {
                             {notice.message}
                         </Notice>
                     )}
-                    <button type="submit">Upload</button>
+                    <button type="submit" onClick={() => router.push("/prescriptions/1")}>Upload</button>
                 </form>
             </div>
             <div className="ContentPageIllustration">
