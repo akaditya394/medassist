@@ -64,7 +64,9 @@ const ElaborationForm = () => {
                         {notice.message}
                     </Notice>
                 )}
-                <button type={form.submitButton.type}>{form.submitButton.label}</button>
+                <button type={form.submitButton.type} onClick={() => router.push("/results")}>
+                    {form.submitButton.label}
+                </button>
             </form>
         </div>
     )

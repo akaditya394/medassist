@@ -1,0 +1,22 @@
+@import "../../shared/variables.scss";
+
+.prescription {
+    width: auto;
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 2rem;
+
+    img {
+        width: 20rem;
+        height: 28rem;
+    }
+}
+
+.table {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 2rem;
+}
