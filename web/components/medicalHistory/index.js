@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import styles from "./styles.module.scss"
+import { useRouter } from "next/router";
 
 const conditionsArray = [
     {
@@ -55,6 +56,7 @@ const conditionsArray = [
 ]
 
 const MedicalHistory = () => {
+    const router = useRouter()
     const [checked, setChecked] = useState(false)
     const handleChange = () => {
         setChecked(!checked)
@@ -79,7 +81,7 @@ const MedicalHistory = () => {
                     )
                 })}
             </div>
-            <button className={styles.button} onClick={handleSubmit}>
+            <button className={styles.button} onClick={() => router.push("/prescriptionUpload")}>
                 Continue
             </button>
         </>
