@@ -8,7 +8,9 @@ const VerifiedResult = () => {
         <>
             <Notice>
                 <h3>Prescription verified</h3>
-                <p>Your upload prescription has been verified by a trained medical professional.</p>
+                <p>Your upload prescription has been verified by{' '}
+                    <strong>Dr. Puneet Sharma</strong>
+                    , a trained medical professional.</p>
             </Notice>
             <h1 className="pageHeading">Your verified Prescription</h1>
             <div className={styles.prescription}>
