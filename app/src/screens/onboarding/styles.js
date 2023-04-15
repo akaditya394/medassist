@@ -66,10 +66,18 @@ export const StyledButton = styled.TouchableOpacity`
     border-radius: 5px;
     margin-vertical: 5px;
     height: 60px;
+
+    ${(props) => props.login == true && `
+        background-color: ${Colors.secondary};
+    `}
 `;
 
 export const ButtonText = styled.Text`
     color: white;
     font-weight: 700;
     font-size: 16px;
+
+    ${(props) => props.login == true && `
+        color: ${Colors.primary};
+    `}
 `;
