@@ -1,5 +1,5 @@
 import styles from "./styles.module.scss"
-import TestPrescription from "../../images/test/prescription.png"
+import TestPrescription from "../../images/test/prescription.jpg"
 import ElaborationForm from "../elaborationForm"
 import SideEffectsTable from "../sideEffectsTable"
 

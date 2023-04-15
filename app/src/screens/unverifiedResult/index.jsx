@@ -41,17 +41,17 @@ const UnverifiedResultScreen = ({ navigation }) => {
                 </UpperContainer>
                 <Notice>
                     <StyledText>
-                        This uploaded prescription is not yet verified
+                        Your upload prescription has not yet been verified.
                     </StyledText>
                 </Notice>
-                <ListTitle>Drugs' names in prescription</ListTitle>
+                {/* <ListTitle>Drugs' names in prescription</ListTitle>
                 {drugs.map((drug, key) => {
                     return (
                         <StyledListItem key={key}>
                             <StyledListText>{`\u2022 ${drug.name}`}</StyledListText>
                         </StyledListItem>
                     )
-                })}
+                })} */}
                 <Line />
                 <StyledText>
                     Additonal info will be available as soon as your

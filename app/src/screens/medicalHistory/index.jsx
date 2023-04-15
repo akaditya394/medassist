@@ -27,55 +27,45 @@ import SettingsImage from "../../images/icons/settings.svg";
 const conditionsArray = [
   {
     id: "1",
-    text: "Condition 1",
-    value: "",
+    text: "Diabetes",
   },
   {
     id: "2",
-    text: "Condition 3",
-    value: "",
+    text: "High Blood pressure",
   },
   {
     id: "3",
-    text: "Condition 4",
-    value: "",
+    text: "Low Blood pressure",
   },
   {
     id: "4",
-    text: "Condition 5",
-    value: "",
+    text: "Respiratory Problems",
   },
   {
     id: "5",
-    text: "Condition 6",
-    value: "",
+    text: "COVID 19",
   },
   {
     id: "6",
-    text: "Condition 7",
-    value: "",
+    text: "Allergies",
   },
   {
     id: "7",
-    text: "Condition 8",
-    value: "",
+    text: "Migraine",
   },
   {
     id: "8",
-    text: "Condition 9",
-    value: "",
+    text: "Gastrointestinal distress",
   },
   {
     id: "9",
-    text: "Condition 10",
-    value: "",
+    text: "Skin Problems",
   },
   {
     id: "10",
-    text: "Condition 11",
-    value: "",
+    text: "Mental Health Problems",
   },
-];
+]
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
@@ -165,7 +155,7 @@ const MedicalHistoryScreen = ({ navigation }) => {
           </ConditionsContainer>
 
           <Line />
-          <StyledButton onPress={handleSubmit} title="Submit">
+          <StyledButton onPress={() => navigation.navigate("Upload")} title="Submit">
             <ButtonText>Submit</ButtonText>
           </StyledButton>
         </StyledFormArea>

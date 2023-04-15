@@ -1,4 +1,5 @@
 import { StatusBar } from 'expo-status-bar'
+import { Text } from 'react-native'
 
 import {
     StyledContainer,
@@ -21,10 +22,11 @@ import {
 import SettingsImage from '../../images/icons/settings.svg'
 
 const drugs = [
-    { id: 1, name: 'Drug 1', correct: false, review: 'Review 1' },
-    { id: 2, name: 'Drug 2', correct: true },
-    { id: 3, name: 'Drug 3', correct: false, review: 'Review 2' },
-    { id: 4, name: 'Drug 4', correct: true },
+    { id: 1, name: 'Microcef CV 200 mg', correct: false, suggestion: '-' },
+    { id: 2, name: 'Ventryl D', correct: false, suggestion: 'Avoid cold beverages' },
+    { id: 3, name: 'Pantotav DSR', correct: false, suggestion: 'Drink warm water in morning' },
+    { id: 4, name: 'BENZ Pearls', correct: false, suggestion: '-' },
+    { id: 5, name: 'Montak LC', correct: false, suggestion: 'Avoid sour edibles' },
 ]
 
 const VerifiedResultScreen = ({ navigation }) => {
@@ -44,7 +46,9 @@ const VerifiedResultScreen = ({ navigation }) => {
                 </UpperContainer>
                 <Notice>
                     <StyledText>
-                        This uploaded prescription is verified by a trained medical professional
+                        Your upload prescription has been verified by{' '}
+                        <Text style={{ fontWeight: 'bold' }}>Dr. Puneet Sharma</Text>
+                        , a trained medical professional.
                     </StyledText>
                 </Notice>
                 <ListTitle>Drugs' names in prescription</ListTitle>
@@ -53,7 +57,7 @@ const VerifiedResultScreen = ({ navigation }) => {
                         <StyledListItem key={key}>
                             <StyledListText>{`\u2022 ${drug.name}`}</StyledListText>
                             {!drug.correct && (
-                                <StyledListReview>{drug.review}</StyledListReview>
+                                <StyledListReview>{drug.suggestion}</StyledListReview>
                             )}
                         </StyledListItem>
                     )

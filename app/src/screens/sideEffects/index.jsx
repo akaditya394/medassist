@@ -37,12 +37,20 @@ const sideEffectsData = [
 ]
 
 const items = [
-    { id: "1", text: "Hello" },
-    { id: "2", text: "Hello" },
-    { id: "3", text: "Hello" },
-    { id: "4", text: "Hello" },
-    { id: "5", text: "Hello" },
-    { id: "6", text: "Hello" },
+    { id: 1, text: 'Hairfall' },
+    { id: 2, text: 'Headache' },
+    { id: 3, text: 'Nausea' },
+    { id: 4, text: 'Sore throat' },
+    { id: 5, text: 'Breathlessness' },
+    { id: 6, text: 'Skin Rashes' },
+    { id: 7, text: 'Swelling' },
+    { id: 8, text: 'Upset Stomach' },
+    { id: 9, text: 'Dry mouth' },
+    { id: 10, text: 'Drowsiness' },
+    { id: 11, text: 'Vomiting' },
+    { id: 12, text: 'Diarrhea' },
+    { id: 13, text: 'Pimples' },
+    { id: 14, text: 'Fatigue' },
 ]
 
 const SideEffectsScreen = ({ navigation }) => {
@@ -85,8 +93,8 @@ const SideEffectsScreen = ({ navigation }) => {
                         handleChange, handleBlur, handleSubmit, values
                     }) => (
                         <StyledFormArea>
-                            <StyledLabel>Select your side-effects</StyledLabel>
-                            <DropDownContainer>
+                            <StyledLabel>Sort your side effects by removing non desired ones</StyledLabel>
+                            {/* <DropDownContainer>
                                 <DropDownPicker
                                     // style={styles.dropdown}
                                     open={sideEffectsOpen}
@@ -101,7 +109,7 @@ const SideEffectsScreen = ({ navigation }) => {
                                     // onChangeValue={onChange}
                                     zIndex={3000}
                                 />
-                            </DropDownContainer>
+                            </DropDownContainer> */}
                             <StyledSideEffects>
                                 <FlatList
                                     data={items}
@@ -114,12 +122,12 @@ const SideEffectsScreen = ({ navigation }) => {
                                         </StyledSideEffect>
                                     )}
                                     //Setting the number of column
-                                    numColumns={2}
+                                    // numColumns={1}
                                     keyExtractor={(item, index) => index}
                                 />
                             </StyledSideEffects>
                             <MsgBox>...</MsgBox>
-                            <StyledButton onPress={handleSubmit}>
+                            <StyledButton onPress={() => navigation.navigate("AllResults")}>
                                 <ButtonText>Submit</ButtonText>
                             </StyledButton>
                             <Line />

@@ -115,7 +115,7 @@ const SignUpScreen = ({ navigation }) => {
                                 </RadioButtonGroup>
                             </StyledRoleSelector>
                             <MsgBox>...</MsgBox>
-                            <StyledButton onPress={handleSubmit}>
+                            <StyledButton onPress={() => navigation.navigate("MedicalHistory")}>
                                 <ButtonText>Sign up</ButtonText>
                             </StyledButton>
                             <Line />

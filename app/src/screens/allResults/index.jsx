@@ -18,9 +18,9 @@ import VerifiedImage from '../../images/icons/verified.svg'
 import UploadImage from '../../images/icons/upload.svg'
 
 const data = [
-    { id: 1, name: 'Item 1', verified: true },
-    { id: 2, name: 'Item 2', verified: false },
-    { id: 3, name: 'Item 3', verified: true },
+    { id: 1, name: 'My Prescription', verified: true },
+    { id: 2, name: 'Prescription 1', verified: false },
+    { id: 3, name: 'Prescription 2', verified: true },
 ]
 
 const AllResultsScreen = ({ navigation }) => {

@@ -53,5 +53,49 @@ export const Icon = styled.TouchableOpacity`
     `}
 `;
 
+export const TableContainer = styled.View`
+    width: 100%;
+    background-color: white;
+`;
 
+export const StyledButton = styled.TouchableOpacity`
+    padding: 15px;
+    background-color: ${Colors.primary};
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    margin-vertical: 5px;
+    height: 60px;
+`;
 
+export const ButtonText = styled.Text`
+    color: white;
+    font-weight: 700;
+    font-size: 16px;
+`;
+
+export const Line = styled.View`
+    height: 1px;
+    width: 100%;
+    background-color: ${Colors.primary};
+    margin-vertical: 10px;
+`;
+
+export const SuggestionsContainer = styled.View`
+    /* border: 1px solid black; */
+    margin-top: 20px;
+`;
+
+export const SuggestionContainer = styled.View`
+    margin-bottom: 10px;
+`;
+
+export const StyledText = styled.Text`
+    color: ${Colors.primary};
+    font-size: 18px;
+    font-weight: 500;
+`;
+
+export const RadioContainer = styled.View`
+    width: 50%;
+`;
