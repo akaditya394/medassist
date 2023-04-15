@@ -14,9 +14,9 @@ import {
 import SettingsImage from '../../images/icons/settings.svg'
 
 const data = [
-    { id: 1, text: 'Item 1' },
-    { id: 2, text: 'Item 2' },
-    { id: 3, text: 'Item 3' },
+    { id: 1, text: 'Prescription 1' },
+    { id: 2, text: 'Prescription 2' },
+    { id: 3, text: 'Prescription 3' },
 ]
 
 const AllPrescriptionsScreen = ({ navigation }) => {

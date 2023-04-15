@@ -11,33 +11,33 @@ const SideEffectsTable = () => {
             </tr>
             <tr>
                 <td>1</td>
-                <td>Drug 1</td>
-                <td>Symptom 1</td>
-                <td>Alternative 1</td>
+                <td>Microcef CV 200 mg</td>
+                <td>Throat infections</td>
+                <td>Goodcif CV 200mg</td>
             </tr>
             <tr>
                 <td>2</td>
-                <td>Drug 2</td>
-                <td>Symptom 2</td>
-                <td>Alternative 2</td>
+                <td>Ventryl D</td>
+                <td>Sore throat</td>
+                <td>Chericof</td>
             </tr>
             <tr>
                 <td>3</td>
-                <td>Drug 3</td>
-                <td>Symptom 3</td>
-                <td>Alternative 3</td>
+                <td>Pantotav DSR</td>
+                <td>Acidity</td>
+                <td>Pantin D</td>
             </tr>
             <tr>
                 <td>4</td>
-                <td>Drug 4</td>
-                <td>Symptom 4</td>
-                <td>Alternative 4</td>
+                <td>BENZ Pearls</td>
+                <td>Dry cough</td>
+                <td>-</td>
             </tr>
             <tr>
                 <td>5</td>
-                <td>Drug 5</td>
-                <td>Symptom 5</td>
-                <td>Alternative 5</td>
+                <td>Montak LC</td>
+                <td>Runny nose, watery eyes, sneezing</td>
+                <td>Levocet M</td>
             </tr>
         </table>
     )

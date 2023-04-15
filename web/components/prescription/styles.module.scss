@@ -20,7 +20,11 @@
 }
 
 .inputWrapper {
+    margin: 1rem 0;
+
     label {
+        display: block;
+        margin: 0.5rem 0;
         color: $text;
         font-family: $regular;
         font-size: 0.875rem;
@@ -29,8 +33,15 @@
     }
 
     input {
-        width: 1.5rem;
-        height: 1rem;
+        width: calc(100% - 1rem);
+        max-width: 24rem;
+        height: 2.9375rem;
+        background: #fafafa;
+        border: 1px solid #e3e3e3;
+        border-radius: 0.5rem;
+        padding: 1rem;
+        font-size: 1rem;
+        font-family: $regular;
         color: $text;
     }
 

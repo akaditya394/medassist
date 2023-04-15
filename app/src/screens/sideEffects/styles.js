@@ -10,7 +10,7 @@ export const StyledContainer = styled.View`
     background-color: #fff;
 `;
 
-export const InnerContainer = styled.View`
+export const InnerContainer = styled.ScrollView`
     flex: 1;
     width: 100%;
 `;
@@ -138,7 +138,7 @@ export const StyledSideEffect = styled.View`
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    width: 165px;
+    width: 100%;
     height: 50px;
     padding-left: 5px;
     padding-right: 5px;

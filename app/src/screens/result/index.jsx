@@ -21,11 +21,13 @@ import { Table, Row, Rows } from 'react-native-table-component'
 import { Colors } from '../../shared/variables'
 
 const ResultScreen = ({ navigation }) => {
-    const tableHead = ['Drug name', 'Side Effects', 'Alternatives']
+    const tableHead = ['Drug name', 'Symptoms', 'Alternatives']
     const tableData = [
-        ['Drug 1', 'Side Effect 1', 'Alternative 1'],
-        ['Drug 2', 'Side Effect 2', 'Alternative 2'],
-        ['Drug 3', 'Side Effect 3', 'Alternative 3']
+        ['Microcef CV 200 mg', 'Throat infections', 'Goodcif CV 200mg'],
+        ['Ventryl D', 'Sore throat', 'Chericof'],
+        ['Pantotav DSR', 'Acidity', 'Pantin D'],
+        ['BENZ Pearls', 'Dry cough', '-'],
+        ['Montak LC', 'Runny nose, watery eyes, sneezing', 'Levocet M']
     ]
 
     return (
@@ -43,7 +45,7 @@ const ResultScreen = ({ navigation }) => {
                     </IconsContainer>
                 </UpperContainer>
                 <SelectImage>
-                    <PrescriptionImage resizeMode="cover" source={require('../../images/test/prescription.png')} />
+                    <PrescriptionImage resizeMode="cover" source={require('../../images/test/prescription.jpg')} />
                 </SelectImage>
                 <TableContainer>
                     <Table borderStyle={{ borderWidth: 1, borderColor: `${Colors.primary}` }}>

@@ -14,18 +14,45 @@ const Prescription = () => {
         {
             id: "1",
             type: "text",
-            label: "Drug 1",
+            label: "Microcef CV 200 mg",
             required: false,
-            name: "Drug 1",
+            name: "Microcef CV 200 mg",
             value: "",
             approved: "Yes",
         },
         {
             id: "2",
             type: "text",
-            label: "Drug 2",
+            label: "Ventryl D",
             required: true,
-            name: "Drug 2",
+            name: "Ventryl D",
+            value: "",
+            approved: "Yes",
+        },
+        {
+            id: "3",
+            type: "text",
+            label: "Pantotav DSR",
+            required: true,
+            name: "Drug Pantotav DSR",
+            value: "",
+            approved: "Yes",
+        },
+        {
+            id: "4",
+            type: "text",
+            label: "BENZ Pearls",
+            required: true,
+            name: "BENZ Pearls",
+            value: "",
+            approved: "Yes",
+        },
+        {
+            id: "5",
+            type: "text",
+            label: "Montak LC",
+            required: true,
+            name: "Montak LC",
             value: "",
             approved: "Yes",
         },
@@ -71,7 +98,7 @@ const Prescription = () => {
                 <form onSubmit={handleSubmit}>
                     {drugsData.map((drug) => (
                         <div key={drug.id} style={{ marginBottom: "10px" }}>
-                            <h4>{drug.name} Approval</h4>
+                            <text>Approval for{' '}<strong>{drug.name}</strong></text>
                             <div>
                                 <label>
                                     <input
@@ -98,11 +125,13 @@ const Prescription = () => {
                                 <div>
                                     <label>
                                         Please provide suggestions:{" "}
-                                        <Input
-                                            type="text"
-                                            value={drugApprovals[drug.id].suggestion}
-                                            onChange={(e) => handleSuggestionChange(e, drug.id)}
-                                        />
+                                        <div className={styles.inputWrapper}>
+                                            <input
+                                                type="text"
+                                                value={drugApprovals[drug.id].suggestion}
+                                                onChange={(e) => handleSuggestionChange(e, drug.id)}
+                                            />
+                                        </div>
                                     </label>
                                 </div>
                             )}

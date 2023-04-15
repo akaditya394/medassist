@@ -52,7 +52,7 @@ const OnboardingScreen = ({ navigation }) => {
           keyExtractor={(item) => item.id.toString()}
         />
         <BottomContainer>
-          <StyledButton onPress={() => navigation.navigate("MedicalHistory")}>
+          <StyledButton onPress={() => navigation.navigate("AllPrescriptions")}>
             <ButtonText>Get Started</ButtonText>
           </StyledButton>
         </BottomContainer>
