@@ -109,7 +109,7 @@ const LoginPage = () => {
               {notice.message}
             </Notice>
           )}
-          <button type={form.submitButton.type}>
+          <button type={form.submitButton.type} onClick={() => router.push("/results")}>
             {form.submitButton.label}
           </button>
           <button type={form.button.type} onClick={handlePasswordReset}>

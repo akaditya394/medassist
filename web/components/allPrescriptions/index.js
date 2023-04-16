@@ -4,8 +4,8 @@ import NextLink from 'next/link'
 import styles from "./styles.module.scss"
 
 const data = [
-    { id: 1, name: 'Item 1' },
-    { id: 2, name: 'Item 2' },
+    { id: 1, name: 'my prescription' },
+    { id: 2, name: 'test prescription' },
     { id: 3, name: 'Item 3' },
 ]
 

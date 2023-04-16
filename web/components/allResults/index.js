@@ -6,9 +6,10 @@ import VerifiedIcon from "../../images/icons/verified.svg"
 import UnverifiedIcon from "../../images/icons/hourglass.svg"
 
 const data = [
-    { id: 1, name: 'Item 1', verified: true },
-    { id: 2, name: 'Item 2', verified: false },
-    { id: 3, name: 'Item 3', verified: true },
+    { id: 1, name: 'my prescription', verified: true },
+    // { id: 2, name: 'test prescription', verified: false },
+    // { id: 3, name: 'Item 2', verified: false },
+    // { id: 4, name: 'Item 3', verified: true },
 ]
 
 const AllResultsPage = () => {

@@ -142,7 +142,7 @@ const SignupPage = () => {
               {notice.message}
             </Notice>
           )}
-          <button type={form.submitButton.type} onClick={() => router.push("/medicalHistory")}>
+          <button type={form.submitButton.type} onClick={() => router.push("/prescriptions")}>
             {form.submitButton.label}
           </button>
         </form>
