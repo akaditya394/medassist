@@ -4,8 +4,8 @@ import UploadPage from "../components/uploadPage"
 import PrescriptionsPage from "./prescriptions"
 
 const IndexPage = () => {
-  const isAuth = true
-  const isUserDoctor = true
+  const isAuth = false
+  const isUserDoctor = false
 
   let body = null
 

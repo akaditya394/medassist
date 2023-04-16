@@ -15,7 +15,7 @@ const Layout = ({ children }) => {
     const [isContextMenuOpen, setIsContextMenuOpen] = useState(false)
 
     const isLoginPage = router.pathname === "/login"
-    const isAuth = true
+    const isAuth = false
 
     const toggleContextMenu = () => {
         setIsContextMenuOpen(!isContextMenuOpen)
@@ -73,7 +73,7 @@ const Layout = ({ children }) => {
                                 {
                                     id: "logout",
                                     label: "Logout",
-                                    action: () => handleNavigation("/logout"),
+                                    action: () => handleNavigation("/"),
                                 },
                             ]}
                             closeAction={() => closeContextMenu()}
@@ -89,7 +89,7 @@ const Layout = ({ children }) => {
                     <div className={styles.name}>
                         Crafted by {' '}
                         <a
-                            href="https://themillenniumfalcon.github.io"
+                            href="https://github.com/akaditya394"
                             rel="noopener noreferrer"
                             role="link"
                             tabIndex="0"
@@ -100,7 +100,7 @@ const Layout = ({ children }) => {
                         </a>
                         {', '}
                         <a
-                            href="https://themillenniumfalcon.github.io"
+                            href="https://github.com/NamanAgarwal214"
                             rel="noopener noreferrer"
                             role="link"
                             tabIndex="0"

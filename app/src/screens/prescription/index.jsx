@@ -48,7 +48,7 @@ const drugsData = [
         type: "text",
         label: "Pantotav DSR",
         required: true,
-        name: "Drug Pantotav DSR",
+        name: "Pantotav DSR",
         value: "",
         approved: "Yes",
     },
