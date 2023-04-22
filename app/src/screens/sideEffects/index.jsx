@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { StatusBar } from 'expo-status-bar'
 import { Formik } from 'formik'
-import { FlatList, Text } from 'react-native'
+import { FlatList, View } from 'react-native'
 import DropDownPicker from "react-native-dropdown-picker"
 
 import {
@@ -23,20 +23,32 @@ import {
     StyledSideEffect,
     Close,
     SideEffectText,
-    DropDownContainer
+    DropDownContainer,
+    TextInputContainer
 } from './styles'
 
 import SettingsImage from '../../images/icons/settings.svg'
 import UploadImage from '../../images/icons/upload.svg'
 import CloseImage from '../../images/icons/close.svg'
 
-const sideEffectsData = [
-    { label: "Side Effect 1", value: "side_effect_1" },
-    { label: "Side Effect 2", value: "side_effect_2" },
-    { label: "Side Effect 3", value: "side_effect_3" },
+const sideEffectsDropDownData = [
+    { label: 'Hairfall', value: "hairfall" },
+    { label: 'Headache', value: "headache" },
+    { label: 'Nausea', value: "nausea" },
+    { label: 'Sore throat', value: "sore_throat" },
+    { label: 'Breathlessness', value: "breathlessness" },
+    { label: 'Skin Rashes', value: "skin_rashes" },
+    { label: 'Swelling', value: "swelling" },
+    { label: 'Upset Stomach', value: "upset_stomach" },
+    { label: 'Dry mouth', value: "dry_mouth" },
+    { label: 'Drowsiness', value: "drowsiness" },
+    { label: 'Vomiting', value: "vomiting" },
+    { label: 'Diarrhea', value: "diarrhea" },
+    { label: 'Pimples', value: "pimples" },
+    { label: 'Fatigue', value: "fatigue" },
 ]
 
-const items = [
+const data = [
     { id: 1, text: 'Hairfall' },
     { id: 2, text: 'Headache' },
     { id: 3, text: 'Nausea' },
@@ -56,8 +68,13 @@ const items = [
 const SideEffectsScreen = ({ navigation }) => {
     const [sideEffectsOpen, setSideEffectsOpen] = useState(false)
     const [sideEffectsValue, setSideEffectsValue] = useState(null)
-    const [sideEffects, setSideEffects] = useState(sideEffectsData)
+    const [sideEffects, setSideEffects] = useState(sideEffectsDropDownData)
     const [loading, setLoading] = useState(false)
+    const [sideEffectsData, setSideEffectsData] = useState(data)
+
+    const handleRemoveItem = (id) => {
+        setSideEffectsData(sideEffectsData.filter(item => item.id !== id))
+    }
 
     // const { handleSubmit, control } = useForm();
     // const onSubmit = (data) => {
@@ -93,8 +110,8 @@ const SideEffectsScreen = ({ navigation }) => {
                         handleChange, handleBlur, handleSubmit, values
                     }) => (
                         <StyledFormArea>
-                            <StyledLabel>Sort your side effects by removing non desired ones</StyledLabel>
-                            {/* <DropDownContainer>
+                            <StyledLabel>Select your side effects or type them out:</StyledLabel>
+                            <DropDownContainer>
                                 <DropDownPicker
                                     // style={styles.dropdown}
                                     open={sideEffectsOpen}
@@ -109,14 +126,21 @@ const SideEffectsScreen = ({ navigation }) => {
                                     // onChangeValue={onChange}
                                     zIndex={3000}
                                 />
-                            </DropDownContainer> */}
+                            </DropDownContainer>
+                            <MyTextInput
+                                label="Write your side effects if not available in dropdown:"
+                                onChangeText={handleChange('email')}
+                                onBlur={handleBlur('email')}
+                                value={values.email}
+                                keyboardType="email-address"
+                            />
                             <StyledSideEffects>
                                 <FlatList
-                                    data={items}
+                                    data={sideEffectsData}
                                     renderItem={({ item, id }) => (
                                         <StyledSideEffect key={id}>
                                             <SideEffectText>{item.text}</SideEffectText>
-                                            <Close onPress={() => navigation.navigate('Upload')}>
+                                            <Close onPress={() => handleRemoveItem(item.id)}>
                                                 <CloseImage width="20px" height="20px" fill="#0F2E53" />
                                             </Close>
                                         </StyledSideEffect>
@@ -136,6 +160,15 @@ const SideEffectsScreen = ({ navigation }) => {
                 </Formik>
             </InnerContainer>
         </StyledContainer>
+    )
+}
+
+const MyTextInput = ({ label, ...props }) => {
+    return (
+        <TextInputContainer>
+            <StyledInputLabel>{label}</StyledInputLabel>
+            <StyledTextInput {...props} />
+        </TextInputContainer>
     )
 }
 

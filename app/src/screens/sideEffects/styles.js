@@ -10,7 +10,7 @@ export const StyledContainer = styled.View`
     background-color: #fff;
 `;
 
-export const InnerContainer = styled.ScrollView`
+export const InnerContainer = styled.View`
     flex: 1;
     width: 100%;
 `;
@@ -63,30 +63,30 @@ export const StyledFormArea = styled.View`
     width: 100%;
 `;
 
+export const StyledInputLabel = styled.Text`
+    color: ${Colors.primary};
+    font-size: 15px;
+    text-align: left;
+`;
+
 export const StyledTextInput = styled.TextInput`
-    background-color: ${Colors.tertiary};
+    background-color: ${Colors.secondary};
     padding: 15px;
-    padding-left: 55px;
-    padding-right: 55px;
+    padding-left: 25px;
+    padding-right: 25px;
     border-radius: 5px;
     font-size: 16px;
     height: 60px;
-    margin-vertical: 3px;
+    margin-top: 3px;
     margin-bottom: 10px;
     color: ${Colors.primary};
 `;
 
 export const StyledLabel = styled.Text`
     color: ${Colors.primary};
-    font-size: 13px;
+    font-size: 15px;
     text-align: left;
-`;
-
-export const LeftIcon = styled.View`
-    left: 15px;
-    top: 38px;
-    position: absolute;
-    z-index: 1;
+    margin-bottom: 10px;
 `;
 
 export const RightIcon = styled.TouchableOpacity`
@@ -102,7 +102,8 @@ export const StyledButton = styled.TouchableOpacity`
     justify-content: center;
     align-items: center;
     border-radius: 5px;
-    margin-vertical: 5px;
+    margin-top: 5px;
+    margin-bottom: 5px;
     height: 60px;
 `;
 
@@ -121,7 +122,7 @@ export const Line = styled.View`
     height: 1px;
     width: 100%;
     background-color: ${Colors.primary};
-    margin-vertical: 10px;
+    margin-top: 10px;
 `;
 
 export const StyledSideEffects = styled.View`
@@ -152,4 +153,9 @@ export const SideEffectText = styled.Text`
 
 export const DropDownContainer = styled.View`
     z-index: 1;
+`;
+
+export const TextInputContainer = styled.View`
+    width: 100%;
+    margin-top: 10px;
 `;
