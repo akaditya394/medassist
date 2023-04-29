@@ -33,7 +33,7 @@ const AllResultsScreen = ({ navigation }) => {
                         Home
                     </PageTitle>
                     <IconsContainer>
-                        <Icon onPress={() => navigation.navigate('Upload')}>
+                        <Icon onPress={() => navigation.navigate('SideEffects')}>
                             <UploadImage width="26px" height="26px" fill="#fff" />
                         </Icon>
                         <Icon settings={true} onPress={() => navigation.navigate('Settings')}>
