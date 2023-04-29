@@ -59,7 +59,7 @@ export const Close = styled.TouchableOpacity`
     background-color: ${Colors.tertiary};
 `;
 
-export const StyledFormArea = styled.View`
+export const StyledFormArea = styled.ScrollView`
     width: 100%;
 `;
 
@@ -71,6 +71,7 @@ export const StyledInputLabel = styled.Text`
 
 export const StyledTextInput = styled.TextInput`
     background-color: ${Colors.secondary};
+    border: ${Colors.primary};
     padding: 15px;
     padding-left: 25px;
     padding-right: 25px;

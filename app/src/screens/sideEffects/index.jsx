@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { StatusBar } from 'expo-status-bar'
 import { Formik } from 'formik'
-import { FlatList, View } from 'react-native'
 import DropDownPicker from "react-native-dropdown-picker"
 
 import {
@@ -135,20 +134,16 @@ const SideEffectsScreen = ({ navigation }) => {
                                 keyboardType="email-address"
                             />
                             <StyledSideEffects>
-                                <FlatList
-                                    data={sideEffectsData}
-                                    renderItem={({ item, id }) => (
+                                {sideEffectsData.map((item, id) => {
+                                    return (
                                         <StyledSideEffect key={id}>
                                             <SideEffectText>{item.text}</SideEffectText>
                                             <Close onPress={() => handleRemoveItem(item.id)}>
                                                 <CloseImage width="20px" height="20px" fill="#0F2E53" />
                                             </Close>
                                         </StyledSideEffect>
-                                    )}
-                                    //Setting the number of column
-                                    // numColumns={1}
-                                    keyExtractor={(item, index) => index}
-                                />
+                                    )
+                                })}
                             </StyledSideEffects>
                             <MsgBox>...</MsgBox>
                             <StyledButton onPress={() => navigation.navigate("AllResults")}>
