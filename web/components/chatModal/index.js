@@ -4,7 +4,14 @@ import Modal from 'react-modal'
 import styles from "./styles.module.scss"
 import CloseIcon from "../../images/icons/closeModal.svg"
 
-const ChatModalOpener = () => {
+const data = [
+    { id: 1, text: 'How many glass of water I need to drink in a day' },
+    { id: 2, text: 'How r u' },
+    { id: 3, text: 'What to do when stung by a bee' },
+]
+
+const ChatModal = () => {
+    const [value, setValue] = useState("")
     const [modalIsOpen, setIsOpen] = useState(false)
 
     const openModal = () => {
@@ -14,6 +21,8 @@ const ChatModalOpener = () => {
     const closeModal = () => {
         setIsOpen(false)
     }
+
+    console.log('value is', value)
     return (
         <>
             <div className={styles.chatBubbleWrapper} onClick={openModal}>
@@ -50,14 +59,28 @@ const ChatModalOpener = () => {
                 <div className={styles.inputWrapper}>
                     <label>Ask me anything about your health?</label>
                     <input
-                        // id={id}
-                        // type={type}
-                        // value={value}
-                        onChange={() => { }}
+                        value={value}
+                        onChange={(e) => setValue(e.target.value)}
                     />
                 </div>
-                <div className={styles.label}>
-                    Not sure where to start?
+
+                <div className={styles.suggestionsWrapper}>
+                    <div className={styles.label}>
+                        Not sure where to start?
+                    </div>
+                    <div className={styles.suggestionsContainer}>
+                        {data.map((item, index) => {
+                            return (
+                                <div className={styles.suggestion} index={index} onClick={() => setValue(item.text)}>
+                                    {item.text}?
+                                </div>
+                            )
+                        })}
+                    </div>
+                </div>
+                <div className={styles.line} />
+                <div className={styles.openai}>
+                    Powered by OpenAI
                 </div>
                 <span
                     role="button"
@@ -72,4 +95,4 @@ const ChatModalOpener = () => {
     )
 }
 
-export default ChatModalOpener
+export default ChatModal

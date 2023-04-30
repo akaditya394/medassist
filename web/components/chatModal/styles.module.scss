@@ -86,3 +86,41 @@
     font-size: 0.875rem;
     letter-spacing: +0.5px;
 }
+
+.suggestionsWrapper {
+    margin-top: 1.5rem;
+
+    .suggestionsContainer {
+        display: inline-flex;
+        flex-wrap: wrap;
+
+        .suggestion {
+            margin: 6px;
+            cursor: pointer;
+            display: inline-block;
+            width: auto;
+            padding: .7rem 1rem;
+            border-radius: .25rem;
+            text-align: center;
+            background: $secondary;
+            color: $primary;
+            font-family: $accent;
+            font-weight: 600;
+        }
+    }
+
+}
+
+.line {
+    height: 1px;
+    width: 100%;
+    background-color: $primary;
+    margin-top: 10px;
+}
+
+.openai {
+    margin-top: 0.8rem;
+    color: $text;
+    font-family: $regular;
+    font-size: 0.875rem;
+}
