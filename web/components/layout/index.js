@@ -4,7 +4,7 @@ import Head from "next/head"
 
 import Button from "../button"
 import ContextMenu from "../contextMenu"
-import ChatModalOpener from '../chatModalOpener'
+import ChatModal from '../chatModal'
 import styles from "./styles.module.scss"
 import GithubIcon from "../../images/icons/github.svg"
 import UserIcon from "../../images/icons/user.svg"
@@ -84,7 +84,7 @@ const Layout = ({ children }) => {
                 </nav>
             </header>
             <main className={styles.content}>{children}</main>
-            <ChatModalOpener />
+            <ChatModal />
             <footer className={styles.footerBar}>
                 <hr className={styles.hr} />
                 <div className={styles.footerInfo}>
