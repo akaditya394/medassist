@@ -17,6 +17,7 @@
     "nodemon": "^2.0.21",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-modal": "^3.16.1",
     "sass": "^1.58.3",
     "typeface-nunito-sans": "^1.1.13",
     "typeface-roboto": "^1.1.13",

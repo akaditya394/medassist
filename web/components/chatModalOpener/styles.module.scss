@@ -1,0 +1,88 @@
+@import "../../shared/variables.scss";
+
+.chatBubbleWrapper {
+    cursor: pointer;
+    position: fixed;
+    bottom: 80px;
+    right: 230px;
+    display: inline-block;
+    width: auto;
+    padding: .7rem 1rem;
+    border-radius: .25rem;
+    text-align: center;
+    background: $secondary;
+    color: $primary;
+    font-family: $accent;
+    font-weight: 700;
+    transition: ease 0.5s;
+}
+
+.chatBubbleWrapper:hover {
+    transform: translate(0, -5px);
+}
+
+.modal {
+    top: 50%;
+    left: 50%;
+    right: auto;
+    bottom: auto;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+    background-color: red;
+}
+
+.dismiss {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    width: 2.5rem;
+    height: 2.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+
+    img {
+        width: 100%;
+        max-width: 1rem;
+        height: 100%;
+        max-height: 1rem;
+    }
+}
+
+.inputWrapper {
+    margin: 1rem 0;
+
+    label {
+        display: block;
+        margin: 0.5rem 0;
+        color: $text;
+        font-family: $regular;
+        font-size: 0.875rem;
+        letter-spacing: +0.5px;
+    }
+
+    input {
+        width: 100%;
+        height: 2.5rem;
+        background: #fafafa;
+        border: 1px solid #e3e3e3;
+        border-radius: 0.5rem;
+        padding: 1rem;
+        font-size: 1rem;
+        font-family: $regular;
+        color: $text;
+    }
+
+    input:focus {
+        background: $tertiary;
+    }
+}
+
+.label {
+    margin: 0.5rem 0;
+    color: $text;
+    font-family: $regular;
+    font-size: 0.875rem;
+    letter-spacing: +0.5px;
+}
