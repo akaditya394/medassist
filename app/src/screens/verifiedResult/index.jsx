@@ -63,7 +63,7 @@ const VerifiedResultScreen = ({ navigation }) => {
                     )
                 })}
                 <Line />
-                <StyledButton>
+                <StyledButton onPress={() => navigation.navigate('UpdatedPrescription')}>
                     <ButtonText>Generate an updated prescription</ButtonText>
                 </StyledButton>
             </InnerContainer>
