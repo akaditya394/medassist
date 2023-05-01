@@ -3,14 +3,14 @@ import { View, Text, Image, TextInput, TouchableOpacity, FlatList, ScrollView } 
 
 import { Colors, StatusBarHeight } from '../../shared/variables'
 
-export const StyledContainer = styled.ScrollView`
+export const StyledContainer = styled.View`
     flex: 1;
     padding: 25px;
     padding-top: ${StatusBarHeight + 10}px;
     background-color: #fff;
 `;
 
-export const InnerContainer = styled.View`
+export const InnerContainer = styled.ScrollView`
     flex: 1;
     width: 100%;
 `;
@@ -53,42 +53,11 @@ export const Icon = styled.TouchableOpacity`
     `}
 `;
 
-export const Notice = styled.View`
-    background-color: ${Colors.tertiary};
-    margin-bottom: 15px;
-    padding: 15px;
-    border-radius: 5px;
-`;
-
-export const StyledText = styled.Text`
-    color: ${Colors.primary};
-    font-size: 16px;
-    font-weight: 500;
-`;
-
-export const ListTitle = styled.Text`
+export const PresriptionTitle = styled.Text`
     font-size: 22px;
     color: ${Colors.primary};
     font-weight: 500;
-    padding-left: 15px;
     margin-bottom: 10px;
-`;
-
-export const StyledListItem = styled.View`
-    margin-bottom: 15px;
-    padding-left: 15px;
-`;
-
-export const StyledListText = styled.Text`
-    color: ${Colors.primary};
-    font-size: 17px;
-    font-weight: 500;
-`;
-
-export const StyledListReview = styled.Text`
-    color: ${Colors.text};
-    font-size: 14px;
-    margin-left: 15px;
 `;
 
 export const StyledButton = styled.TouchableOpacity`
@@ -113,4 +82,17 @@ export const Line = styled.View`
     background-color: ${Colors.primary};
     margin-top: 10px;
     margin-bottom: 10px;
+`;
+
+export const SelectImage = styled.View`
+    display: flex;
+    align-items: center;
+    justify-content: center; 
+    border: 1px solid ${Colors.primary};
+    border-radius: 5px;
+`;
+
+export const PrescriptionImage = styled.Image`
+    width: 100%;
+    height: 550px;
 `;

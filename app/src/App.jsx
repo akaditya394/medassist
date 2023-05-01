@@ -17,6 +17,7 @@ import PrescriptionScreen from "./screens/prescription";
 import VerifiedResultScreen from "./screens/verifiedResult";
 import UnverifiedResultScreen from "./screens/unverifiedResult";
 import MedicalHistoryScreen from "./screens/medicalHistory";
+import UpdatedPrescriptionScreen from './screens/updatedPrescription';
 
 const Stack = createNativeStackNavigator();
 
@@ -75,6 +76,11 @@ export default function App() {
           <Stack.Screen
             name="MedicalHistory"
             component={MedicalHistoryScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="UpdatedPrescription"
+            component={UpdatedPrescriptionScreen}
             options={{ headerShown: false }}
           />
         </Stack.Navigator>
