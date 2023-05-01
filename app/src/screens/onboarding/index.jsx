@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { StatusBar } from "expo-status-bar";
+import { StatusBar } from "expo-status-bar"
 import Spinner from 'react-native-loading-spinner-overlay'
 
 import {
@@ -13,26 +13,36 @@ import {
   SubTitle,
   StyledList,
   StyledListItem,
-} from "./styles";
+  BlobContainer
+} from "./styles"
+
+import Blob1Image from '../../images/svg/blob_1.svg'
+import Blob2Image from '../../images/svg/blob_2.svg'
 
 const data = [
   { id: 1, text: "Upload prescriptions to see side-effects and alternatives to drugs" },
   { id: 2, text: "View personalized health chart accorign to your medical history" },
   { id: 3, text: "One to one consultation with trained medical professionals" },
-];
+]
 
 const OnboardingScreen = ({ navigation }) => {
   const [loading, setLoading] = useState(false)
 
   const startLoading = () => {
-    setLoading(true);
+    setLoading(true)
     setTimeout(() => {
-      setLoading(false);
-    }, 3000);
-  };
+      setLoading(false)
+    }, 3000)
+  }
 
   return (
     <StyledContainer>
+      <BlobContainer>
+        <Blob1Image width="400px" height="400px" fill="#F5F6FB" />
+      </BlobContainer>
+      <BlobContainer blob2={true}>
+        <Blob2Image width="400px" height="400px" fill="#F5F6FB" />
+      </BlobContainer>
       <StatusBar style="dark" />
       <InnerContainer>
         <Spinner
@@ -61,7 +71,7 @@ const OnboardingScreen = ({ navigation }) => {
         </BottomContainer>
       </InnerContainer>
     </StyledContainer>
-  );
-};
+  )
+}
 
-export default OnboardingScreen;
+export default OnboardingScreen

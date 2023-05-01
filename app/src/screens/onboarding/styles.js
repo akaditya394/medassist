@@ -9,6 +9,20 @@ export const StyledContainer = styled.View`
     padding: 25px;
     padding-top: ${StatusBarHeight + 10}px;
     background-color: #fff;
+    position: relative;
+`;
+
+export const BlobContainer = styled.View`
+    position: absolute;
+    z-index: -999;
+    top: 50px;
+    right: -100px;
+
+    ${(props) => props.blob2 == true && `
+        top: 500px;
+        bottom: 50px;
+        left: -100px;
+    `}
 `;
 
 export const InnerContainer = styled.View`
@@ -64,7 +78,8 @@ export const StyledButton = styled.TouchableOpacity`
     justify-content: center;
     align-items: center;
     border-radius: 5px;
-    margin-vertical: 5px;
+    margin-top: 5px;
+    margin-bottom: 5px;
     height: 60px;
 
     ${(props) => props.login == true && `
