@@ -77,13 +77,12 @@ const SideEffectsScreen = ({ navigation }) => {
             return sideEffect
         })
         setSideEffectsData(temp)
-        let selected = sideEffectsData.filter((sideEffect) => sideEffect.isChecked)
-        console.log(selected)
+        let selected = temp.filter((sideEffect) => sideEffect.isChecked)
         setFinalSideEffectsArray(selected)
     }
 
     const handleSubmit = () => {
-        console.log('Final array is', finalSideEffectsArray)
+        console.log(finalSideEffectsArray)
     }
 
     return (
