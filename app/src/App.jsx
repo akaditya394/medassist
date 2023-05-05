@@ -22,7 +22,7 @@ import UpdatedPrescriptionScreen from './screens/updatedPrescription';
 const Stack = createNativeStackNavigator();
 
 export default function App() {
-  const [authSession, setAuthSession] = useState()
+  const [authSession, setAuthSession] = useState('jbgv')
 
   return (
     <NavigationContainer>

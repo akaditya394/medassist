@@ -59,6 +59,11 @@ export const Close = styled.TouchableOpacity`
     background-color: ${Colors.tertiary};
 `;
 
+export const CheckboxContainer = styled.View`
+    width: 20px;
+    height: 20px;
+`;
+
 export const StyledFormArea = styled.ScrollView`
     width: 100%;
 `;
