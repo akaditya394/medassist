@@ -36,7 +36,7 @@ const AllResultsScreen = ({ navigation }) => {
                         <Icon onPress={() => navigation.navigate('SideEffects')}>
                             <UploadImage width="26px" height="26px" fill="#fff" />
                         </Icon>
-                        <Icon settings={true} onPress={() => navigation.navigate('Settings')}>
+                        <Icon settings={true} onPress={() => navigation.navigate('MedicalHistory')}>
                             <SettingsImage width="30px" height="30px" fill="#0F2E53" />
                         </Icon>
                     </IconsContainer>
