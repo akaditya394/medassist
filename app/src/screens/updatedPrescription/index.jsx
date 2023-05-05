@@ -37,7 +37,7 @@ const UpdatedPrescriptionScreen = ({ navigation }) => {
                     <PrescriptionImage resizeMode="cover" source={require('../../images/test/prescription.jpg')} />
                 </SelectImage>
                 <Line />
-                <StyledButton>
+                <StyledButton onPress={() => navigation.navigate('Upload')}>
                     <ButtonText>Download</ButtonText>
                 </StyledButton>
             </InnerContainer>
