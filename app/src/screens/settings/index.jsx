@@ -21,6 +21,8 @@ const devTeam = [
     { id: 4, text: 'Vansh Agrawal', link: 'https://www.linkedin.com/in/vansh-agarwal-94069a202' },
 ]
 
+const handleLogout = () => { }
+
 const SettingsScreen = () => {
     return (
         <StyledContainer>
@@ -33,7 +35,7 @@ const SettingsScreen = () => {
                 {/* <StyledListItem onPress={() => { }}>
                     <StyledListText>Change Theme (not working)</StyledListText>
                 </StyledListItem> */}
-                <StyledListItem onPress={() => { }}>
+                <StyledListItem onPress={handleLogout}>
                     <StyledListText>Logout</StyledListText>
                 </StyledListItem>
                 <ListTitle>Dev Team</ListTitle>

@@ -3,14 +3,14 @@ import { View, Text, Image, TextInput, TouchableOpacity, FlatList, ScrollView } 
 
 import { Colors, StatusBarHeight } from '../../shared/variables'
 
-export const StyledContainer = styled.ScrollView`
+export const StyledContainer = styled.View`
     flex: 1;
     padding: 25px;
     padding-top: ${StatusBarHeight + 10}px;
     background-color: #fff;
 `;
 
-export const InnerContainer = styled.ScrollView`
+export const InnerContainer = styled.View`
     flex: 1;
     width: 100%;
 `;
@@ -59,7 +59,7 @@ export const StyledText = styled.Text`
     font-weight: 500;
 `;
 
-export const StyledFormArea = styled.View`
+export const StyledFormArea = styled.ScrollView`
     width: 100%;
     margin-top: 15px;
 `;
@@ -70,7 +70,7 @@ export const StyledButton = styled.TouchableOpacity`
     justify-content: center;
     align-items: center;
     border-radius: 5px;
-    margin-vertical: 5px;
+    margin-top: 5px;
     height: 60px;
 `;
 
@@ -84,21 +84,7 @@ export const Line = styled.View`
     height: 1px;
     width: 100%;
     background-color: ${Colors.primary};
-    margin-vertical: 10px;
-`;
-
-export const StyledInputLabel = styled.Text`
-    color: ${Colors.primary};
-    font-size: 15px;
-    margin-left: 5px;
-`;
-
-export const StyledCheckbox = styled.View`
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    width: 175px;
-    height: 50px;
+    margin-top: 10px;
 `;
 
 export const ConditionsContainer = styled.View`
@@ -106,4 +92,33 @@ export const ConditionsContainer = styled.View`
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+`;
+
+export const StyledCondition = styled.TouchableOpacity`
+    border: ${Colors.primary};
+    border-radius: 2px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: 50px;
+    padding-left: 5px;
+    padding-right: 5px;
+    margin-bottom: 15px;
+`;
+
+export const ConditionText = styled.Text`
+    color: ${Colors.text};
+    font-size: 15px;
+`;
+
+export const CheckboxContainer = styled.View`
+    width: 20px;
+    height: 20px;
+`;
+
+export const MsgBox = styled.Text`
+    text-align: center;
+    font-size: 13px;
 `;

@@ -25,91 +25,79 @@ export default function App() {
   const [authSession, setAuthSession] = useState('jbgv')
 
   return (
-    <NavigationContainer>
+    <NavigationContainer independent>
       {authSession ? (
-        <Stack.Navigator initialRouteName="AllResults">
+        <Stack.Navigator initialRouteName="AllResults" screenOptions={{
+          headerShown: false
+        }}>
           <Stack.Screen
             name="AllPrescriptions"
             component={AllPrescriptionsScreen}
-            options={{ headerShown: false }}
           />
           <Stack.Screen
             name="AllResults"
             component={AllResultsScreen}
-            options={{ headerShown: false }}
           />
           <Stack.Screen
             name="Settings"
             component={SettingsScreen}
-            options={{ headerShown: false }}
           />
           <Stack.Screen
             name="Upload"
             component={UploadScreen}
-            options={{ headerShown: false }}
           />
           <Stack.Screen
             name="Result"
             component={ResultScreen}
-            options={{ headerShown: false }}
           />
           <Stack.Screen
             name="SideEffects"
             component={SideEffectsScreen}
-            options={{ headerShown: false }}
           />
           <Stack.Screen
             name="Prescription"
             component={PrescriptionScreen}
-            options={{ headerShown: false }}
           />
           <Stack.Screen
             name="VerifiedResult"
             component={VerifiedResultScreen}
-            options={{ headerShown: false }}
           />
           <Stack.Screen
             name="UnverifiedResult"
             component={UnverifiedResultScreen}
-            options={{ headerShown: false }}
           />
           <Stack.Screen
             name="MedicalHistory"
             component={MedicalHistoryScreen}
-            options={{ headerShown: false }}
           />
           <Stack.Screen
             name="UpdatedPrescription"
             component={UpdatedPrescriptionScreen}
-            options={{ headerShown: false }}
           />
         </Stack.Navigator>
       ) : (
-        <Stack.Navigator initialRouteName="Onboarding">
+        <Stack.Navigator initialRouteName="Onboarding" screenOptions={{
+          headerShown: false
+        }}>
           <Stack.Screen
             name="Onboarding"
             component={OnboardingScreen}
-            options={{ headerShown: false }}
           />
           <Stack.Screen
             name="Login"
             component={LoginScreen}
-            options={{ headerShown: false }}
           />
           <Stack.Screen
             name="SignUp"
             component={SignUpScreen}
-            options={{ headerShown: false }}
           />
           <Stack.Screen
             name="ForgotPassword"
             component={ForgotPasswordScreen}
-            options={{ headerShown: false }}
           />
           <Stack.Screen
             name="ResetPassword"
             component={ResetPasswordScreen}
-            options={{ headerShown: false }}
           />
         </Stack.Navigator>
       )}

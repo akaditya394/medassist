@@ -1,8 +1,6 @@
 import { useState } from "react";
 import { StatusBar } from "expo-status-bar";
-import { Formik } from "formik";
-import CheckBox from "expo-checkbox";
-// import { FormItem } from "react-native-form-component";
+import Checkbox from 'expo-checkbox'
 
 import {
   StyledContainer,
@@ -16,75 +14,48 @@ import {
   StyledButton,
   ButtonText,
   Line,
-  StyledInputLabel,
-  StyledCheckbox,
+  StyledCondition,
   ConditionsContainer,
+  ConditionText,
+  CheckboxContainer,
+  MsgBox
 } from "./styles";
 import { Colors } from "../../shared/variables";
 
 import SettingsImage from "../../images/icons/settings.svg";
 
 const conditionsArray = [
-  {
-    id: "1",
-    text: "Diabetes",
-  },
-  {
-    id: "2",
-    text: "High Blood pressure",
-  },
-  {
-    id: "3",
-    text: "Low Blood pressure",
-  },
-  {
-    id: "4",
-    text: "Respiratory Problems",
-  },
-  {
-    id: "5",
-    text: "COVID 19",
-  },
-  {
-    id: "6",
-    text: "Allergies",
-  },
-  {
-    id: "7",
-    text: "Migraine",
-  },
-  {
-    id: "8",
-    text: "Gastrointestinal distress",
-  },
-  {
-    id: "9",
-    text: "Skin Problems",
-  },
-  {
-    id: "10",
-    text: "Mental Health Problems",
-  },
+  { id: "1", text: "Diabetes", value: "diabetes", isChecked: false },
+  { id: "2", text: "High Blood pressure", value: "high_bp", isChecked: false },
+  { id: "3", text: "Low Blood pressure", value: "low_bp", isChecked: false },
+  { id: "4", text: "Respiratory Problems", value: "respiratory_problems", isChecked: false },
+  { id: "5", text: "COVID 19", value: "covid", isChecked: false },
+  { id: "6", text: "Allergies", value: "allergies", isChecked: false },
+  { id: "7", text: "Migraine", value: "migraine", isChecked: false },
+  { id: "8", text: "Gastrointestinal distress", value: "gastrointestinal_distress", isChecked: false },
+  { id: "9", text: "Skin Problems", value: "skin_problems", isChecked: false },
+  { id: "10", text: "Mental Health Problems", value: "mental_health_problems", isChecked: false }
 ]
 
-const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
-
 const MedicalHistoryScreen = ({ navigation }) => {
-  const [conditions, setConditions] = useState([]);
+  const [conditions, setConditions] = useState(conditionsArray)
+  const [finalConditions, setFinalConditions] = useState([])
 
-  const handleCheckBox = (condition, isChecked) => {
-    if (isChecked) {
-      // add the condition to the array
-      setConditions([...conditions, condition]);
-    } else {
-      // remove the condition from the array
-      setConditions(conditions.filter((c) => c !== condition));
-    }
-  };
+  const handleChange = (id) => {
+    let temp = conditions.map((condition) => {
+      if (id === condition.id) {
+        return { ...condition, isChecked: !condition.isChecked }
+      }
+      return condition
+    })
+    setConditions(temp)
+    let selected = temp.filter((condition) => condition.isChecked)
+    setFinalConditions(selected)
+  }
 
   const handleSubmit = () => {
-    console.log("Conditions:", conditions);
-  };
+    console.log(finalConditions)
+  }
 
   return (
     <StyledContainer>
@@ -102,82 +73,30 @@ const MedicalHistoryScreen = ({ navigation }) => {
           </IconsContainer>
         </UpperContainer>
         <StyledText>Please select your medical history</StyledText>
-        {/* <Formik
-          initialValues={{
-            conditions: [],
-          }}
-          onSubmit={async (values, { resetForm }) => {
-            await sleep(500);
-            console.log(values);
-          }}
-        >
-          {({ handleChange, handleSubmit, values, setFieldValue }) => (
-            <StyledFormArea>
-              <ConditionsContainer>
-                {conditionsArray.map((condition, key) => {
-                  return (
-                    <CheckboxComponent
-                      key={key}
-                      value={condition.value}
-                      onValueChange={(nextValue) =>
-                        setFieldValue(conditions, nextValue)
-                      }
-                      label={condition.text}
-                      name="conditions"
-                    />
-                  );
-                })}
-              </ConditionsContainer>
-
-              <Line />
-              <StyledButton onPress={handleSubmit} title="Submit">
-                <ButtonText>Submit</ButtonText>
-              </StyledButton>
-            </StyledFormArea>
-          )}
-        </Formik> */}
-        {/* <Form></Form> */}
         <StyledFormArea>
           <ConditionsContainer>
-            {conditionsArray.map((condition, key) => {
+            {conditions.map((condition, key) => {
               return (
-                <CheckboxComponent
-                  key={key}
-                  value={conditions.includes(condition.text)}
-                  onValueChange={(isChecked) =>
-                    handleCheckBox(condition.text, isChecked)
-                  }
-                  label={condition.text}
-                  name="conditions"
-                />
+                <StyledCondition key={key} onPress={() => handleChange(condition.id)}>
+                  <ConditionText>{condition.text}</ConditionText>
+                  <CheckboxContainer>
+                    <Checkbox
+                      value={condition.isChecked}
+                      color={condition.isChecked ? `${Colors.primary}` : undefined}
+                    />
+                  </CheckboxContainer>
+                </StyledCondition>
               );
             })}
           </ConditionsContainer>
-
-          <Line />
-          <StyledButton onPress={() => navigation.navigate("Upload")} title="Submit">
-            <ButtonText>Submit</ButtonText>
-          </StyledButton>
         </StyledFormArea>
+        <MsgBox>...</MsgBox>
+        <StyledButton onPress={handleSubmit}>
+          <ButtonText>Submit</ButtonText>
+        </StyledButton>
+        <Line />
       </InnerContainer>
     </StyledContainer>
-  );
-};
-
-const CheckboxComponent = ({ label, onValueChange }) => {
-  const [isChecked, setIsChecked] = useState(false);
-
-  return (
-    <StyledCheckbox>
-      <CheckBox
-        color={isChecked ? `${Colors.primary}` : undefined}
-        disabled={false}
-        value={isChecked}
-        onValueChange={onValueChange}
-        onPress={() => setIsChecked(!isChecked)}
-      />
-      <StyledInputLabel>{label}</StyledInputLabel>
-    </StyledCheckbox>
   );
 };
 
