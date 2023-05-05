@@ -2,7 +2,7 @@ import { useState } from 'react'
 import Modal from 'react-modal'
 
 import styles from "./styles.module.scss"
-import CloseIcon from "../../images/icons/closeModal.svg"
+import CloseIcon from "../../images/icons/closeAlt.svg"
 
 const data = [
     { id: 1, text: 'How many glass of water I need to drink in a day' },
