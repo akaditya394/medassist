@@ -33,10 +33,10 @@ const AllResultsScreen = ({ navigation }) => {
                         Home
                     </PageTitle>
                     <IconsContainer>
-                        <Icon onPress={() => navigation.navigate('SideEffects')}>
+                        <Icon onPress={() => navigation.navigate('Upload')}>
                             <UploadImage width="26px" height="26px" fill="#fff" />
                         </Icon>
-                        <Icon settings={true} onPress={() => navigation.navigate('MedicalHistory')}>
+                        <Icon settings={true} onPress={() => navigation.navigate('Settings')}>
                             <SettingsImage width="30px" height="30px" fill="#0F2E53" />
                         </Icon>
                     </IconsContainer>

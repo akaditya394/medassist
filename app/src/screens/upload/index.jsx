@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { StatusBar } from 'expo-status-bar'
 import * as ImagePicker from 'expo-image-picker'
+import { ToastAndroid, Platform, AlertIOS } from 'react-native'
 
 import {
     StyledContainer,
@@ -13,7 +14,10 @@ import {
     StyledImage,
     SelectImage,
     StyledText,
-    BottomContainer
+    BottomContainer,
+    TextInputContainer,
+    StyledInputLabel,
+    StyledTextInput
 } from './styles'
 
 import DefaultImage from '../../images/icons/default_image.svg'
@@ -22,6 +26,7 @@ import SettingsImage from '../../images/icons/settings.svg'
 const UploadScreen = ({ navigation }) => {
     const [hasGalleryPermission, setHasGalleryPermission] = useState(null)
     const [image, setImage] = useState(null)
+    const [imageName, setImageName] = useState('')
 
     useEffect(() => {
         (async () => {
@@ -64,8 +69,24 @@ const UploadScreen = ({ navigation }) => {
         )
     }
 
+    const showToast = () => {
+        if (Platform.OS === 'android') {
+            ToastAndroid.show(
+                "You need to fill the name of your prescription",
+                ToastAndroid.LONG,
+                ToastAndroid.TOP
+            )
+        } else {
+            AlertIOS.alert("You need to fill the name of your prescription")
+        }
+    }
+
     const handleSubmit = async () => {
-        // a http post request to upload image
+        if (imageName === '') {
+            showToast()
+        } else {
+            console.log('name of image is: ', imageName)
+        }
     }
 
     return (
@@ -80,6 +101,14 @@ const UploadScreen = ({ navigation }) => {
                         <SettingsImage width="30px" height="30px" fill="#0F2E53" />
                     </Settings>
                 </UpperContainer>
+                <TextInputContainer>
+                    <StyledInputLabel>Write the name of your prescription:</StyledInputLabel>
+                    <StyledTextInput
+                        onChangeText={(imageName) => setImageName(imageName)}
+                        value={imageName}
+                        keyboardType="email-address"
+                    />
+                </TextInputContainer>
                 {!image ? (
                     <SelectImage>
                         <DefaultImage width={200} height={200} fill="#0F2E53" opacity="0.5" />
@@ -94,7 +123,7 @@ const UploadScreen = ({ navigation }) => {
                     <StyledButton onPress={() => pickImage()}>
                         <ButtonText>Pick an image from camera roll</ButtonText>
                     </StyledButton>
-                    <StyledButton upload={true} onPress={() => navigation.navigate('Result')}>
+                    <StyledButton upload={true} onPress={handleSubmit}>
                         <ButtonText upload={true}>Upload</ButtonText>
                     </StyledButton>
                 </BottomContainer>
