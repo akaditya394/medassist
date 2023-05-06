@@ -11,6 +11,11 @@ import {
     StyledListItem,
     StyledListText,
     Verified,
+    Line,
+    BottomContainer,
+    StyledButton,
+    ButtonText,
+    StyledText
 } from './styles'
 
 import SettingsImage from '../../images/icons/settings.svg'
@@ -21,6 +26,8 @@ const data = [
     { id: 1, name: 'My Prescription', verified: true },
     { id: 2, name: 'Prescription 1', verified: false },
     { id: 3, name: 'Prescription 2', verified: true },
+    { id: 4, name: 'Prescription 2', verified: true },
+    { id: 5, name: 'Prescription 2', verified: true },
 ]
 
 const AllResultsScreen = ({ navigation }) => {
@@ -33,9 +40,11 @@ const AllResultsScreen = ({ navigation }) => {
                         Home
                     </PageTitle>
                     <IconsContainer>
-                        <Icon onPress={() => navigation.navigate('Upload')}>
-                            <UploadImage width="26px" height="26px" fill="#fff" />
-                        </Icon>
+                        {data.length < 5 && (
+                            <Icon onPress={() => navigation.navigate('Upload')}>
+                                <UploadImage width="26px" height="26px" fill="#fff" />
+                            </Icon>
+                        )}
                         <Icon settings={true} onPress={() => navigation.navigate('Settings')}>
                             <SettingsImage width="30px" height="30px" fill="#0F2E53" />
                         </Icon>
@@ -61,6 +70,13 @@ const AllResultsScreen = ({ navigation }) => {
                     )}
                     keyExtractor={(item) => item.id.toString()}
                 />
+                <Line />
+                <BottomContainer>
+                    <StyledText>To continue using medassist, upgrade your plan</StyledText>
+                    <StyledButton onPress={() => navigation.navigate("UpgradePlan")}>
+                        <ButtonText>Upgrade Plan</ButtonText>
+                    </StyledButton>
+                </BottomContainer>
             </InnerContainer>
         </StyledContainer>
     )

@@ -1,9 +1,9 @@
 import styled from 'styled-components'
-import { View, Text, Image, TextInput, TouchableOpacity, FlatList } from 'react-native'
+import { View, Text, Image, TextInput, TouchableOpacity, FlatList, ScrollView } from 'react-native'
 
 import { Colors, StatusBarHeight } from '../../shared/variables'
 
-export const StyledContainer = styled.View`
+export const StyledContainer = styled.ScrollView`
     flex: 1;
     padding: 25px;
     padding-top: ${StatusBarHeight + 10}px;
@@ -53,61 +53,27 @@ export const Icon = styled.TouchableOpacity`
     `}
 `;
 
-export const StyledList = styled.FlatList`
-    flex: 1;
-`;
-
-export const StyledListItem = styled.TouchableOpacity`
-    background-color: ${Colors.tertiary};
-    flex-direction: row;
-    justify-content: space-between;
-    margin-bottom: 15px;
-    padding: 15px;
-    border-radius: 5px;
-`;
-
-export const StyledListText = styled.Text`
-    color: ${Colors.text};
-    font-size: 18px;
-`;
-
-export const Verified = styled.View`
-    width: auto;
-    height: auto;
-`;
-
-export const Line = styled.View`
-    height: 1px;
+export const HistoryContainer = styled.ScrollView`
     width: 100%;
-    background-color: ${Colors.primary};
-    margin-top: 10px;
+`;
+
+
+export const StyledCondition = styled.View`
+    width: 100%;
+    height: 25px;
+    padding-left: 5px;
     margin-bottom: 10px;
 `;
 
-export const BottomContainer = styled.View`
-    width: 100%;
-`;
-
-export const StyledButton = styled.TouchableOpacity`
-    padding: 15px;
-    background-color: ${Colors.primary};
-    justify-content: center;
-    align-items: center;
-    border-radius: 5px;
-    margin-top: 5px;
-    margin-bottom: 5px;
-    height: 60px;
-`;
-
-export const ButtonText = styled.Text`
-    color: white;
-    font-weight: 700;
-    font-size: 16px;
+export const ConditionText = styled.Text`
+    color: ${Colors.text};
+    font-size: 15px; 
+    font-weight: bold;
 `;
 
 export const StyledText = styled.Text`
     color: ${Colors.primary};
-    font-size: 15px;
+    font-size: 18px;
     font-weight: 500;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
 `;

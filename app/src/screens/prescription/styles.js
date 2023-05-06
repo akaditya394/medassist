@@ -56,6 +56,7 @@ export const Icon = styled.TouchableOpacity`
 export const TableContainer = styled.View`
     width: 100%;
     background-color: white;
+    margin-top: 20px;
 `;
 
 export const StyledButton = styled.TouchableOpacity`
@@ -65,13 +66,22 @@ export const StyledButton = styled.TouchableOpacity`
     align-items: center;
     border-radius: 5px;
     margin-top: 5px;
+    margin-bottom: 5px;
     height: 60px;
+
+    ${(props) => props.submit == true && `
+        background-color: ${Colors.secondary};
+    `}
 `;
 
 export const ButtonText = styled.Text`
     color: white;
     font-weight: 700;
     font-size: 16px;
+
+    ${(props) => props.submit == true && `
+        color: ${Colors.primary};
+    `}
 `;
 
 export const Line = styled.View`
@@ -82,8 +92,12 @@ export const Line = styled.View`
     margin-bottom: 10px;
 `;
 
-export const SuggestionsContainer = styled.ScrollView`
+export const SuggestionsContainer = styled.View`
     margin-top: 20px;
+`;
+
+export const ScrollableContainer = styled.ScrollView`
+    width: 100%;
 `;
 
 export const SuggestionContainer = styled.View`
@@ -128,4 +142,26 @@ export const StyledLabel = styled.Text`
 
 export const RadioContainer = styled.View`
     width: 100%;
+`;
+
+export const BottomContainer = styled.View`
+    width: 100%;
+`;
+
+export const DrugName = styled.Text`
+    font-size: 15px; 
+    font-weight: bold;
+`;
+
+export const SelectImage = styled.View`
+    display: flex;
+    align-items: center;
+    justify-content: center; 
+    border: 1px solid ${Colors.primary};
+    border-radius: 5px;
+`;
+
+export const PrescriptionImage = styled.Image`
+    width: 100%;
+    height: 500px;
 `;
