@@ -72,7 +72,7 @@ const UploadScreen = ({ navigation }) => {
             ToastAndroid.show(
                 "You need to fill the name of your prescription and upload it",
                 ToastAndroid.LONG,
-                ToastAndroid.TOP
+                ToastAndroid.BOTTOM
             )
         } else {
             AlertIOS.alert("You need to fill the name of your prescription and upload it")

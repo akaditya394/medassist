@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
-import { View } from 'react-native'
+import { View, ToastAndroid, Platform, AlertIOS } from 'react-native'
 import { StatusBar } from 'expo-status-bar'
-import { Formik } from 'formik'
 
 import { Octicons, Ionicons } from '@expo/vector-icons'
 
@@ -28,6 +27,28 @@ import LogoImage from '../../images/logo/logo.svg'
 
 const ResetPasswordScreen = () => {
     const [hidePassword, setHidePassword] = useState(true)
+    const [password, setPassword] = useState('')
+
+    const showToast = () => {
+        if (Platform.OS === 'android') {
+            ToastAndroid.show(
+                "You need to fill all the required fields",
+                ToastAndroid.SHORT,
+                ToastAndroid.BOTTOM
+            )
+        } else {
+            AlertIOS.alert("You need to fill all the required fields")
+        }
+    }
+
+    const handleSubmit = () => {
+        if (password === '') {
+            showToast()
+        } else {
+            // console.log('password is: ', password)
+        }
+    }
+
     return (
         <StyledContainer>
             <StatusBar style='dark' />
@@ -39,39 +60,23 @@ const ResetPasswordScreen = () => {
                     </PageTitle>
                 </Logo>
                 <SubTitle>Reset Password</SubTitle>
-
-                <Formik
-                    initialValues={{
-                        email: ''
-                    }}
-                    onSubmit={(values) => {
-                        console.log(values)
-                    }}
-                >
-                    {({
-                        handleChange, handleBlur, handleSubmit, values
-                    }) => (
-                        <StyledFormArea>
-                            <MyTextInput
-                                label="New Password"
-                                icon="lock"
-                                placeholderTextColor={Colors.primary}
-                                onChangeText={handleChange('password')}
-                                onBlur={handleBlur('password')}
-                                value={values.password}
-                                secureTextEntry={hidePassword}
-                                isPassword={true}
-                                hidePassword={hidePassword}
-                                setHidePassword={setHidePassword}
-                            />
-                            <MsgBox>...</MsgBox>
-                            <StyledButton onPress={handleSubmit}>
-                                <ButtonText>Set New Password</ButtonText>
-                            </StyledButton>
-                            <Line />
-                        </StyledFormArea>
-                    )}
-                </Formik>
+                <StyledFormArea>
+                    <MyTextInput
+                        label="Password"
+                        icon="lock"
+                        onChangeText={(password) => setPassword(password)}
+                        value={password}
+                        secureTextEntry={hidePassword}
+                        isPassword={true}
+                        hidePassword={hidePassword}
+                        setHidePassword={setHidePassword}
+                    />
+                    <MsgBox>...</MsgBox>
+                    <StyledButton onPress={handleSubmit}>
+                        <ButtonText>Set New Password</ButtonText>
+                    </StyledButton>
+                    <Line />
+                </StyledFormArea>
             </InnerContainer>
         </StyledContainer>
     )

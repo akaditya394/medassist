@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
-import { View } from 'react-native'
+import { View, ToastAndroid, Platform, AlertIOS } from 'react-native'
 import { StatusBar } from 'expo-status-bar'
-import { Formik } from 'formik'
 
 import { Octicons, Ionicons } from '@expo/vector-icons'
 
@@ -27,7 +26,28 @@ import { Colors } from '../../shared/variables'
 import LogoImage from '../../images/logo/logo.svg'
 
 const ForgotPasswordScreen = () => {
-    const [hidePassword, setHidePassword] = useState(true)
+    const [email, setEmail] = useState('')
+
+    const showToast = () => {
+        if (Platform.OS === 'android') {
+            ToastAndroid.show(
+                "You need to fill all the required fields",
+                ToastAndroid.SHORT,
+                ToastAndroid.BOTTOM
+            )
+        } else {
+            AlertIOS.alert("You need to fill all the required fields")
+        }
+    }
+
+    const handleSubmit = () => {
+        if (email === '') {
+            showToast()
+        } else {
+            // console.log('email is: ', email)
+        }
+    }
+
     return (
         <StyledContainer>
             <StatusBar style='dark' />
@@ -39,35 +59,20 @@ const ForgotPasswordScreen = () => {
                     </PageTitle>
                 </Logo>
                 <SubTitle>Forgot Password</SubTitle>
-
-                <Formik
-                    initialValues={{
-                        email: ''
-                    }}
-                    onSubmit={(values) => {
-                        console.log(values)
-                    }}
-                >
-                    {({
-                        handleChange, handleBlur, handleSubmit, values
-                    }) => (
-                        <StyledFormArea>
-                            <MyTextInput
-                                label="Email Address"
-                                icon="mail"
-                                onChangeText={handleChange('email')}
-                                onBlur={handleBlur('email')}
-                                value={values.email}
-                                keyboardType="email-address"
-                            />
-                            <MsgBox>...</MsgBox>
-                            <StyledButton onPress={handleSubmit}>
-                                <ButtonText>Request Password Reset</ButtonText>
-                            </StyledButton>
-                            <Line />
-                        </StyledFormArea>
-                    )}
-                </Formik>
+                <StyledFormArea>
+                    <MyTextInput
+                        label="Email Address"
+                        icon="mail"
+                        onChangeText={(email) => setEmail(email)}
+                        value={email}
+                        keyboardType="email-address"
+                    />
+                    <MsgBox>...</MsgBox>
+                    <StyledButton onPress={handleSubmit}>
+                        <ButtonText>Request Password Reset</ButtonText>
+                    </StyledButton>
+                    <Line />
+                </StyledFormArea>
             </InnerContainer>
         </StyledContainer>
     )

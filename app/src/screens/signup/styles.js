@@ -55,9 +55,14 @@ export const StyledTextInput = styled.TextInput`
     border-radius: 5px;
     font-size: 16px;
     height: 60px;
-    margin-vertical: 3px;
+    margin-top: 3px;
     margin-bottom: 10px;
     color: ${Colors.primary};
+
+    ${(props) => props.isUser == true && `
+        padding-left: 30px;
+        padding-right: 30px;
+    `}
 `;
 
 export const StyledInputLabel = styled.Text`
@@ -90,7 +95,8 @@ export const StyledButton = styled.TouchableOpacity`
     justify-content: center;
     align-items: center;
     border-radius: 5px;
-    margin-vertical: 5px;
+    margin-top: 5px;
+    margin-bottom: 5px;
     height: 60px;
 `;
 
@@ -109,7 +115,7 @@ export const Line = styled.View`
     height: 1px;
     width: 100%;
     background-color: ${Colors.primary};
-    margin-vertical: 10px;
+    margin-top: 10px;
 `;
 
 export const StyledText = styled.Text`
