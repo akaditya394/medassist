@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Text } from 'react-native'
 import { StatusBar } from 'expo-status-bar'
 import { Table, Row, Rows } from 'react-native-table-component'
-import RadioButtonGroup, { RadioButtonItem } from "expo-radio-button"
+import RadioForm, { RadioButton, RadioButtonInput, RadioButtonLabel } from 'react-native-simple-radio-button'
 
 import {
     StyledContainer,
@@ -18,6 +18,10 @@ import {
     SuggestionsContainer,
     SuggestionContainer,
     StyledText,
+    InputContainer,
+    TextInputContainer,
+    StyledTextInput,
+    StyledLabel,
     RadioContainer
 } from './styles'
 import { Colors } from '../../shared/variables'
@@ -73,38 +77,23 @@ const drugsData = [
 ];
 
 const PrescriptionScreen = ({ navigation }) => {
-    const [current, setCurrent] = useState("user")
-    const [drugApprovals, setDrugApprovals] = useState(
-        drugsData.reduce((acc, drug) => {
-            acc[drug.id] = { approval: "yes", suggestion: "" };
-            return acc;
-        }, {})
-    );
-
-    const handleApprovalChange = (e, drugId) => {
-        const { value } = e.target;
-        setDrugApprovals((prevApprovals) => ({
-            ...prevApprovals,
-            [drugId]: { ...prevApprovals[drugId], approval: value },
-        }));
-    };
-
-    const handleSuggestionChange = (e, drugId) => {
-        const { value } = e.target;
-        setDrugApprovals((prevApprovals) => ({
-            ...prevApprovals,
-            [drugId]: { ...prevApprovals[drugId], suggestion: value },
-        }));
-    };
-
-    const tableHead = ['Drug name', 'Symptoms', 'Alternatives']
+    const [sideEffects, setSideEffects] = useState('')
+    const [value, setValue] = useState(0)
+    const tableHead = ['Drug name', 'Symptoms']
     const tableData = [
-        ['Microcef CV 200 mg', 'Throat infections', 'Goodcif CV 200mg'],
-        ['Ventryl D', 'Sore throat', 'Chericof'],
-        ['Pantotav DSR', 'Acidity', 'Pantin D'],
-        ['BENZ Pearls', 'Dry cough', '-'],
-        ['Montak LC', 'Runny nose, watery eyes, sneezing', 'Levocet M']
+        ['Microcef CV 200 mg', 'Throat infections'],
+        ['Ventryl D', 'Sore throat'],
+        ['Pantotav DSR', 'Acidity'],
+        ['BENZ Pearls', 'Dry cough'],
+        ['Montak LC', 'Runny nose, watery eyes, sneezing']
     ]
+
+    const items = [
+        { label: 'Yes', value: 0 },
+        { label: 'No', value: 1 }
+    ]
+
+    const handleSubmit = () => { }
 
     return (
         <StyledContainer>
@@ -129,48 +118,57 @@ const PrescriptionScreen = ({ navigation }) => {
                     </Table>
                 </TableContainer>
                 <SuggestionsContainer>
+                    <StyledText>Select your side effects or type them out:</StyledText>
                     {drugsData.map((drug) => (
                         <SuggestionContainer key={drug.id}>
-                            <StyledText>Approval for{' '}
-                                <Text style={{ fontSize: 22, fontWeight: 'bold' }}>{drug.name}</Text>:
-                            </StyledText>
-                            <RadioContainer>
-                                <RadioButtonGroup
-                                    containerStyle={{
-                                        display: 'flex',
-                                        flexDirection: 'row',
-                                        alignItems: 'center',
-                                        justifyContent: 'space-between',
-                                    }}
-                                    selected={current}
-                                    onSelected={(value) => setCurrent(value)}
-                                    radioBackground="#0F2E53"
-                                >
-                                    <RadioButtonItem
-                                        name={`drug${drug.id}Approval`}
-                                        value="yes"
-                                        checked={drugApprovals[drug.id].approval === "yes"}
-                                        onChange={(e) => handleApprovalChange(e, drug.id)}
-                                        label={
-                                            <StyledText>yes</StyledText>
-                                        }
-                                    />
-                                    <RadioButtonItem
-                                        name={`drug${drug.id}Approval`}
-                                        value="no"
-                                        checked={drugApprovals[drug.id].approval === "no"}
-                                        onChange={(e) => handleApprovalChange(e, drug.id)}
-                                        label={
-                                            <StyledText>No</StyledText>
-                                        }
-                                    />
-                                </RadioButtonGroup>
-                            </RadioContainer>
+                            <StyledLabel>Approval for{' '}
+                                <Text style={{ fontSize: 15, fontWeight: 'bold' }}>"{drug.name}"</Text>:
+                            </StyledLabel>
+                            <InputContainer>
+                                <RadioContainer>
+                                    <RadioForm formHorizontal>
+                                        {items.map((obj, index) => (
+                                            <RadioButton key={index}>
+                                                <RadioButtonInput
+                                                    obj={obj}
+                                                    index={index}
+                                                    isSelected={index === value}
+                                                    onPress={(value) => setValue(value)}
+                                                    borderWidth={2}
+                                                    buttonInnerColor='#0F2E53'
+                                                    buttonOuterColor={index === value ? '#0F2E53' : '#0F2E53'}
+                                                    buttonSize={10}
+                                                    buttonWrapStyle={{ marginRight: 5 }}
+                                                />
+                                                <RadioButtonLabel
+                                                    obj={obj}
+                                                    index={index}
+                                                    labelStyle={{
+                                                        color: index === value ? '#0F2E53' : '#0F2E53',
+                                                        fontSize: 19,
+                                                        fontWeight: 'bold',
+                                                        marginRight: 20
+                                                    }}
+                                                />
+                                            </RadioButton>
+                                        ))}
+                                    </RadioForm>
+                                </RadioContainer>
+                                {value === 1 && (
+                                    <TextInputContainer>
+                                        <StyledTextInput
+                                            onChangeText={(sideEffects) => setSideEffects(sideEffects)}
+                                            value={sideEffects}
+                                            keyboardType="email-address"
+                                        />
+                                    </TextInputContainer>
+                                )}
+                            </InputContainer>
                         </SuggestionContainer>
                     ))}
                 </SuggestionsContainer>
                 <Line />
-                <StyledButton onPress={() => navigation.navigate("AllPrescriptions")}>
+                <StyledButton onPress={handleSubmit}>
                     <ButtonText>Submit</ButtonText>
                 </StyledButton>
             </InnerContainer>
