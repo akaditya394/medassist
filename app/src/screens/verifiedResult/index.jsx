@@ -1,5 +1,6 @@
 import { StatusBar } from 'expo-status-bar'
 import { Text } from 'react-native'
+import { Table, Row, Rows } from 'react-native-table-component'
 
 import {
     StyledContainer,
@@ -10,26 +11,26 @@ import {
     Icon,
     Notice,
     StyledText,
-    StyledListItem,
-    StyledListText,
     ListTitle,
-    StyledListReview,
     StyledButton,
     ButtonText,
-    Line
+    Line,
+    TableContainer
 } from './styles'
 
 import SettingsImage from '../../images/icons/settings.svg'
-
-const drugs = [
-    { id: 1, name: 'Microcef CV 200 mg', correct: false, suggestion: '-' },
-    { id: 2, name: 'Ventryl D', correct: false, suggestion: 'Avoid cold beverages' },
-    { id: 3, name: 'Pantotav DSR', correct: false, suggestion: 'Drink warm water in morning' },
-    { id: 4, name: 'BENZ Pearls', correct: false, suggestion: '-' },
-    { id: 5, name: 'Montak LC', correct: false, suggestion: 'Avoid sour edibles' },
-]
+import { Colors } from '../../shared/variables'
 
 const VerifiedResultScreen = ({ navigation }) => {
+    const tableHead = ['Drug name', 'Symptoms', 'Alternatives']
+    const tableData = [
+        ['Microcef CV 200 mg', 'Throat infections', 'Goodcif CV 200mg'],
+        ['Ventryl D', 'Sore throat', 'Chericof'],
+        ['Pantotav DSR', 'Acidity', 'Pantin D'],
+        ['BENZ Pearls', 'Dry cough', '-'],
+        ['Montak LC', 'Runny nose, watery eyes, sneezing', 'Levocet M']
+    ]
+
     return (
         <StyledContainer>
             <StatusBar style='dark' />
@@ -51,17 +52,15 @@ const VerifiedResultScreen = ({ navigation }) => {
                         , a trained medical professional.
                     </StyledText>
                 </Notice>
-                <ListTitle>Drugs' names in prescription</ListTitle>
-                {drugs.map((drug, key) => {
-                    return (
-                        <StyledListItem key={key}>
-                            <StyledListText>{`\u2022 ${drug.name}`}</StyledListText>
-                            {!drug.correct && (
-                                <StyledListReview>{drug.suggestion}</StyledListReview>
-                            )}
-                        </StyledListItem>
-                    )
-                })}
+                <ListTitle>Drugs' names and alternatives</ListTitle>
+                <TableContainer>
+                    <Table borderStyle={{ borderWidth: 1, borderColor: `${Colors.primary}` }}>
+                        <Row data={tableHead} style={{
+                            height: 50, backgroundColor: `${Colors.tertiary}`
+                        }} textStyle={{ margin: 6, fontWeight: 'bold' }} />
+                        <Rows data={tableData} textStyle={{ margin: 6 }} />
+                    </Table>
+                </TableContainer>
                 <Line />
                 <StyledButton onPress={() => navigation.navigate('UpdatedPrescription')}>
                     <ButtonText>Generate an updated prescription</ButtonText>

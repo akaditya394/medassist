@@ -114,3 +114,11 @@ export const Line = styled.View`
     margin-top: 10px;
     margin-bottom: 10px;
 `;
+
+export const TableContainer = styled.View`
+    width: 100%;
+    background-color: white;
+    margin-top: 10px;
+    padding-left: 15px;
+    padding-right: 15px;
+`;

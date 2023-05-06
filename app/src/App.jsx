@@ -27,7 +27,7 @@ export default function App() {
   return (
     <NavigationContainer independent>
       {authSession ? (
-        <Stack.Navigator initialRouteName="AllResults" screenOptions={{
+        <Stack.Navigator initialRouteName="AllPrescriptions" screenOptions={{
           headerShown: false
         }}>
           <Stack.Screen

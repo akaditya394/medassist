@@ -64,7 +64,7 @@ export const StyledButton = styled.TouchableOpacity`
     justify-content: center;
     align-items: center;
     border-radius: 5px;
-    margin-vertical: 5px;
+    margin-top: 5px;
     height: 60px;
 `;
 
@@ -78,11 +78,11 @@ export const Line = styled.View`
     height: 1px;
     width: 100%;
     background-color: ${Colors.primary};
-    margin-vertical: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
 `;
 
-export const SuggestionsContainer = styled.View`
-    /* border: 1px solid black; */
+export const SuggestionsContainer = styled.ScrollView`
     margin-top: 20px;
 `;
 
@@ -94,8 +94,38 @@ export const StyledText = styled.Text`
     color: ${Colors.primary};
     font-size: 18px;
     font-weight: 500;
+    margin-bottom: 15px;
+`;
+
+export const InputContainer = styled.View`
+    width: 100%;
+    margin-top: 10px;
+`;
+
+export const StyledTextInput = styled.TextInput`
+    background-color: ${Colors.secondary};
+    border: ${Colors.primary};
+    padding: 5px;
+    padding-left: 25px;
+    padding-right: 25px;
+    border-radius: 5px;
+    font-size: 16px;
+    height: 40px;
+    margin-top: 3px;
+    margin-bottom: 10px;
+    color: ${Colors.primary};
+`;
+
+export const TextInputContainer = styled.View`
+    width: 100%;
+`;
+
+export const StyledLabel = styled.Text`
+    color: ${Colors.primary};
+    font-size: 15px;
+    text-align: left;
 `;
 
 export const RadioContainer = styled.View`
-    width: 50%;
+    width: 100%;
 `;

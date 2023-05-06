@@ -43,8 +43,6 @@ const UploadScreen = ({ navigation }) => {
             quality: 1,
         })
 
-        console.log(result)
-
         if (!result.canceled) {
             setImage(result.assets[0].uri)
         }
@@ -72,20 +70,21 @@ const UploadScreen = ({ navigation }) => {
     const showToast = () => {
         if (Platform.OS === 'android') {
             ToastAndroid.show(
-                "You need to fill the name of your prescription",
+                "You need to fill the name of your prescription and upload it",
                 ToastAndroid.LONG,
                 ToastAndroid.TOP
             )
         } else {
-            AlertIOS.alert("You need to fill the name of your prescription")
+            AlertIOS.alert("You need to fill the name of your prescription and upload it")
         }
     }
 
     const handleSubmit = async () => {
-        if (imageName === '') {
+        if (imageName === '' || image === null) {
             showToast()
         } else {
             console.log('name of image is: ', imageName)
+            console.log('Image is', image)
         }
     }
 
