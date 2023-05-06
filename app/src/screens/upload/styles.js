@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { View, Text, Image, TextInput, TouchableOpacity, FlatList } from 'react-native'
+import { View, Text, Image, TextInput, TouchableOpacity, FlatList, ToastAndroid } from 'react-native'
 
 import { Colors, StatusBarHeight } from '../../shared/variables'
 
@@ -57,7 +57,8 @@ export const StyledButton = styled.TouchableOpacity`
     justify-content: center;
     align-items: center;
     border-radius: 5px;
-    margin-vertical: 5px;
+    margin-top: 5px;
+    margin-bottom: 5px;
     height: 60px;
 
     ${(props) => props.upload == true && `
@@ -79,12 +80,34 @@ export const SelectImage = styled.View`
     flex: 1;
     align-items: center;
     justify-content: center;
-    /* border: 1px solid ${Colors.primary};
-    border-radius: 5px; */
 `;
 
 export const StyledText = styled.Text`
     color: ${Colors.primary};
     font-size: 16px;
     font-weight: 500;
+`;
+
+export const TextInputContainer = styled.View`
+    width: 100%;
+`;
+
+export const StyledInputLabel = styled.Text`
+    color: ${Colors.primary};
+    font-size: 15px;
+    text-align: left;
+`;
+
+export const StyledTextInput = styled.TextInput`
+    background-color: ${Colors.secondary};
+    border: ${Colors.primary};
+    padding: 15px;
+    padding-left: 25px;
+    padding-right: 25px;
+    border-radius: 5px;
+    font-size: 16px;
+    height: 60px;
+    margin-top: 3px;
+    margin-bottom: 10px;
+    color: ${Colors.primary};
 `;
