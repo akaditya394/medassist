@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
-import { View } from 'react-native'
+import { View, ToastAndroid, Platform, AlertIOS } from 'react-native'
 import { StatusBar } from 'expo-status-bar'
-import { Formik } from 'formik'
 
 import { Octicons, Ionicons } from '@expo/vector-icons'
 
@@ -32,6 +31,30 @@ import LogoImage from '../../images/logo/logo.svg'
 
 const LoginScreen = ({ navigation }) => {
     const [hidePassword, setHidePassword] = useState(true)
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+
+    const showToast = () => {
+        if (Platform.OS === 'android') {
+            ToastAndroid.show(
+                "You need to fill all the required fields",
+                ToastAndroid.SHORT,
+                ToastAndroid.BOTTOM
+            )
+        } else {
+            AlertIOS.alert("You need to fill all the required fields")
+        }
+    }
+
+    const handleSubmit = () => {
+        if (email === '' || password === '') {
+            showToast()
+        } else {
+            // console.log('email is: ', email)
+            // console.log('password is: ', password)
+        }
+    }
+
     return (
         <StyledContainer>
             <StatusBar style='dark' />
@@ -43,61 +66,43 @@ const LoginScreen = ({ navigation }) => {
                     </PageTitle>
                 </Logo>
                 <SubTitle>Account Login</SubTitle>
-
-                <Formik
-                    initialValues={{
-                        email: '', password: ''
-                    }}
-                    onSubmit={(values) => {
-                        console.log(values)
-                    }}
-                >
-                    {({
-                        handleChange, handleBlur, handleSubmit, values
-                    }) => (
-                        <StyledFormArea>
-                            <MyTextInput
-                                label="Email Address"
-                                icon="mail"
-                                placeholderTextColor={Colors.primary}
-                                onChangeText={handleChange('email')}
-                                onBlur={handleBlur('email')}
-                                value={values.email}
-                                keyboardType="email-address"
-                            />
-                            <MyTextInput
-                                label="Password"
-                                icon="lock"
-                                placeholderTextColor={Colors.primary}
-                                onChangeText={handleChange('password')}
-                                onBlur={handleBlur('password')}
-                                value={values.password}
-                                secureTextEntry={hidePassword}
-                                isPassword={true}
-                                hidePassword={hidePassword}
-                                setHidePassword={setHidePassword}
-                            />
-                            <MsgBox>...</MsgBox>
-                            <StyledButton onPress={handleSubmit}>
-                                <ButtonText>Login</ButtonText>
-                            </StyledButton>
-                            <StyledButton forgotPassword={true} onPress={() => navigation.navigate('ForgotPassword')}>
-                                <ButtonText forgotPassword={true}>
-                                    Forgot Password ?
-                                </ButtonText>
-                            </StyledButton>
-                            <Line />
-                            <ExtraView>
-                                <ExtraText>Don't have an account yet?</ExtraText>
-                                <TextLink>
-                                    <TextLinkContent
-                                        onPress={() => navigation.navigate('SignUp')}
-                                    >{' '}Sign up here.</TextLinkContent>
-                                </TextLink>
-                            </ExtraView>
-                        </StyledFormArea>
-                    )}
-                </Formik>
+                <StyledFormArea>
+                    <MyTextInput
+                        label="Email Address"
+                        icon="mail"
+                        onChangeText={(email) => setEmail(email)}
+                        value={email}
+                        keyboardType="email-address"
+                    />
+                    <MyTextInput
+                        label="Password"
+                        icon="lock"
+                        onChangeText={(password) => setPassword(password)}
+                        value={password}
+                        secureTextEntry={hidePassword}
+                        isPassword={true}
+                        hidePassword={hidePassword}
+                        setHidePassword={setHidePassword}
+                    />
+                    <MsgBox>...</MsgBox>
+                    <StyledButton onPress={handleSubmit}>
+                        <ButtonText>Login</ButtonText>
+                    </StyledButton>
+                    <StyledButton forgotPassword={true} onPress={() => navigation.navigate('ForgotPassword')}>
+                        <ButtonText forgotPassword={true}>
+                            Forgot Password ?
+                        </ButtonText>
+                    </StyledButton>
+                    <Line />
+                    <ExtraView>
+                        <ExtraText>Don't have an account yet?</ExtraText>
+                        <TextLink>
+                            <TextLinkContent
+                                onPress={() => navigation.navigate('SignUp')}
+                            >{' '}Sign up here.</TextLinkContent>
+                        </TextLink>
+                    </ExtraView>
+                </StyledFormArea>
             </InnerContainer>
         </StyledContainer>
     )
