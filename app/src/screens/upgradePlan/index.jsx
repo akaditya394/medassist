@@ -14,10 +14,25 @@ import {
     PlanPrice,
     PlanPriceSubText,
     PlanTextContainer,
-    YearlyPrice
+    YearlyPrice,
+    BilledText,
+    StyledFeature,
+    FeatureText,
+    MostPopularText,
+    MostPopularContainer
 } from './styles'
 
 import SettingsImage from '../../images/icons/settings.svg'
+
+const yearlyData = [
+    { id: "1", text: "Billing will be done once a year" },
+    { id: "2", text: "Unlimited access to medassist platform" },
+]
+
+const monthlyData = [
+    { id: "1", text: "Billing will be done once every month" },
+    { id: "2", text: "Unlimited access to medassist platform" },
+]
 
 const UpgradePlanScreen = ({ navigation }) => {
     return (
@@ -36,19 +51,38 @@ const UpgradePlanScreen = ({ navigation }) => {
                 </UpperContainer>
                 <StyledText>Choose your plan:</StyledText>
                 <PlanContainer>
+                    <MostPopularContainer>
+                        <MostPopularText>most popular plan</MostPopularText>
+                    </MostPopularContainer>
                     <PlanTextContainer>
                         <PlanPrice>$10<PlanPriceSubText>/Month</PlanPriceSubText></PlanPrice>
                         <YearlyPrice>$120/Year</YearlyPrice>
                     </PlanTextContainer>
+                    <BilledText>billed yearly</BilledText>
+                    {yearlyData.map((item, key) => {
+                        return (
+                            <StyledFeature key={key}>
+                                <FeatureText>{`\u2022 ${item.text}`}</FeatureText>
+                            </StyledFeature>
+                        );
+                    })}
                     <StyledButton onPress={() => { }}>
                         <ButtonText>Choose Plan</ButtonText>
                     </StyledButton>
                 </PlanContainer>
-                <PlanContainer yearly={true}>
+                <PlanContainer monthly={true}>
                     <PlanTextContainer>
-                        <PlanPrice>$10<PlanPriceSubText>/Month</PlanPriceSubText></PlanPrice>
-                        <YearlyPrice>$120/Year</YearlyPrice>
+                        <PlanPrice>$12<PlanPriceSubText>/Month</PlanPriceSubText></PlanPrice>
+                        <YearlyPrice>$144/Year</YearlyPrice>
                     </PlanTextContainer>
+                    <BilledText>billed monthly</BilledText>
+                    {monthlyData.map((item, key) => {
+                        return (
+                            <StyledFeature key={key}>
+                                <FeatureText>{`\u2022 ${item.text}`}</FeatureText>
+                            </StyledFeature>
+                        );
+                    })}
                     <StyledButton onPress={() => { }}>
                         <ButtonText>Choose Plan</ButtonText>
                     </StyledButton>

@@ -43,7 +43,7 @@ const ViewMedicalHistoryScreen = ({ navigation }) => {
                         </Icon>
                     </IconsContainer>
                 </UpperContainer>
-                <StyledText>Select your side effects or type them out:</StyledText>
+                <StyledText>Here is the patient's medical History:</StyledText>
                 <HistoryContainer>
                     {data.map((condition, key) => {
                         return (
