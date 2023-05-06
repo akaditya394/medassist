@@ -18,16 +18,18 @@ import VerifiedResultScreen from "./screens/verifiedResult";
 import UnverifiedResultScreen from "./screens/unverifiedResult";
 import MedicalHistoryScreen from "./screens/medicalHistory";
 import UpdatedPrescriptionScreen from './screens/updatedPrescription';
+import ViewMedicalHistoryScreen from './screens/viewMedicalHistory';
+import UpgradePlanScreen from './screens/upgradePlan';
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
-  const [authSession, setAuthSession] = useState()
+  const [authSession, setAuthSession] = useState('gh')
 
   return (
     <NavigationContainer independent>
       {authSession ? (
-        <Stack.Navigator initialRouteName="AllPrescriptions" screenOptions={{
+        <Stack.Navigator initialRouteName="AllResults" screenOptions={{
           headerShown: false
         }}>
           <Stack.Screen
@@ -73,6 +75,14 @@ export default function App() {
           <Stack.Screen
             name="UpdatedPrescription"
             component={UpdatedPrescriptionScreen}
+          />
+          <Stack.Screen
+            name="ViewMedicalHistory"
+            component={ViewMedicalHistoryScreen}
+          />
+          <Stack.Screen
+            name="UpgradePlan"
+            component={UpgradePlanScreen}
           />
         </Stack.Navigator>
       ) : (
