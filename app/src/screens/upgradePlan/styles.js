@@ -66,7 +66,7 @@ export const PlanContainer = styled.View`
     padding: 15px;
     border-radius: 5px;
 
-    ${(props) => props.yearly == true && `
+    ${(props) => props.monthly == true && `
         margin-bottom: 0px;
     `}
 `;
@@ -77,8 +77,6 @@ export const PlanTextContainer = styled.View`
     flex-direction: row;
     align-items: baseline;
     justify-content: space-between;
-    border: 1px solid black;
-    margin-bottom: 20px;
 `;
 
 export const PlanPrice = styled.Text`
@@ -112,4 +110,40 @@ export const ButtonText = styled.Text`
     color: white;
     font-weight: 700;
     font-size: 16px;
+`;
+
+export const BilledText = styled.Text`
+    color: ${Colors.text};
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 20px;
+`;
+
+export const StyledFeature = styled.View`
+    width: 100%;
+    height: 20px;
+    padding-left: 5px;
+    margin-bottom: 10px;
+`;
+
+export const FeatureText = styled.Text`
+    color: ${Colors.text};
+    font-size: 15px; 
+    font-weight: 500;
+`;
+
+export const MostPopularContainer = styled.View`
+    padding: 5px;
+    background-color: ${Colors.primary};
+    justify-content: center;
+    align-items: center;
+    border-radius: 2px;
+    height: 35px;
+    margin-bottom: 10px;
+`;
+
+export const MostPopularText = styled.Text`
+    color: white;
+    font-size: 14px;
+    font-weight: 500;
 `;
