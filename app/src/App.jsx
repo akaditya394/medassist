@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { StripeProvider } from "@stripe/stripe-react-native";
 
 import LoginScreen from "./screens/login";
 import SignUpScreen from "./screens/signup";
@@ -21,6 +22,7 @@ import ViewMedicalHistoryScreen from './screens/viewMedicalHistory';
 import UpgradePlanScreen from './screens/upgradePlan';
 import VerifyMedicalProfessionalScreen from './screens/verifyMedicalProfessional';
 import ChatbotScreen from './screens/chatbot';
+import PaymentScreen from './screens/payment';
 
 const Stack = createNativeStackNavigator();
 
@@ -28,94 +30,100 @@ export default function App() {
   const [authSession, setAuthSession] = useState('ghj')
 
   return (
-    <NavigationContainer independent>
-      {authSession ? (
-        <Stack.Navigator initialRouteName="AllResults" screenOptions={{
-          headerShown: false
-        }}>
-          <Stack.Screen
-            name="AllPrescriptions"
-            component={AllPrescriptionsScreen}
-          />
-          <Stack.Screen
-            name="AllResults"
-            component={AllResultsScreen}
-          />
-          <Stack.Screen
-            name="Settings"
-            component={SettingsScreen}
-          />
-          <Stack.Screen
-            name="Upload"
-            component={UploadScreen}
-          />
-          <Stack.Screen
-            name="Result"
-            component={ResultScreen}
-          />
-          <Stack.Screen
-            name="Prescription"
-            component={PrescriptionScreen}
-          />
-          <Stack.Screen
-            name="VerifiedResult"
-            component={VerifiedResultScreen}
-          />
-          <Stack.Screen
-            name="UnverifiedResult"
-            component={UnverifiedResultScreen}
-          />
-          <Stack.Screen
-            name="MedicalHistory"
-            component={MedicalHistoryScreen}
-          />
-          <Stack.Screen
-            name="UpdatedPrescription"
-            component={UpdatedPrescriptionScreen}
-          />
-          <Stack.Screen
-            name="ViewMedicalHistory"
-            component={ViewMedicalHistoryScreen}
-          />
-          <Stack.Screen
-            name="UpgradePlan"
-            component={UpgradePlanScreen}
-          />
-          <Stack.Screen
-            name="Chatbot"
-            component={ChatbotScreen}
-          />
-        </Stack.Navigator>
-      ) : (
-        <Stack.Navigator initialRouteName="Onboarding" screenOptions={{
-          headerShown: false
-        }}>
-          <Stack.Screen
-            name="Onboarding"
-            component={OnboardingScreen}
-          />
-          <Stack.Screen
-            name="Login"
-            component={LoginScreen}
-          />
-          <Stack.Screen
-            name="SignUp"
-            component={SignUpScreen}
-          />
-          <Stack.Screen
-            name="VerifyMedicalProfessional"
-            component={VerifyMedicalProfessionalScreen}
-          />
-          <Stack.Screen
-            name="ForgotPassword"
-            component={ForgotPasswordScreen}
-          />
-          <Stack.Screen
-            name="ResetPassword"
-            component={ResetPasswordScreen}
-          />
-        </Stack.Navigator>
-      )}
-    </NavigationContainer>
+    <StripeProvider publishableKey=''>
+      <NavigationContainer independent>
+        {authSession ? (
+          <Stack.Navigator initialRouteName="AllResults" screenOptions={{
+            headerShown: false
+          }}>
+            <Stack.Screen
+              name="AllPrescriptions"
+              component={AllPrescriptionsScreen}
+            />
+            <Stack.Screen
+              name="AllResults"
+              component={AllResultsScreen}
+            />
+            <Stack.Screen
+              name="Settings"
+              component={SettingsScreen}
+            />
+            <Stack.Screen
+              name="Upload"
+              component={UploadScreen}
+            />
+            <Stack.Screen
+              name="Result"
+              component={ResultScreen}
+            />
+            <Stack.Screen
+              name="Prescription"
+              component={PrescriptionScreen}
+            />
+            <Stack.Screen
+              name="VerifiedResult"
+              component={VerifiedResultScreen}
+            />
+            <Stack.Screen
+              name="UnverifiedResult"
+              component={UnverifiedResultScreen}
+            />
+            <Stack.Screen
+              name="MedicalHistory"
+              component={MedicalHistoryScreen}
+            />
+            <Stack.Screen
+              name="UpdatedPrescription"
+              component={UpdatedPrescriptionScreen}
+            />
+            <Stack.Screen
+              name="ViewMedicalHistory"
+              component={ViewMedicalHistoryScreen}
+            />
+            <Stack.Screen
+              name="UpgradePlan"
+              component={UpgradePlanScreen}
+            />
+            <Stack.Screen
+              name="Chatbot"
+              component={ChatbotScreen}
+            />
+            <Stack.Screen
+              name="Payment"
+              component={PaymentScreen}
+            />
+          </Stack.Navigator>
+        ) : (
+          <Stack.Navigator initialRouteName="Onboarding" screenOptions={{
+            headerShown: false
+          }}>
+            <Stack.Screen
+              name="Onboarding"
+              component={OnboardingScreen}
+            />
+            <Stack.Screen
+              name="Login"
+              component={LoginScreen}
+            />
+            <Stack.Screen
+              name="SignUp"
+              component={SignUpScreen}
+            />
+            <Stack.Screen
+              name="VerifyMedicalProfessional"
+              component={VerifyMedicalProfessionalScreen}
+            />
+            <Stack.Screen
+              name="ForgotPassword"
+              component={ForgotPasswordScreen}
+            />
+            <Stack.Screen
+              name="ResetPassword"
+              component={ResetPasswordScreen}
+            />
+          </Stack.Navigator>
+        )}
+      </NavigationContainer>
+    </StripeProvider>
   );
 }
