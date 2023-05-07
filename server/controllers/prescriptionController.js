@@ -77,3 +77,23 @@ exports.addPrescriptions = async (req, res) => {
     });
   }
 };
+
+// exports.verify = async (req, res) => {
+//   // const id =
+//   try {
+//     const prescription = await Prescription.findByIdAndUpdate(
+//       id,
+//       { isVerified: true },
+//       { new: true }
+//     );
+//     res.status(200).json({
+//       type: "success",
+//       message: "Prescription Verified",
+//     });
+//   } catch (error) {
+//     res.status(404).json({
+//       type: "error",
+//       message: error.message,
+//     });
+//   }
+// };

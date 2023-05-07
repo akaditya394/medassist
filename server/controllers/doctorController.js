@@ -1,4 +1,7 @@
 const Doctor = require("../models/Doctor");
+const Prescription = require("../models/Prescriptions");
+const { issueToken } = require("../utils/token");
+const jwt = require("jsonwebtoken");
 
 exports.register = async (req, res) => {
   const { name, email, password } = req.body;
@@ -10,9 +13,9 @@ exports.register = async (req, res) => {
     });
   }
 
-  const doctor = await Doctor.find({ email });
+  const oldDoctor = await Doctor.findOne({ email });
 
-  if (doctor) {
+  if (oldDoctor) {
     return res.status(409).json({
       type: "error",
       message: "Doctor Already exists",
@@ -138,4 +141,28 @@ exports.logout = (req, res) => {
     type: "success",
     message: "Successfully logged out",
   });
+};
+
+exports.getAllUnverifiedPrescriptions = async (req, res) => {
+  try {
+    const prescriptions = await Prescription.find({
+      isVerified: false,
+      doctor: { $in: res.locals.id },
+    });
+    if (prescriptions.length === 0) {
+      return res.status(401).json({
+        type: "error",
+        message: "No unverified prescriptions",
+      });
+    }
+    res.status(200).json({
+      type: "success",
+      prescriptions,
+    });
+  } catch (error) {
+    res.json({
+      type: "error",
+      message: error.message,
+    });
+  }
 };

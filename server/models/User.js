@@ -22,6 +22,14 @@ const userSchema = new mongoose.Schema(
       minlength: 8,
       select: false,
     },
+    age: {
+      type: Number,
+      required: [true, "please provide your age"],
+    },
+    weight: {
+      type: Number,
+      required: [true, "please provide your weight"],
+    },
     prescriptions: [
       {
         type: mongoose.Schema.Types.ObjectId,

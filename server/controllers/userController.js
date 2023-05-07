@@ -14,9 +14,9 @@ cloudinary.config({
 });
 
 exports.register = async (req, res) => {
-  const { name, email, password } = req.body;
+  const { name, email, password, age, weight } = req.body;
 
-  if (!name || !email || !password) {
+  if (!name || !email || !password || !age || !weight) {
     return res.status(401).json({
       type: "error",
       message: "Invalid or No Credentials",
@@ -25,9 +25,11 @@ exports.register = async (req, res) => {
 
   try {
     const user = new User({
-      name: req.body.name,
-      email: req.body.email,
-      password: req.body.password,
+      name,
+      email,
+      password,
+      age,
+      weight,
     });
 
     issueToken(res, user);
