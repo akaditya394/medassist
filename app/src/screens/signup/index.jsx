@@ -53,10 +53,16 @@ const SignUpScreen = ({ navigation }) => {
         if (username === '' || email === '' || password === '' || (current === 'user' && (weight === '' || age === ''))
         ) {
             showToast()
+        } else if (current === 'medical_professional') {
+            navigateToVerifyScreen()
         } else {
             // console.log('username is: ', username)
             // console.log('email is: ', email)
         }
+    }
+
+    const navigateToVerifyScreen = () => {
+        navigation.navigate("VerifyMedicalProfessional")
     }
 
     return (
@@ -147,10 +153,7 @@ const SignUpScreen = ({ navigation }) => {
                         </>
                     )}
                     <MsgBox>...</MsgBox>
-                    <StyledButton onPress={
-                        // handleSubmit
-                        () => navigation.navigate("VerifyMedicalProfessional")
-                    }>
+                    <StyledButton onPress={handleSubmit}>
                         <ButtonText>Sign up</ButtonText>
                     </StyledButton>
                     <Line />

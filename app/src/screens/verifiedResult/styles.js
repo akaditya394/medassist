@@ -70,7 +70,6 @@ export const ListTitle = styled.Text`
     font-size: 22px;
     color: ${Colors.primary};
     font-weight: 500;
-    padding-left: 15px;
     margin-bottom: 10px;
 `;
 
@@ -118,7 +117,4 @@ export const Line = styled.View`
 export const TableContainer = styled.View`
     width: 100%;
     background-color: white;
-    margin-top: 10px;
-    padding-left: 15px;
-    padding-right: 15px;
 `;

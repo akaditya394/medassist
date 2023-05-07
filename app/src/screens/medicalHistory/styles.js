@@ -122,3 +122,26 @@ export const MsgBox = styled.Text`
     text-align: center;
     font-size: 13px;
 `;
+
+export const InputContainer = styled.View`
+    width: 100%;
+`;
+
+export const StyledInputLabel = styled.Text`
+    color: ${Colors.primary};
+    font-size: 13px;
+    text-align: left;
+`;
+
+export const StyledTextInput = styled.TextInput`
+    background-color: ${Colors.tertiary};
+    padding: 15px;
+    padding-left: 25px;
+    padding-right: 25px;
+    border-radius: 5px;
+    font-size: 16px;
+    height: 60px;
+    margin-top: 3px;
+    margin-bottom: 10px;
+    color: ${Colors.primary};
+`;

@@ -20,11 +20,11 @@ import {
 } from './styles'
 
 const data = [
-    { label: 'Hairfall', value: "hairfall" },
-    { label: 'Headache', value: "headache" },
-    { label: 'Nausea', value: "nausea" },
-    { label: 'Sore throat', value: "sore_throat" },
-    { label: 'Breathlessness', value: "breathlessness" },
+    { label: 'Andhra Pradesh Medical Council', value: "hairfall" },
+    { label: 'Arunacchal Pradesh Medical Council', value: "headache" },
+    { label: 'Assam Medical Council', value: "nausea" },
+    { label: 'Bhopal Medical Council', value: "sore_throat" },
+    { label: 'Bihar Medical Council', value: "breathlessness" },
     { label: 'Skin Rashes', value: "skin_rashes" },
     { label: 'Swelling', value: "swelling" },
     { label: 'Upset Stomach', value: "upset_stomach" },
@@ -61,7 +61,8 @@ const VerifyMedicalProfessionalScreen = ({ navigation }) => {
         if (name === '' || regNumber === '' || medicalCouncilValue === null) {
             showToast()
         } else {
-            console.log(medicalCouncilValue)
+            // console.log(medicalCouncilValue)
+            // http post request to verify
         }
     }
 
