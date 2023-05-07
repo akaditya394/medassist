@@ -5,8 +5,24 @@ const User = require("../models/User");
 const { issueToken } = require("../utils/token");
 const sendEmail = require("../utils/email");
 require("dotenv").config();
+const cloudinary = require("cloudinary").v2;
+
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.API_KEY,
+  api_secret: process.env.API_SECRET,
+});
 
 exports.register = async (req, res) => {
+  const { name, email, password } = req.body;
+
+  if (!name || !email || !password) {
+    return res.status(401).json({
+      type: "error",
+      message: "Invalid or No Credentials",
+    });
+  }
+
   try {
     const user = new User({
       name: req.body.name,
@@ -19,9 +35,11 @@ exports.register = async (req, res) => {
 
     res.status(200).json({
       type: "success",
+      user,
       message: "Signed up successfully",
     });
   } catch (err) {
+    console.log(err);
     res.json({
       type: "error",
       message: err.message,
@@ -29,14 +47,21 @@ exports.register = async (req, res) => {
   }
 };
 
-exports.login = async (req, res, next) => {
+exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
+
+    if (!email || !password) {
+      return res.status(401).json({
+        type: "error",
+        message: "Invalid or No Credentials",
+      });
+    }
 
     const user = await User.findOne({ email }).select("+password");
 
     if (!user || !(await user.verifyPassword(password, user.password))) {
-      return res.json({
+      return res.status(401).json({
         type: "error",
         message: "Incorrect email or password!",
       });
@@ -57,7 +82,7 @@ exports.login = async (req, res, next) => {
   }
 };
 
-exports.protect = (req, res, next) => {
+exports.protect = async (req, res, next) => {
   let token;
   if (
     req.headers.authorization &&
@@ -67,30 +92,49 @@ exports.protect = (req, res, next) => {
   } else if (req.cookies.jwt) {
     token = req.cookies.jwt;
   }
+
+  let decoded;
   if (token) {
-    jwt.verify(token, process.env.JWT_SECRET, (err, decodedToken) => {
-      if (err) {
-        console.log(err.message);
-        res.redirect("/");
-      } else {
-        // console.log(decodedToken);
-        res.locals.id = decodedToken.sub;
-        next();
+    try {
+      decoded = await jwt.verify(token, process.env.JWT_SECRET);
+    } catch (error) {
+      return res.status(400).json({
+        type: "error",
+        message: error.message,
+      });
+    }
+
+    try {
+      const currentUser = await User.findById({ _id: decoded.sub });
+      if (!currentUser) {
+        throw new Error("The user does not exist anymore.");
       }
-    });
+      res.locals.id = decoded.sub;
+      console.log("Success from middleware");
+      next();
+    } catch (error) {
+      return res.status(500).json({
+        type: "error",
+        message: error.message,
+      });
+    }
   } else {
-    res.json("error");
+    return res.status(400).json({
+      type: "error",
+      message: "You aren't Logged In",
+    });
   }
 };
 
-exports.logout = (req, res, next) => {
+exports.logout = (req, res) => {
   res.cookie("jwt", "logged out", {
     expires: new Date(Date.now() + 10 * 1000), //expires in 10 seconds
     httpOnly: true,
   });
 
   res.status(200).json({
-    status: "successfully logged out",
+    type: "success",
+    message: "Successfully logged out",
   });
 };
 
@@ -164,6 +208,29 @@ exports.resetPassword = async (req, res) => {
     res.json({
       type: "error",
       message: err.message,
+    });
+  }
+};
+
+exports.uploadImage = async (req, res) => {
+  const { file } = req.files;
+  // console.log(req);
+  console.log(res);
+  try {
+    cloudinary.uploader
+      .upload(file.tempFilePath, {
+        public_id: `${Date.now()}`,
+        folder: "prescriptions",
+        filename_override: file.name,
+      })
+      .then((result) => {
+        // const data = await User.findByIdAndUpdate(req.user.id, {$push: {prescriptions: }})
+        console.log(result);
+      });
+  } catch (error) {
+    res.json({
+      type: "error",
+      message: error.message,
     });
   }
 };

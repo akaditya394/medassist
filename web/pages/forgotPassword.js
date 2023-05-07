@@ -42,7 +42,7 @@ const ForgotPasswordPage = () => {
     e.preventDefault();
     // a http post request to send reset password email
     const res = await axios.post(
-      "http://localhost:8000/api/auth/forgotPassword",
+      "http://localhost:8000/user/forgotPassword",
       JSON.stringify(formData),
       {
         headers: {

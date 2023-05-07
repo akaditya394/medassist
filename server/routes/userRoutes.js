@@ -6,7 +6,8 @@ const {
   forgotPassword,
   resetPassword,
   checkUser,
-} = require("../controllers/authController");
+  uploadImage,
+} = require("../controllers/userController");
 
 const router = require("express").Router();
 
@@ -15,5 +16,6 @@ router.post("/login", login);
 router.get("/logout", protect, logout);
 router.post("/forgotPassword", forgotPassword);
 router.post("/resetPassword", resetPassword);
+router.post("/uploadImage", protect, uploadImage);
 
 module.exports = router;

@@ -1,33 +1,23 @@
-import React from "react"
-import LandingPage from "../components/landingPage"
-import UploadPage from "../components/uploadPage"
-import PrescriptionsPage from "./prescriptions"
+import React from "react";
+import LandingPage from "../components/landingPage";
+import UploadPage from "../components/uploadPage";
+import PrescriptionsPage from "./prescriptions";
 
 const IndexPage = () => {
-  const isAuth = false
-  const isUserDoctor = false
+  const isAuth = true;
+  const isUserDoctor = false;
 
-  let body = null
+  let body = null;
 
   if (isAuth && isUserDoctor) {
-    body = (
-      <PrescriptionsPage />
-    )
+    body = <PrescriptionsPage />;
   } else if (isAuth && !isUserDoctor) {
-    body = (
-      <UploadPage />
-    )
+    body = <UploadPage />;
   } else {
-    body = (
-      <LandingPage />
-    )
+    body = <LandingPage />;
   }
 
-  return (
-    <>
-      {body}
-    </>
-  )
-}
+  return <>{body}</>;
+};
 
-export default IndexPage
+export default IndexPage;

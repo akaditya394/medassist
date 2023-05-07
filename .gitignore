@@ -2,6 +2,7 @@ node_modules
 .next
 build
 
+/server/tmp
 # misc
 .DS_Store
 *.pem

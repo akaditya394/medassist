@@ -46,11 +46,12 @@ const SignupPage = () => {
   const RESET_NOTICE = { type: "", message: "" };
   const [notice, setNotice] = useState(RESET_NOTICE);
   const router = useRouter();
-  const [option, setOption] = useState("User")
+  const [option, setOption] = useState("user");
 
-  const onOptionChange = e => {
-    setOption(e.target.value)
-  }
+  const onOptionChange = (e) => {
+    console.log(e.target.value);
+    setOption(e.target.value);
+  };
 
   const values = {};
   form.inputs.forEach((input) => (values[input.id] = input.value));
@@ -61,15 +62,15 @@ const SignupPage = () => {
   };
 
   const setRole = () => {
-    formData.role = option
-  }
+    formData.role = option;
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setRole()
+    setRole();
     // a http post request to signup
     const res = await axios.post(
-      "http://localhost:8000/api/auth/register",
+      `http://localhost:8000/${option}/register`,
       JSON.stringify(formData),
       {
         headers: {
@@ -120,9 +121,9 @@ const SignupPage = () => {
             <input
               type="radio"
               name="option"
-              value="User"
+              value="user"
               id="User"
-              checked={option === "User"}
+              checked={option === "user"}
               onChange={onOptionChange}
             />
             <label htmlFor="User">User</label>
@@ -142,7 +143,10 @@ const SignupPage = () => {
               {notice.message}
             </Notice>
           )}
-          <button type={form.submitButton.type} onClick={() => router.push("/prescriptions")}>
+          <button
+            type={form.submitButton.type}
+            onClick={() => router.push("/results")}
+          >
             {form.submitButton.label}
           </button>
         </form>

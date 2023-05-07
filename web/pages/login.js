@@ -54,7 +54,7 @@ const LoginPage = () => {
     e.preventDefault();
     // a http post request to login
     const res = await axios.post(
-      "http://localhost:8000/api/auth/login",
+      "http://localhost:8000/user/login",
       JSON.stringify(formData),
       {
         headers: {
@@ -109,7 +109,10 @@ const LoginPage = () => {
               {notice.message}
             </Notice>
           )}
-          <button type={form.submitButton.type} onClick={() => router.push("/results")}>
+          <button
+            type={form.submitButton.type}
+            onClick={() => router.push("/results")}
+          >
             {form.submitButton.label}
           </button>
           <button type={form.button.type} onClick={handlePasswordReset}>

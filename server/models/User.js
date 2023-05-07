@@ -22,6 +22,12 @@ const userSchema = new mongoose.Schema(
       minlength: 8,
       select: false,
     },
+    prescriptions: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Prescriptions",
+      },
+    ],
     passwordChangedAt: Date,
     passwordResetToken: String,
     passwordResetExpires: Date,
