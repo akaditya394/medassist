@@ -27,7 +27,7 @@ const data = [
     { id: 2, name: 'Prescription 1', verified: false },
     { id: 3, name: 'Prescription 2', verified: true },
     { id: 4, name: 'Prescription 2', verified: true },
-    // { id: 5, name: 'Prescription 2', verified: true },
+    { id: 5, name: 'Prescription 2', verified: true },
 ]
 
 const AllResultsScreen = ({ navigation }) => {
@@ -41,7 +41,7 @@ const AllResultsScreen = ({ navigation }) => {
                     </PageTitle>
                     <IconsContainer>
                         {data.length < 5 && (
-                            <Icon onPress={() => navigation.navigate('Upload')}>
+                            <Icon onPress={() => navigation.navigate('MedicalHistory')}>
                                 <UploadImage width="26px" height="26px" fill="#fff" />
                             </Icon>
                         )}

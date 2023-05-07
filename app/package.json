@@ -34,7 +34,8 @@
     "react-native-svg": "13.4.0",
     "react-native-svg-transformer": "^1.0.0",
     "react-native-table-component": "^1.2.2",
-    "styled-components": "^5.3.9"
+    "styled-components": "^5.3.9",
+    "@stripe/stripe-react-native": "0.23.3"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"

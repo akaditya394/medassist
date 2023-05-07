@@ -66,7 +66,7 @@ const UpgradePlanScreen = ({ navigation }) => {
                             </StyledFeature>
                         );
                     })}
-                    <StyledButton onPress={() => { }}>
+                    <StyledButton onPress={() => navigation.navigate('Payment')}>
                         <ButtonText>Choose Plan</ButtonText>
                     </StyledButton>
                 </PlanContainer>
