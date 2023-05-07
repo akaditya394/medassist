@@ -45,7 +45,7 @@ exports.register = async (req, res) => {
     });
   } catch (err) {
     console.log(err);
-    res.status(err.statusCode).json({
+    res.status(err.status).json({
       type: "error",
       message: err.message,
     });

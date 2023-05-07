@@ -9,6 +9,7 @@ const cors = require("cors");
 const userRoutes = require("./routes/userRoutes");
 const prescriptionRoutes = require("./routes/prescriptionRoutes");
 const doctorRoutes = require("./routes/doctorRoutes");
+const chatRoutes = require("./routes/chatRoutes");
 
 // middleware
 app.use(cors());
@@ -37,5 +38,6 @@ app.use(cookieParser());
 app.use("/user", userRoutes);
 app.use("/prescription", prescriptionRoutes);
 app.use("/doctor", doctorRoutes);
+app.use("/", chatRoutes);
 
 module.exports = app;

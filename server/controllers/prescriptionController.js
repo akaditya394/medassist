@@ -19,7 +19,7 @@ exports.getAllPrescriptions = async (req, res) => {
       prescriptions,
     });
   } catch (error) {
-    res.status(error.statusCode).json({
+    res.status(error.status).json({
       type: "error",
       message: error.message,
     });
@@ -65,7 +65,7 @@ exports.addPrescriptions = async (req, res) => {
         });
       })
       .catch((err) => {
-        res.status(err.statusCode).json({
+        res.status(err.status).json({
           type: "error",
           message: err.message,
         });
