@@ -50,6 +50,10 @@ const SettingsScreen = ({ navigation }) => {
                     </StyledListItem>
                 )}
                 <Line />
+                <StyledListItem onPress={() => navigation.navigate("Chatbot")}>
+                    <StyledListText>Chatbot (experimental)</StyledListText>
+                </StyledListItem>
+                <Line />
                 <StyledListItem onPress={handleLogout}>
                     <StyledListText>Logout</StyledListText>
                 </StyledListItem>

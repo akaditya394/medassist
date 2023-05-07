@@ -1,4 +1,5 @@
 import { StatusBar } from 'expo-status-bar'
+import { Table, Row, Rows } from 'react-native-table-component'
 
 import {
     StyledContainer,
@@ -9,22 +10,23 @@ import {
     Icon,
     Notice,
     StyledText,
-    StyledListItem,
-    StyledListText,
-    ListTitle,
+    TableContainer,
     Line
 } from './styles'
+import { Colors } from '../../shared/variables'
 
 import SettingsImage from '../../images/icons/settings.svg'
 
-const drugs = [
-    { id: 1, name: 'Drug 1', correct: false, review: 'Review 1' },
-    { id: 2, name: 'Drug 2', correct: true },
-    { id: 3, name: 'Drug 3', correct: false, review: 'Review 2' },
-    { id: 4, name: 'Drug 4', correct: true },
-]
-
 const UnverifiedResultScreen = ({ navigation }) => {
+    const tableHead = ['Drug name', 'Symptoms']
+    const tableData = [
+        ['Microcef CV 200 mg', 'Throat infections'],
+        ['Ventryl D', 'Sore throat'],
+        ['Pantotav DSR', 'Acidity'],
+        ['BENZ Pearls', 'Dry cough'],
+        ['Montak LC', 'Runny nose, watery eyes, sneezing']
+    ]
+
     return (
         <StyledContainer>
             <StatusBar style='dark' />
@@ -44,14 +46,14 @@ const UnverifiedResultScreen = ({ navigation }) => {
                         Your upload prescription has not yet been verified.
                     </StyledText>
                 </Notice>
-                {/* <ListTitle>Drugs' names in prescription</ListTitle>
-                {drugs.map((drug, key) => {
-                    return (
-                        <StyledListItem key={key}>
-                            <StyledListText>{`\u2022 ${drug.name}`}</StyledListText>
-                        </StyledListItem>
-                    )
-                })} */}
+                <TableContainer>
+                    <Table borderStyle={{ borderWidth: 1, borderColor: `${Colors.primary}` }}>
+                        <Row data={tableHead} style={{
+                            height: 50, backgroundColor: `${Colors.tertiary}`
+                        }} textStyle={{ margin: 6, fontWeight: 'bold' }} />
+                        <Rows data={tableData} textStyle={{ margin: 6 }} />
+                    </Table>
+                </TableContainer>
                 <Line />
                 <StyledText>
                     Additonal info will be available as soon as your

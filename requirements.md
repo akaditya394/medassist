@@ -16,4 +16,5 @@
 - doctor has to give alternatives as well as suggestions
 - subscription model after 5 uses
 - something that shows the market's mindset
+- add features like ssr 
 - figure out a way to present mobile screen in case of a ppt

@@ -22,13 +22,13 @@ import SettingsImage from '../../images/icons/settings.svg'
 import { Colors } from '../../shared/variables'
 
 const VerifiedResultScreen = ({ navigation }) => {
-    const tableHead = ['Drug name', 'Symptoms', 'Alternatives']
+    const tableHead = ['Drug name', 'Symptoms', 'Alternatives', 'Suggestions']
     const tableData = [
-        ['Microcef CV 200 mg', 'Throat infections', 'Goodcif CV 200mg'],
-        ['Ventryl D', 'Sore throat', 'Chericof'],
-        ['Pantotav DSR', 'Acidity', 'Pantin D'],
-        ['BENZ Pearls', 'Dry cough', '-'],
-        ['Montak LC', 'Runny nose, watery eyes, sneezing', 'Levocet M']
+        ['Microcef CV 200 mg', 'Throat infections', 'Goodcif CV 200mg', '-'],
+        ['Ventryl D', 'Sore throat', 'Chericof', 'Avoid cold beverages'],
+        ['Pantotav DSR', 'Acidity', 'Pantin D', 'Drink warm water in morning'],
+        ['BENZ Pearls', 'Dry cough', '-', '-'],
+        ['Montak LC', 'Runny nose, watery eyes, sneezing', 'Levocet M', 'Avoid sour edibles']
     ]
 
     return (

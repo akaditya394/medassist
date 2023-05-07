@@ -18,7 +18,10 @@ import {
   ConditionsContainer,
   ConditionText,
   CheckboxContainer,
-  MsgBox
+  MsgBox,
+  InputContainer,
+  StyledInputLabel,
+  StyledTextInput
 } from "./styles";
 import { Colors } from "../../shared/variables";
 
@@ -34,12 +37,14 @@ const conditionsArray = [
   { id: "7", text: "Migraine", value: "migraine", isChecked: false },
   { id: "8", text: "Gastrointestinal distress", value: "gastrointestinal_distress", isChecked: false },
   { id: "9", text: "Skin Problems", value: "skin_problems", isChecked: false },
-  { id: "10", text: "Mental Health Problems", value: "mental_health_problems", isChecked: false }
+  { id: "10", text: "Mental Health Problems", value: "mental_health_problems", isChecked: false },
+  { id: "11", text: "Other", value: "other", isChecked: false }
 ]
 
 const MedicalHistoryScreen = ({ navigation }) => {
   const [conditions, setConditions] = useState(conditionsArray)
   const [finalConditions, setFinalConditions] = useState([])
+  const [otherCondition, setOtherCondition] = useState('')
 
   const handleChange = (id) => {
     let temp = conditions.map((condition) => {
@@ -53,7 +58,12 @@ const MedicalHistoryScreen = ({ navigation }) => {
     setFinalConditions(selected)
   }
 
+  const otherMedicalHistoryChecker = (item) => {
+    return item.text === "Other"
+  }
+
   const handleSubmit = () => {
+    console.log(otherCondition)
     console.log(finalConditions)
   }
 
@@ -89,6 +99,16 @@ const MedicalHistoryScreen = ({ navigation }) => {
               );
             })}
           </ConditionsContainer>
+          {conditions.find(otherMedicalHistoryChecker).isChecked && (
+            <InputContainer>
+              <StyledInputLabel>Type your medical history</StyledInputLabel>
+              <StyledTextInput
+                onChangeText={(otherCondition) => setOtherCondition(otherCondition)}
+                value={otherCondition}
+                keyboardType="default"
+              />
+            </InputContainer>
+          )}
         </StyledFormArea>
         <MsgBox>...</MsgBox>
         <StyledButton onPress={handleSubmit}>
