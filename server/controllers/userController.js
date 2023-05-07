@@ -4,6 +4,7 @@ const crypto = require("crypto");
 const User = require("../models/User");
 const { issueToken } = require("../utils/token");
 const sendEmail = require("../utils/email");
+const Prescription = require("../models/Prescriptions");
 require("dotenv").config();
 const cloudinary = require("cloudinary").v2;
 
@@ -229,6 +230,54 @@ exports.uploadImage = async (req, res) => {
         // const data = await User.findByIdAndUpdate(req.user.id, {$push: {prescriptions: }})
         console.log(result);
       });
+  } catch (error) {
+    res.json({
+      type: "error",
+      message: error.message,
+    });
+  }
+};
+
+exports.getAllUnverifiedPrescriptions = async (req, res) => {
+  try {
+    const prescriptions = await Prescription.find({
+      isVerified: false,
+      user: res.locals.id,
+    });
+    if (prescriptions.length === 0) {
+      return res.status(401).json({
+        type: "error",
+        message: "No unverified prescriptions",
+      });
+    }
+    res.status(200).json({
+      type: "success",
+      prescriptions,
+    });
+  } catch (error) {
+    res.json({
+      type: "error",
+      message: error.message,
+    });
+  }
+};
+
+exports.getAllVerifiedPrescriptions = async (req, res) => {
+  try {
+    const prescriptions = await Prescription.find({
+      isVerified: true,
+      user: res.locals.id,
+    });
+    if (prescriptions.length === 0) {
+      return res.status(401).json({
+        type: "error",
+        message: "No verified prescriptions",
+      });
+    }
+    res.status(200).json({
+      type: "success",
+      prescriptions,
+    });
   } catch (error) {
     res.json({
       type: "error",
