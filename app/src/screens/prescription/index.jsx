@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { StatusBar } from 'expo-status-bar'
 import { Table, Row, Rows } from 'react-native-table-component'
-import RadioForm, { RadioButton, RadioButtonInput, RadioButtonLabel } from 'react-native-simple-radio-button'
 
 import {
     StyledContainer,
@@ -21,12 +20,12 @@ import {
     TextInputContainer,
     StyledTextInput,
     StyledLabel,
-    RadioContainer,
     BottomContainer,
     DrugName,
     SelectImage,
     PrescriptionImage,
-    ScrollableContainer
+    ScrollableContainer,
+    StyledInputLabel
 } from './styles'
 import { Colors } from '../../shared/variables'
 
@@ -76,8 +75,8 @@ const drugsData = [
 ];
 
 const PrescriptionScreen = ({ navigation }) => {
-    const [sideEffects, setSideEffects] = useState('')
-    const [value, setValue] = useState(0)
+    const [alternatives, setAlternatives] = useState('')
+    const [suggestions, setSuggesstions] = useState('')
     const tableHead = ['Drug name', 'Symptoms']
     const tableData = [
         ['Microcef CV 200 mg', 'Throat infections'],
@@ -85,11 +84,6 @@ const PrescriptionScreen = ({ navigation }) => {
         ['Pantotav DSR', 'Acidity'],
         ['BENZ Pearls', 'Dry cough'],
         ['Montak LC', 'Runny nose, watery eyes, sneezing']
-    ]
-
-    const items = [
-        { label: 'Yes', value: 0 },
-        { label: 'No', value: 1 }
     ]
 
     const handleSubmit = () => { }
@@ -121,51 +115,29 @@ const PrescriptionScreen = ({ navigation }) => {
                         </Table>
                     </TableContainer>
                     <SuggestionsContainer>
-                        <StyledText>Select your side effects or type them out:</StyledText>
+                        <StyledText>Suggest alternatives and give suggestions:</StyledText>
                         {drugsData.map((drug) => (
                             <SuggestionContainer key={drug.id}>
                                 <StyledLabel>Approval for{' '}
                                     <DrugName>"{drug.name}"</DrugName>:
                                 </StyledLabel>
                                 <InputContainer>
-                                    <RadioContainer>
-                                        <RadioForm formHorizontal>
-                                            {items.map((obj, index) => (
-                                                <RadioButton key={index}>
-                                                    <RadioButtonInput
-                                                        obj={obj}
-                                                        index={index}
-                                                        isSelected={index === value}
-                                                        onPress={(value) => setValue(value)}
-                                                        borderWidth={2}
-                                                        buttonInnerColor='#0F2E53'
-                                                        buttonOuterColor={index === value ? '#0F2E53' : '#0F2E53'}
-                                                        buttonSize={10}
-                                                        buttonWrapStyle={{ marginRight: 5 }}
-                                                    />
-                                                    <RadioButtonLabel
-                                                        obj={obj}
-                                                        index={index}
-                                                        labelStyle={{
-                                                            color: index === value ? '#0F2E53' : '#0F2E53',
-                                                            fontSize: 19,
-                                                            fontWeight: 'bold',
-                                                            marginRight: 20
-                                                        }}
-                                                    />
-                                                </RadioButton>
-                                            ))}
-                                        </RadioForm>
-                                    </RadioContainer>
-                                    {value === 1 && (
-                                        <TextInputContainer>
-                                            <StyledTextInput
-                                                onChangeText={(sideEffects) => setSideEffects(sideEffects)}
-                                                value={sideEffects}
-                                                keyboardType="email-address"
-                                            />
-                                        </TextInputContainer>
-                                    )}
+                                    <TextInputContainer>
+                                        <StyledInputLabel>Suggest alternatives</StyledInputLabel>
+                                        <StyledTextInput
+                                            onChangeText={(alternatives) => setAlternatives(alternatives)}
+                                            value={alternatives}
+                                            keyboardType="email-address"
+                                        />
+                                    </TextInputContainer>
+                                    <TextInputContainer>
+                                        <StyledInputLabel>Give suggestions</StyledInputLabel>
+                                        <StyledTextInput
+                                            onChangeText={(suggestions) => setSuggesstions(suggestions)}
+                                            value={suggestions}
+                                            keyboardType="email-address"
+                                        />
+                                    </TextInputContainer>
                                 </InputContainer>
                             </SuggestionContainer>
                         ))}

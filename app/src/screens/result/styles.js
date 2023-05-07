@@ -10,7 +10,7 @@ export const StyledContainer = styled.View`
     background-color: #fff;
 `;
 
-export const InnerContainer = styled.ScrollView`
+export const InnerContainer = styled.View`
     flex: 1;
     width: 100%;
 `;
@@ -22,6 +22,10 @@ export const UpperContainer = styled.View`
     padding-top: 10px;
     padding-bottom: 10px;
     margin-bottom: 20px;
+`;
+
+export const ScrollableContainer = styled.ScrollView`
+    width: 100%;
 `;
 
 export const PageTitle = styled.Text`

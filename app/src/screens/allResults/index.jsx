@@ -27,7 +27,7 @@ const data = [
     { id: 2, name: 'Prescription 1', verified: false },
     { id: 3, name: 'Prescription 2', verified: true },
     { id: 4, name: 'Prescription 2', verified: true },
-    { id: 5, name: 'Prescription 2', verified: true },
+    // { id: 5, name: 'Prescription 2', verified: true },
 ]
 
 const AllResultsScreen = ({ navigation }) => {
@@ -70,13 +70,17 @@ const AllResultsScreen = ({ navigation }) => {
                     )}
                     keyExtractor={(item) => item.id.toString()}
                 />
-                <Line />
-                <BottomContainer>
-                    <StyledText>To continue using medassist, upgrade your plan</StyledText>
-                    <StyledButton onPress={() => navigation.navigate("UpgradePlan")}>
-                        <ButtonText>Upgrade Plan</ButtonText>
-                    </StyledButton>
-                </BottomContainer>
+                {data.length >= 5 && (
+                    <>
+                        <Line />
+                        <BottomContainer>
+                            <StyledText>To continue using medassist, upgrade your plan</StyledText>
+                            <StyledButton onPress={() => navigation.navigate("UpgradePlan")}>
+                                <ButtonText>Upgrade Plan</ButtonText>
+                            </StyledButton>
+                        </BottomContainer>
+                    </>
+                )}
             </InnerContainer>
         </StyledContainer>
     )
