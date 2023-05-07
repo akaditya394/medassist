@@ -1,5 +1,19 @@
 @import "../../shared/variables.scss";
 
+.prescription {
+    width: auto;
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 2rem;
+
+    img {
+        width: 20rem;
+        height: 28rem;
+    }
+}
+
 .table {
     display: flex;
     align-items: center;
@@ -24,18 +38,17 @@
 
     label {
         display: block;
-        margin: 0.5rem 0;
+        margin-bottom: 0.5rem;
         color: $text;
         font-family: $regular;
-        font-size: 0.875rem;
-        text-transform: uppercase;
+        font-size: 0.8rem;
         letter-spacing: +0.5px;
     }
 
     input {
         width: calc(100% - 1rem);
         max-width: 24rem;
-        height: 2.9375rem;
+        height: 2.5rem;
         background: #fafafa;
         border: 1px solid #e3e3e3;
         border-radius: 0.5rem;
@@ -47,5 +60,46 @@
 
     input:focus {
         background: $tertiary;
+    }
+}
+
+.buttonContainer {
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .continueButton {
+        cursor: pointer;
+        width: auto;
+        min-width: 9rem;
+        height: 2.6rem;
+        margin: 1rem 1rem;
+        margin-bottom: 1rem;
+        padding: 0 1rem;
+        background: $primary;
+        color: #ffffff;
+        border: none;
+        border-radius: 0.5rem;
+        font-family: $accent;
+        font-size: 1rem;
+        font-weight: 700;
+    }
+
+    .button {
+        cursor: pointer;
+        width: auto;
+        min-width: 9rem;
+        height: 2.6rem;
+        margin: 1rem 1rem;
+        margin-bottom: 1rem;
+        padding: 0 1rem;
+        background: $secondary;
+        color: $primary;
+        border: none;
+        border-radius: 0.5rem;
+        font-family: $accent;
+        font-size: 1rem;
+        font-weight: 700;
     }
 }
