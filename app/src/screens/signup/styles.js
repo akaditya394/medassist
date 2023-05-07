@@ -60,8 +60,8 @@ export const StyledTextInput = styled.TextInput`
     color: ${Colors.primary};
 
     ${(props) => props.isUser == true && `
-        padding-left: 30px;
-        padding-right: 30px;
+        padding-left: 25px;
+        padding-right: 25px;
     `}
 `;
 

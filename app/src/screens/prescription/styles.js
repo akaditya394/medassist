@@ -140,10 +140,6 @@ export const StyledLabel = styled.Text`
     text-align: left;
 `;
 
-export const RadioContainer = styled.View`
-    width: 100%;
-`;
-
 export const BottomContainer = styled.View`
     width: 100%;
 `;
@@ -164,4 +160,10 @@ export const SelectImage = styled.View`
 export const PrescriptionImage = styled.Image`
     width: 100%;
     height: 500px;
+`;
+
+export const StyledInputLabel = styled.Text`
+    color: ${Colors.primary};
+    font-size: 13px;
+    text-align: left;
 `;
