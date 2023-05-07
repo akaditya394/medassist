@@ -28,7 +28,7 @@ import { Colors } from '../../shared/variables'
 
 import LogoImage from '../../images/logo/logo.svg'
 
-const SignUpScreen = () => {
+const SignUpScreen = ({ navigation }) => {
     const [hidePassword, setHidePassword] = useState(true)
     const [username, setUsername] = useState('')
     const [email, setEmail] = useState('')
@@ -147,7 +147,10 @@ const SignUpScreen = () => {
                         </>
                     )}
                     <MsgBox>...</MsgBox>
-                    <StyledButton onPress={handleSubmit}>
+                    <StyledButton onPress={
+                        // handleSubmit
+                        () => navigation.navigate("VerifyMedicalProfessional")
+                    }>
                         <ButtonText>Sign up</ButtonText>
                     </StyledButton>
                     <Line />

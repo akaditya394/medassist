@@ -4,12 +4,16 @@ import * as WebBrowser from 'expo-web-browser'
 import {
     StyledContainer,
     InnerContainer,
+    UpperContainer,
+    Line,
     PageTitle,
-    StyledList,
     StyledListItem,
     StyledListText,
+    RenewalDate,
     Link,
-    ListTitle
+    StyledDevTeamListItem,
+    StyledDevTeamListText,
+    StyledDevListText
 } from './styles'
 
 import LinkImage from '../../images/icons/external_link.svg'
@@ -23,34 +27,45 @@ const devTeam = [
 
 const handleLogout = () => { }
 
-const SettingsScreen = () => {
+let isPaidUser = false
+
+const SettingsScreen = ({ navigation }) => {
     return (
         <StyledContainer>
             <StatusBar style='dark' />
             <InnerContainer>
-                <PageTitle>
-                    Settings
-                </PageTitle>
-                <ListTitle>Misc</ListTitle>
-                {/* <StyledListItem onPress={() => { }}>
-                    <StyledListText>Change Theme (not working)</StyledListText>
-                </StyledListItem> */}
+                <UpperContainer>
+                    <PageTitle>
+                        Settings
+                    </PageTitle>
+                </UpperContainer>
+                {isPaidUser ? (
+                    <StyledListItem onPress={handleLogout}>
+                        <StyledListText>Manage Subscription</StyledListText>
+                        <RenewalDate>Your plan renews on June 7, 2023.</RenewalDate>
+                    </StyledListItem>
+                ) : (
+                    <StyledListItem onPress={() => navigation.navigate("UpgradePlan")}>
+                        <StyledListText>Upgrade Plan</StyledListText>
+                    </StyledListItem>
+                )}
+                <Line />
                 <StyledListItem onPress={handleLogout}>
                     <StyledListText>Logout</StyledListText>
                 </StyledListItem>
-                <ListTitle>Dev Team</ListTitle>
-                <StyledList
-                    data={devTeam}
-                    renderItem={({ item }) => (
-                        <StyledListItem onPress={() => WebBrowser.openBrowserAsync(item.link)}>
-                            <StyledListText>{`\u2022 ${item.text}`}</StyledListText>
+                <Line />
+                <StyledDevListText>Dev Team:</StyledDevListText>
+                {devTeam.map((item, index) => {
+                    return (
+                        <StyledDevTeamListItem key={index} onPress={() => WebBrowser.openBrowserAsync(item.link)}>
+                            <StyledDevTeamListText>{`\u2022 ${item.text}`}</StyledDevTeamListText>
                             <Link>
                                 <LinkImage width="18px" height="18px" fill="#0F2E53" />
                             </Link>
-                        </StyledListItem>
-                    )}
-                    keyExtractor={(item) => item.id.toString()}
-                />
+                        </StyledDevTeamListItem>
+                    )
+                })}
+                <Line />
             </InnerContainer>
         </StyledContainer>
     )

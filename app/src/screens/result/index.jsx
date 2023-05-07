@@ -12,7 +12,8 @@ import {
     StyledButton,
     ButtonText,
     PrescriptionImage,
-    TableContainer
+    TableContainer,
+    ScrollableContainer
 } from './styles'
 
 import SettingsImage from '../../images/icons/settings.svg'
@@ -20,13 +21,13 @@ import { Table, Row, Rows } from 'react-native-table-component'
 import { Colors } from '../../shared/variables'
 
 const ResultScreen = ({ navigation }) => {
-    const tableHead = ['Drug name', 'Symptoms', 'Alternatives']
+    const tableHead = ['Drug name', 'Symptoms']
     const tableData = [
-        ['Microcef CV 200 mg', 'Throat infections', 'Goodcif CV 200mg'],
-        ['Ventryl D', 'Sore throat', 'Chericof'],
-        ['Pantotav DSR', 'Acidity', 'Pantin D'],
-        ['BENZ Pearls', 'Dry cough', '-'],
-        ['Montak LC', 'Runny nose, watery eyes, sneezing', 'Levocet M']
+        ['Microcef CV 200 mg', 'Throat infections'],
+        ['Ventryl D', 'Sore throat'],
+        ['Pantotav DSR', 'Acidity'],
+        ['BENZ Pearls', 'Dry cough'],
+        ['Montak LC', 'Runny nose, watery eyes, sneezing']
     ]
 
     return (
@@ -43,20 +44,22 @@ const ResultScreen = ({ navigation }) => {
                         </Icon>
                     </IconsContainer>
                 </UpperContainer>
-                <SelectImage>
-                    <PrescriptionImage resizeMode="cover" source={require('../../images/test/prescription.jpg')} />
-                </SelectImage>
-                <TableContainer>
-                    <Table borderStyle={{ borderWidth: 1, borderColor: `${Colors.primary}` }}>
-                        <Row data={tableHead} style={{
-                            height: 50, backgroundColor: `${Colors.tertiary}`
-                        }} textStyle={{ margin: 6, fontWeight: 'bold' }} />
-                        <Rows data={tableData} textStyle={{ margin: 6 }} />
-                    </Table>
-                </TableContainer>
+                <ScrollableContainer>
+                    <SelectImage>
+                        <PrescriptionImage resizeMode="cover" source={require('../../images/test/prescription.jpg')} />
+                    </SelectImage>
+                    <TableContainer>
+                        <Table borderStyle={{ borderWidth: 1, borderColor: `${Colors.primary}` }}>
+                            <Row data={tableHead} style={{
+                                height: 50, backgroundColor: `${Colors.tertiary}`
+                            }} textStyle={{ margin: 6, fontWeight: 'bold' }} />
+                            <Rows data={tableData} textStyle={{ margin: 6 }} />
+                        </Table>
+                    </TableContainer>
+                </ScrollableContainer>
                 <BottomContainer>
-                    <StyledButton onPress={() => navigation.navigate('SideEffects')}>
-                        <ButtonText>Add your side effects</ButtonText>
+                    <StyledButton onPress={() => navigation.navigate('AllResults')}>
+                        <ButtonText>Continue</ButtonText>
                     </StyledButton>
                 </BottomContainer>
             </InnerContainer>

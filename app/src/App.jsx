@@ -12,7 +12,6 @@ import SettingsScreen from "./screens/settings";
 import ResetPasswordScreen from "./screens/resetPassword";
 import UploadScreen from "./screens/upload";
 import ResultScreen from "./screens/result";
-import SideEffectsScreen from "./screens/sideEffects";
 import PrescriptionScreen from "./screens/prescription";
 import VerifiedResultScreen from "./screens/verifiedResult";
 import UnverifiedResultScreen from "./screens/unverifiedResult";
@@ -20,16 +19,17 @@ import MedicalHistoryScreen from "./screens/medicalHistory";
 import UpdatedPrescriptionScreen from './screens/updatedPrescription';
 import ViewMedicalHistoryScreen from './screens/viewMedicalHistory';
 import UpgradePlanScreen from './screens/upgradePlan';
+import VerifyMedicalProfessionalScreen from './screens/verifyMedicalProfessional';
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
-  const [authSession, setAuthSession] = useState('gh')
+  const [authSession, setAuthSession] = useState()
 
   return (
     <NavigationContainer independent>
       {authSession ? (
-        <Stack.Navigator initialRouteName="AllResults" screenOptions={{
+        <Stack.Navigator initialRouteName="AllPrescriptions" screenOptions={{
           headerShown: false
         }}>
           <Stack.Screen
@@ -51,10 +51,6 @@ export default function App() {
           <Stack.Screen
             name="Result"
             component={ResultScreen}
-          />
-          <Stack.Screen
-            name="SideEffects"
-            component={SideEffectsScreen}
           />
           <Stack.Screen
             name="Prescription"
@@ -100,6 +96,10 @@ export default function App() {
           <Stack.Screen
             name="SignUp"
             component={SignUpScreen}
+          />
+          <Stack.Screen
+            name="VerifyMedicalProfessional"
+            component={VerifyMedicalProfessionalScreen}
           />
           <Stack.Screen
             name="ForgotPassword"
