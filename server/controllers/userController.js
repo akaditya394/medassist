@@ -5,6 +5,7 @@ const User = require("../models/User");
 const { issueToken } = require("../utils/token");
 const sendEmail = require("../utils/email");
 const Prescription = require("../models/Prescriptions");
+const Doctor = require("../models/Doctor");
 require("dotenv").config();
 const cloudinary = require("cloudinary").v2;
 
@@ -280,6 +281,30 @@ exports.getAllVerifiedPrescriptions = async (req, res) => {
     });
   } catch (error) {
     res.json({
+      type: "error",
+      message: error.message,
+    });
+  }
+};
+
+exports.assignDoctor = async (req, res) => {
+  // need to see how these id are coming
+  const { d_id, p_id } = req.body;
+  const doc = await Doctor.findOne({ _id: d_id });
+  const pres = await Prescription.findOne({ _id: p_id });
+  try {
+    const doctor = await Doctor.findByIdAndUpdate(d_id, {
+      $push: { prescriptions: pres },
+    });
+    const presc = await Prescription.findByIdAndUpdate(p_id, {
+      $push: { doctor: doc },
+    });
+
+    res.status(200).json({
+      type: "success",
+    });
+  } catch (error) {
+    res.status(200).json({
       type: "error",
       message: error.message,
     });
