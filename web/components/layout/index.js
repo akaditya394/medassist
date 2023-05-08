@@ -4,6 +4,7 @@ import Head from "next/head";
 
 //Context
 import StateContext from "../../Context/StateContext";
+import DispatchContext from "../../Context/DispatchContext";
 
 import Button from "../button";
 import ContextMenu from "../contextMenu";
@@ -19,6 +20,7 @@ const Layout = ({ children }) => {
   const [isContextMenuOpen, setIsContextMenuOpen] = useState(false);
 
   const isLoginPage = router.pathname === "/login";
+  const appDispatch = useContext(DispatchContext);
   const appState = useContext(StateContext);
   const isAuth = appState.loggedIn;
   const isUserDoctor = appState?.person?.role === "Medical_Professional";
@@ -79,7 +81,12 @@ const Layout = ({ children }) => {
                 {
                   id: "logout",
                   label: "Logout",
-                  action: () => handleNavigation("/"),
+                  action: () => {
+                    appDispatch({
+                      type: "logout",
+                    });
+                    handleNavigation("/");
+                  },
                 },
               ]}
               closeAction={() => closeContextMenu()}
