@@ -4,7 +4,7 @@ import TestPrescription from "../../images/test/prescription.jpg"
 const Result = () => {
     return (
         <>
-            <h1 className="pageHeading">Drugs, side effects and alternatives</h1>
+            <h1 className="pageHeading">Drugs and side effects</h1>
             <div className={styles.prescription}>
                 <img src={TestPrescription} alt="Prescription" />
             </div>
