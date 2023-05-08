@@ -37,10 +37,11 @@ exports.register = async (req, res) => {
         message: "Some error occured...please try again",
       });
     }
-    issueToken(res, doctor);
+    const token = issueToken(res, doctor);
     res.status(200).json({
       type: "success",
       doctor,
+      token,
       message: "Signed up successfully",
     });
   } catch (err) {
@@ -73,10 +74,11 @@ exports.login = async (req, res) => {
     }
     doctor.password = undefined;
 
-    issueToken(res, doctor);
+    const token = issueToken(res, doctor);
 
     res.status(200).json({
       type: "success",
+      token,
       message: "Logged in successfully",
     });
   } catch (error) {

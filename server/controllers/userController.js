@@ -34,12 +34,13 @@ exports.register = async (req, res) => {
       weight,
     });
 
-    issueToken(res, user);
+    const token = issueToken(res, user);
     await user.save();
 
     res.status(200).json({
       type: "success",
       user,
+      token,
       message: "Signed up successfully",
     });
   } catch (err) {
@@ -72,10 +73,11 @@ exports.login = async (req, res) => {
     }
     user.password = undefined;
 
-    issueToken(res, user);
+    const token = issueToken(res, user);
 
     res.status(200).json({
       type: "success",
+      token,
       message: "Logged in successfully",
     });
   } catch (error) {
