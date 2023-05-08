@@ -76,16 +76,13 @@ const MyApp = ({ Component, pageProps }) => {
         <DispatchContext.Provider value={dispatch}>
           <Layout>
             {/* <Elements stripe={stripePromise}> */}
-        <Component {...pageProps} />
+            <Component {...pageProps} />
             {/* </Elements> */}
-      </Layout>
+          </Layout>
         </DispatchContext.Provider>
       </StateContext.Provider>
     );;
   }
-};
-
-export default MyApp;
 };
 
 export default MyApp;

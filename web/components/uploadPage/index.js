@@ -6,10 +6,12 @@ import styles from "./styles.module.scss";
 import UploadPageIllustration from "../../images/upload_page_illustration.svg";
 import axios from "axios";
 import StateContext from "../../Context/StateContext";
+import Loader from "../loader";
 
 const LoginPage = () => {
   const RESET_NOTICE = { type: "", message: "" };
   const [notice, setNotice] = useState(RESET_NOTICE);
+  const [isLoading, setIsLoading] = useState(false)
   const router = useRouter();
   const appState = useContext(StateContext);
 
@@ -67,6 +69,7 @@ const LoginPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    state.selectedPdfs && setIsLoading(true)
     const data = new FormData();
     if (!state.selectedPdfs) {
       setNotice({
@@ -139,7 +142,7 @@ const LoginPage = () => {
             </Notice>
           )}
           <button type="submit" onClick={handleSubmit}>
-            Upload
+            {!isLoading ? 'Upload' : <Loader />}
           </button>
         </form>
       </div>

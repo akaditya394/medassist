@@ -5,6 +5,7 @@ import DispatchContext from "../Context/DispatchContext";
 
 import Notice from "../components/notice";
 import Input from "../components/input";
+import Loader from "../components/loader";
 
 import BackArrowIcon from "../images/icons/arrow-left.svg";
 import LoginPageIllustration from "../images/login_page_illustration.svg";
@@ -42,6 +43,7 @@ const LoginPage = () => {
   const RESET_NOTICE = { type: "", message: "" };
   const [notice, setNotice] = useState(RESET_NOTICE);
   const [option, setOption] = useState("user");
+  const [isLoading, setIsLoading] = useState(false)
   const router = useRouter();
   const appDispatch = useContext(DispatchContext);
 
@@ -159,12 +161,14 @@ const LoginPage = () => {
           )}
           <button
             type={form.submitButton.type}
-            // onClick={() => router.push("/results")}
+          // onClick={() => router.push("/results")}
           >
             {form.submitButton.label}
           </button>
           <button type={form.button.type} onClick={handlePasswordReset}>
-            {form.button.label}
+            {!isLoading ? (
+              <>{form.button.label}</>
+            ) : <Loader />}
           </button>
         </form>
         <p>
