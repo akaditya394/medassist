@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useRouter } from "next/router";
 
 import Input from "../components/input";
@@ -6,6 +6,7 @@ import Notice from "../components/notice";
 
 import BackArrowIcon from "../images/icons/arrow-left.svg";
 import SignupPageIllustration from "../images/signup_page_illustration.svg";
+import DispatchContext from "../Context/DispatchContext";
 import axios from "axios";
 
 const form = {
@@ -45,9 +46,11 @@ const form = {
 const SignupPage = () => {
   const RESET_NOTICE = { type: "", message: "" };
   const [notice, setNotice] = useState(RESET_NOTICE);
+  const [weight, setWeight] = useState('')
+  const [age, setAge] = useState('')
   const router = useRouter();
   const [option, setOption] = useState("user");
-
+  const appDispatch = useContext(DispatchContext);
   const onOptionChange = (e) => {
     console.log(e.target.value);
     setOption(e.target.value);
@@ -61,27 +64,42 @@ const SignupPage = () => {
     setFormData({ ...formData, [id]: value });
   };
 
-  const setRole = () => {
-    formData.role = option;
-  };
+  // const setRole = () => {
+  //   formData.role = option;
+  // };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setRole();
+    const personForm = new FormData();
+    Object.keys(formData).forEach((key) => {
+      personForm.append(key, formData[key]);
+    });
+    if (option === "user") {
+      personForm.append("age", age);
+      personForm.append("weight", weight);
+    }
+    console.log(personForm, "Pform");
+
+    // setRole();
+
     // a http post request to signup
-    const res = await axios.post(
-      `http://localhost:8000/${option}/register`,
-      JSON.stringify(formData),
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    const res = await axios.post(`/${option}/register`, personForm, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
     switch (res.data.type) {
       case "success":
+        appDispatch({
+          type: "login",
+          data: {
+            token: res.data.token,
+            role: option,
+            about: option === "user" ? res?.data?.user : res?.data?.doctor,
+          },
+        });
         setTimeout(() => {
-          router.replace("/");
+          router.replace("/medicalHistory");
         }, 3000);
         setNotice({ type: "SUCCESS", message: res.data.message });
         break;
@@ -117,7 +135,7 @@ const SignupPage = () => {
             );
           })}
           <h3>Select your role</h3>
-          <div className="inputWrapper">
+          <div className="radioWrapper">
             <input
               type="radio"
               name="option"
@@ -138,15 +156,32 @@ const SignupPage = () => {
             />
             <label htmlFor="Medical_Professional">Medical Professional</label>
           </div>
+          {option === "user" && (
+            <>
+              <div className="inputWrapper">
+                <label>Weight in kg</label>
+                <input
+                  required={option === "user" ? true : false}
+                  value={weight}
+                  onChange={(e) => setWeight(e.target.value)}
+                />
+              </div>
+              <div className="inputWrapper">
+                <label>Age</label>
+                <input
+                  required={option === "user" ? true : false}
+                  value={age}
+                  onChange={(e) => setAge(e.target.value)}
+                />
+              </div>
+            </>
+          )}
           {notice.message && (
             <Notice status={notice.type} mini>
               {notice.message}
             </Notice>
           )}
-          <button
-            type={form.submitButton.type}
-            onClick={() => router.push("/results")}
-          >
+          <button type={form.submitButton.type}>
             {form.submitButton.label}
           </button>
         </form>
