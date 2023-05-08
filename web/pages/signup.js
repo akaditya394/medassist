@@ -46,8 +46,8 @@ const form = {
 const SignupPage = () => {
   const RESET_NOTICE = { type: "", message: "" };
   const [notice, setNotice] = useState(RESET_NOTICE);
-  const [weight, setWeight] = useState('')
-  const [age, setAge] = useState('')
+  const [weight, setWeight] = useState("");
+  const [age, setAge] = useState("");
   const router = useRouter();
   const [option, setOption] = useState("user");
   const appDispatch = useContext(DispatchContext);
@@ -78,7 +78,6 @@ const SignupPage = () => {
       personForm.append("age", age);
       personForm.append("weight", weight);
     }
-    console.log(personForm, "Pform");
 
     // setRole();
 
@@ -98,8 +97,11 @@ const SignupPage = () => {
             about: option === "user" ? res?.data?.user : res?.data?.doctor,
           },
         });
+
         setTimeout(() => {
-          router.replace("/medicalHistory");
+          option === "user"
+            ? router.replace("/medicalHistory")
+            : router.replace("/prescriptions");
         }, 3000);
         setNotice({ type: "SUCCESS", message: res.data.message });
         break;
@@ -149,9 +151,9 @@ const SignupPage = () => {
             <input
               type="radio"
               name="option"
-              value="Medical_Professional"
+              value="doctor"
               id="Medical_Professional"
-              checked={option === "Medical_Professional"}
+              checked={option === "doctor"}
               onChange={onOptionChange}
             />
             <label htmlFor="Medical_Professional">Medical Professional</label>
