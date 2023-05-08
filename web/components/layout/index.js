@@ -1,6 +1,9 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useRouter } from "next/router";
 import Head from "next/head";
+
+//Context
+import StateContext from "../../Context/StateContext";
 
 import Button from "../button";
 import ContextMenu from "../contextMenu";
@@ -16,7 +19,9 @@ const Layout = ({ children }) => {
   const [isContextMenuOpen, setIsContextMenuOpen] = useState(false);
 
   const isLoginPage = router.pathname === "/login";
-  const isAuth = false;
+  const appState = useContext(StateContext);
+  const isAuth = appState.loggedIn;
+  const isUserDoctor = appState?.person?.role === "Medical_Professional";
 
   const toggleContextMenu = () => {
     setIsContextMenuOpen(!isContextMenuOpen);

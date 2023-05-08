@@ -1,15 +1,17 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useRouter } from "next/router";
 
 import Notice from "../notice";
 import styles from "./styles.module.scss";
 import UploadPageIllustration from "../../images/upload_page_illustration.svg";
 import axios from "axios";
+import StateContext from "../../Context/StateContext";
 
 const LoginPage = () => {
   const RESET_NOTICE = { type: "", message: "" };
   const [notice, setNotice] = useState(RESET_NOTICE);
   const router = useRouter();
+  const appState = useContext(StateContext);
 
   const [state, setState] = useState({
     selectedPdfs: null,
@@ -67,6 +69,7 @@ const LoginPage = () => {
     e.preventDefault();
     const data = new FormData();
     data.append("file", state.selectedPdfs);
+    const token = appState.person.token;
     // a http post request to upload prescription
     const res = await axios.post(
       "http://localhost:8000/prescription/uploadPrescription",
@@ -74,13 +77,21 @@ const LoginPage = () => {
       {
         headers: {
           "Content-Type": "multipart/form-data",
-          // Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${token}`,
         },
       }
     );
-    console.log(formData);
-    console.log(state);
-    console.log(data);
+    switch (res.data.type) {
+      case "success":
+        // setTimeout(() => {
+        //   router.replace("/");
+        // }, 3000);
+        setNotice({ type: "SUCCESS", message: res.data.message });
+        break;
+      case "error":
+        setNotice({ type: "ERROR", message: res.data.message });
+        break;
+    }
   };
 
   return (

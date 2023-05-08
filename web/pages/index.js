@@ -1,12 +1,17 @@
-import React from "react";
+import React, { useContext } from "react";
+import axios from "axios";
 import LandingPage from "../components/landingPage";
 import UploadPage from "../components/uploadPage";
 import PrescriptionsPage from "./prescriptions";
 
-const IndexPage = () => {
-  const isAuth = true;
-  const isUserDoctor = false;
+//Context
+import StateContext from "../Context/StateContext";
 
+const IndexPage = () => {
+  const appState = useContext(StateContext);
+  const isAuth = appState.loggedIn;
+  const isUserDoctor = appState?.person?.role === "Medical_Professional";
+  console.log(appState, "Hey");
   let body = null;
 
   if (isAuth && isUserDoctor) {
