@@ -1,28 +1,81 @@
-import { useState, useEffect } from 'react'
-import Layout from "../components/layout"
+import { useState, useEffect } from "react";
+import { useImmerReducer } from "use-immer";
+import axios from "axios";
+import Layout from "../components/layout";
 
-import "typeface-nunito-sans"
-import "typeface-roboto"
-import "../shared/global.scss"
+import "typeface-nunito-sans";
+import "typeface-roboto";
+import "../shared/global.scss";
+
+//Context
+import StateContext from "../Context/StateContext";
+import DispatchContext from "../Context/DispatchContext";
+axios.defaults.baseURL = "http://localhost:8000/";
 
 const MyApp = ({ Component, pageProps }) => {
-  const [showChild, setShowChild] = useState(false)
+  const isBrowser = typeof window !== "undefined";
+  const initialState = {
+    loggedIn:
+      isBrowser && Boolean(window.localStorage.getItem("medassistPerson")),
+    person: {
+      token:
+        isBrowser &&
+        Boolean(window.localStorage.getItem("medassistPerson")) &&
+        JSON.parse(window.localStorage.getItem("medassistPerson")).token,
+      role:
+        isBrowser &&
+        Boolean(window.localStorage.getItem("medassistPerson")) &&
+        JSON.parse(window.localStorage.getItem("medassistPerson")).role,
+      about:
+        isBrowser &&
+        Boolean(window.localStorage.getItem("medassistPerson")) &&
+        JSON.parse(window.localStorage.getItem("medassistPerson")).about,
+    },
+  };
+  const [showChild, setShowChild] = useState(false);
+  console.log(isBrowser, "yo");
+  function ourReducer(draft, action) {
+    switch (action.type) {
+      case "login":
+        draft.loggedIn = true;
+        draft.person = action.data;
+        return;
+      case "logout":
+        draft.loggedIn = false;
+        return;
+      default:
+    }
+  }
+  const [state, dispatch] = useImmerReducer(ourReducer, initialState);
+
   useEffect(() => {
-    setShowChild(true)
-  }, [])
+    if (state.loggedIn) {
+      localStorage.setItem("medassistPerson", JSON.stringify(state.person));
+    } else {
+      localStorage.removeItem("medassistPerson");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [state.loggedIn]);
+  useEffect(() => {
+    setShowChild(true);
+  }, []);
 
   if (!showChild) {
-    return null
+    return null;
   }
-  if (typeof window === 'undefined') {
-    return <></>
+  if (typeof window === "undefined") {
+    return <></>;
   } else {
     return (
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
-    )
+      <StateContext.Provider value={state}>
+        <DispatchContext.Provider value={dispatch}>
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+        </DispatchContext.Provider>
+      </StateContext.Provider>
+    );
   }
-}
+};
 
-export default MyApp
+export default MyApp;

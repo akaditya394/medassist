@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useRouter } from "next/router";
 
 import Input from "../components/input";
@@ -6,6 +6,7 @@ import Notice from "../components/notice";
 
 import BackArrowIcon from "../images/icons/arrow-left.svg";
 import SignupPageIllustration from "../images/signup_page_illustration.svg";
+import DispatchContext from "../Context/DispatchContext";
 import axios from "axios";
 
 const form = {
@@ -47,7 +48,7 @@ const SignupPage = () => {
   const [notice, setNotice] = useState(RESET_NOTICE);
   const router = useRouter();
   const [option, setOption] = useState("user");
-
+  const appDispatch = useContext(DispatchContext);
   const onOptionChange = (e) => {
     console.log(e.target.value);
     setOption(e.target.value);
@@ -61,27 +62,42 @@ const SignupPage = () => {
     setFormData({ ...formData, [id]: value });
   };
 
-  const setRole = () => {
-    formData.role = option;
-  };
+  // const setRole = () => {
+  //   formData.role = option;
+  // };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setRole();
+    const personForm = new FormData();
+    Object.keys(formData).forEach((key) => {
+      personForm.append(key, formData[key]);
+    });
+    if (option === "user") {
+      personForm.append("age", 23);
+      personForm.append("weight", 72);
+    }
+    console.log(personForm, "Pform");
+
+    // setRole();
+
     // a http post request to signup
-    const res = await axios.post(
-      `http://localhost:8000/${option}/register`,
-      JSON.stringify(formData),
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    const res = await axios.post(`/${option}/register`, personForm, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
     switch (res.data.type) {
       case "success":
+        appDispatch({
+          type: "login",
+          data: {
+            token: res.data.token,
+            role: option,
+            about: option === "user" ? res?.data?.user : res?.data?.doctor,
+          },
+        });
         setTimeout(() => {
-          router.replace("/");
+          router.replace("/medicalHistory");
         }, 3000);
         setNotice({ type: "SUCCESS", message: res.data.message });
         break;
@@ -143,10 +159,7 @@ const SignupPage = () => {
               {notice.message}
             </Notice>
           )}
-          <button
-            type={form.submitButton.type}
-            onClick={() => router.push("/results")}
-          >
+          <button type={form.submitButton.type}>
             {form.submitButton.label}
           </button>
         </form>
