@@ -1,5 +1,7 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useRouter } from "next/router";
+
+import DispatchContext from "../Context/DispatchContext";
 
 import Notice from "../components/notice";
 import Input from "../components/input";
@@ -39,8 +41,9 @@ const form = {
 const LoginPage = () => {
   const RESET_NOTICE = { type: "", message: "" };
   const [notice, setNotice] = useState(RESET_NOTICE);
-  const [option, setOption] = useState("user")
+  const [option, setOption] = useState("user");
   const router = useRouter();
+  const appDispatch = useContext(DispatchContext);
 
   const onOptionChange = (e) => {
     console.log(e.target.value);
@@ -59,31 +62,48 @@ const LoginPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     // a http post request to login
-    const res = await axios.post(
-      "http://localhost:8000/user/login",
-      JSON.stringify(formData),
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
+    try {
+      const res = await axios.post(
+        `/${option}/login`,
+        JSON.stringify(formData),
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      switch (res.data.type) {
+        case "success":
+          appDispatch({
+            type: "login",
+            data: {
+              token: res.data.token,
+              role: option,
+              about: option === "user" ? res?.data?.user : res?.data?.doctor,
+            },
+          });
+          setTimeout(() => {
+            option === "user"
+              ? router.replace("/results")
+              : router.replace("/prescriptions");
+          }, 3000);
+          setNotice({ type: "SUCCESS", message: res.data.message });
+          break;
+        case "error":
+          setNotice({ type: "ERROR", message: res.data.message });
+          break;
       }
-    );
-    switch (res.data.type) {
-      case "success":
-        setTimeout(() => {
-          router.replace("/");
-        }, 3000);
-        setNotice({ type: "SUCCESS", message: res.data.message });
-        break;
-      case "error":
-        setNotice({ type: "ERROR", message: res.data.message });
-        break;
+    } catch (err) {
+      setNotice({ type: "ERROR", message: err.response.data.message });
     }
   };
 
   const handlePasswordReset = (e) => {
     e.preventDefault();
-    router.push("/forgotPassword");
+    router.push({
+      pathname: `/forgotPassword`,
+      query: { person: option },
+    });
   };
 
   return (
@@ -125,9 +145,9 @@ const LoginPage = () => {
             <input
               type="radio"
               name="option"
-              value="Medical_Professional"
+              value="doctor"
               id="Medical_Professional"
-              checked={option === "Medical_Professional"}
+              checked={option === "doctor"}
               onChange={onOptionChange}
             />
             <label htmlFor="Medical_Professional">Medical Professional</label>
@@ -139,7 +159,7 @@ const LoginPage = () => {
           )}
           <button
             type={form.submitButton.type}
-            onClick={() => router.push("/results")}
+            // onClick={() => router.push("/results")}
           >
             {form.submitButton.label}
           </button>

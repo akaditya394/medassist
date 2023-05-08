@@ -29,6 +29,7 @@ const ForgotPasswordPage = () => {
   const RESET_NOTICE = { type: "", message: "" };
   const [notice, setNotice] = useState(RESET_NOTICE);
   const router = useRouter();
+  const option = router.query.person;
 
   const values = {};
   form.inputs.forEach((input) => (values[input.id] = input.value));
@@ -41,25 +42,38 @@ const ForgotPasswordPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     // a http post request to send reset password email
-    const res = await axios.post(
-      "http://localhost:8000/user/forgotPassword",
-      JSON.stringify(formData),
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
+    try {
+      const res = await axios.post(
+        `/${option}/forgotPassword`,
+        JSON.stringify(formData),
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      switch (res.data.type) {
+        case "success":
+          setNotice({ type: "SUCCESS", message: res.data.message });
+          break;
+        case "error":
+          setTimeout(() => {
+            router.replace({
+              pathname: `/forgotPassword`,
+              query: { person: option },
+            });
+          }, 3000);
+          setNotice({ type: "ERROR", message: res.data.message });
+          break;
       }
-    );
-    switch (res.data.type) {
-      case "success":
-        setNotice({ type: "SUCCESS", message: res.data.message });
-        break;
-      case "error":
-        setTimeout(() => {
-          router.replace("http://localhost:3000/forgotPassword");
-        }, 3000);
-        setNotice({ type: "ERROR", message: res.data.message });
-        break;
+    } catch (err) {
+      setTimeout(() => {
+        router.replace({
+          pathname: `/forgotPassword`,
+          query: { person: option },
+        });
+      }, 3000);
+      setNotice({ type: "ERROR", message: err.response.data.message });
     }
   };
 

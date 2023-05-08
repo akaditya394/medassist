@@ -68,11 +68,18 @@ const LoginPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const data = new FormData();
+    if (!state.selectedPdfs) {
+      setNotice({
+        type: "ERROR",
+        message: "Select atleast one file",
+      });
+      return;
+    }
     data.append("file", state.selectedPdfs);
     const token = appState.person.token;
     // a http post request to upload prescription
     const res = await axios.post(
-      "http://localhost:8000/prescription/uploadPrescription",
+      "/prescription/uploadPrescription",
       { file: state.selectedPdfs, name: formData.name },
       {
         headers: {
