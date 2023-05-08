@@ -46,6 +46,8 @@ const form = {
 const SignupPage = () => {
   const RESET_NOTICE = { type: "", message: "" };
   const [notice, setNotice] = useState(RESET_NOTICE);
+  const [weight, setWeight] = useState('')
+  const [age, setAge] = useState('')
   const router = useRouter();
   const [option, setOption] = useState("user");
   const appDispatch = useContext(DispatchContext);
@@ -73,8 +75,8 @@ const SignupPage = () => {
       personForm.append(key, formData[key]);
     });
     if (option === "user") {
-      personForm.append("age", 23);
-      personForm.append("weight", 72);
+      personForm.append("age", age);
+      personForm.append("weight", weight);
     }
     console.log(personForm, "Pform");
 
@@ -133,7 +135,7 @@ const SignupPage = () => {
             );
           })}
           <h3>Select your role</h3>
-          <div className="inputWrapper">
+          <div className="radioWrapper">
             <input
               type="radio"
               name="option"
@@ -154,6 +156,26 @@ const SignupPage = () => {
             />
             <label htmlFor="Medical_Professional">Medical Professional</label>
           </div>
+          {option === "user" && (
+            <>
+              <div className="inputWrapper">
+                <label>Weight in kg</label>
+                <input
+                  required={option === "user" ? true : false}
+                  value={weight}
+                  onChange={(e) => setWeight(e.target.value)}
+                />
+              </div>
+              <div className="inputWrapper">
+                <label>Age</label>
+                <input
+                  required={option === "user" ? true : false}
+                  value={age}
+                  onChange={(e) => setAge(e.target.value)}
+                />
+              </div>
+            </>
+          )}
           {notice.message && (
             <Notice status={notice.type} mini>
               {notice.message}
