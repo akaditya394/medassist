@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { View, ToastAndroid, Platform, AlertIOS } from 'react-native'
 import { StatusBar } from 'expo-status-bar'
+import Spinner from 'react-native-loading-spinner-overlay'
 
 import { Octicons, Ionicons } from '@expo/vector-icons'
 
@@ -33,6 +34,7 @@ const LoginScreen = ({ navigation }) => {
     const [hidePassword, setHidePassword] = useState(true)
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [isloading, setIsLoading] = useState(false)
 
     const showToast = () => {
         if (Platform.OS === 'android') {
@@ -50,6 +52,7 @@ const LoginScreen = ({ navigation }) => {
         if (email === '' || password === '') {
             showToast()
         } else {
+            // setIsLoading(true)
             // console.log('email is: ', email)
             // console.log('password is: ', password)
         }
@@ -59,6 +62,11 @@ const LoginScreen = ({ navigation }) => {
         <StyledContainer>
             <StatusBar style='dark' />
             <InnerContainer>
+                <Spinner
+                    visible={isloading}
+                    textContent={'Loading...'}
+                    textStyle={{ color: '#FFF' }}
+                />
                 <Logo>
                     <LogoImage width="30px" height="30px" fill="#0F2E53" />
                     <PageTitle>

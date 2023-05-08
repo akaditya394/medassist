@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { View, ToastAndroid, Platform, AlertIOS } from 'react-native'
 import { StatusBar } from 'expo-status-bar'
+import Spinner from 'react-native-loading-spinner-overlay'
 
 import { Octicons, Ionicons } from '@expo/vector-icons'
 
@@ -27,6 +28,7 @@ import LogoImage from '../../images/logo/logo.svg'
 
 const ForgotPasswordScreen = () => {
     const [email, setEmail] = useState('')
+    const [isloading, setIsLoading] = useState(false)
 
     const showToast = () => {
         if (Platform.OS === 'android') {
@@ -44,6 +46,7 @@ const ForgotPasswordScreen = () => {
         if (email === '') {
             showToast()
         } else {
+            // setIsLoading(true)
             // console.log('email is: ', email)
         }
     }
@@ -52,6 +55,11 @@ const ForgotPasswordScreen = () => {
         <StyledContainer>
             <StatusBar style='dark' />
             <InnerContainer>
+                <Spinner
+                    visible={isloading}
+                    textContent={'Loading...'}
+                    textStyle={{ color: '#FFF' }}
+                />
                 <Logo>
                     <LogoImage width="30px" height="30px" fill="#0F2E53" />
                     <PageTitle>

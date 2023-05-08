@@ -1,6 +1,5 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { StatusBar } from "expo-status-bar"
-import Spinner from 'react-native-loading-spinner-overlay'
 
 import {
   StyledContainer,
@@ -26,14 +25,6 @@ const data = [
 ]
 
 const OnboardingScreen = ({ navigation }) => {
-  const [loading, setLoading] = useState(false)
-
-  const startLoading = () => {
-    setLoading(true)
-    setTimeout(() => {
-      setLoading(false)
-    }, 3000)
-  }
 
   return (
     <StyledContainer>
@@ -45,11 +36,6 @@ const OnboardingScreen = ({ navigation }) => {
       </BlobContainer>
       <StatusBar style="dark" />
       <InnerContainer>
-        <Spinner
-          visible={loading}
-          textContent={'Loading...'}
-          textStyle={{ color: '#FFF' }}
-        />
         <PageTitle>
           med<Assist>assist</Assist>
         </PageTitle>

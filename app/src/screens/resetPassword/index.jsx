@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { View, ToastAndroid, Platform, AlertIOS } from 'react-native'
 import { StatusBar } from 'expo-status-bar'
+import Spinner from 'react-native-loading-spinner-overlay'
 
 import { Octicons, Ionicons } from '@expo/vector-icons'
 
@@ -28,6 +29,7 @@ import LogoImage from '../../images/logo/logo.svg'
 const ResetPasswordScreen = () => {
     const [hidePassword, setHidePassword] = useState(true)
     const [password, setPassword] = useState('')
+    const [isloading, setIsLoading] = useState(false)
 
     const showToast = () => {
         if (Platform.OS === 'android') {
@@ -45,6 +47,7 @@ const ResetPasswordScreen = () => {
         if (password === '') {
             showToast()
         } else {
+            // setIsLoading(true)
             // console.log('password is: ', password)
         }
     }
@@ -53,6 +56,11 @@ const ResetPasswordScreen = () => {
         <StyledContainer>
             <StatusBar style='dark' />
             <InnerContainer>
+                <Spinner
+                    visible={isloading}
+                    textContent={'Loading...'}
+                    textStyle={{ color: '#FFF' }}
+                />
                 <Logo>
                     <LogoImage width="30px" height="30px" fill="#0F2E53" />
                     <PageTitle>
