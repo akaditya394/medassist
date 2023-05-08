@@ -37,10 +37,6 @@ export const Line = styled.View`
     margin-bottom: 10px;
 `;
 
-export const MessagesArea = styled.ScrollView`
-    width: 100%;
-`;
-
 export const BottomContainer = styled.View`
     width: 100%;
 `;
@@ -89,4 +85,34 @@ export const RightIcon = styled.TouchableOpacity`
     top: 15px;
     position: absolute;
     z-index: 1;
+`;
+
+export const MessagesArea = styled.ScrollView`
+    width: 100%;
+`;
+
+export const SingleMessageContainer = styled.View`
+    width: 60%;
+    background-color: ${Colors.tertiary};
+    padding: 15px;
+    border-radius: 2px;
+    justify-content: center;
+    margin-bottom: 10px;
+    margin-left: 0; 
+    margin-right: auto;
+
+    ${(props) => props.isSender == true && `
+        background-color: ${Colors.primary};
+        margin-left: auto; 
+        margin-right: 0;
+    `}
+`;
+
+export const MessageText = styled.Text`
+    font-size: 14px;
+    color: ${Colors.text};
+
+    ${(props) => props.isSender == true && `
+        color: #fff;
+    `}
 `;

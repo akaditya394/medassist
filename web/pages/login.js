@@ -39,7 +39,13 @@ const form = {
 const LoginPage = () => {
   const RESET_NOTICE = { type: "", message: "" };
   const [notice, setNotice] = useState(RESET_NOTICE);
+  const [option, setOption] = useState("user")
   const router = useRouter();
+
+  const onOptionChange = (e) => {
+    console.log(e.target.value);
+    setOption(e.target.value);
+  };
 
   const values = {};
   form.inputs.forEach((input) => (values[input.id] = input.value));
@@ -104,6 +110,28 @@ const LoginPage = () => {
               />
             );
           })}
+          <h3>Select your role</h3>
+          <div className="radioWrapper">
+            <input
+              type="radio"
+              name="option"
+              value="user"
+              id="User"
+              checked={option === "user"}
+              onChange={onOptionChange}
+            />
+            <label htmlFor="User">User</label>
+
+            <input
+              type="radio"
+              name="option"
+              value="Medical_Professional"
+              id="Medical_Professional"
+              checked={option === "Medical_Professional"}
+              onChange={onOptionChange}
+            />
+            <label htmlFor="Medical_Professional">Medical Professional</label>
+          </div>
           {notice.message && (
             <Notice status={notice.type} mini>
               {notice.message}
