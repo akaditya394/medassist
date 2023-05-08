@@ -1,5 +1,8 @@
 import { useEffect, useState, useContext } from "react";
 import NextLink from "next/link";
+import { useRouter } from "next/router";
+
+import Notice from "../notice"
 
 import StateContext from "../../Context/StateContext";
 import styles from "./styles.module.scss";
@@ -17,6 +20,7 @@ import axios from "axios";
 const AllResultsPage = () => {
   const RESET_NOTICE = { type: "", message: "" };
   const [notice, setNotice] = useState(RESET_NOTICE);
+    const router = useRouter();
   const [data, setData] = useState([]);
   const appState = useContext(StateContext);
 
@@ -53,6 +57,12 @@ const AllResultsPage = () => {
     prescriptions();
   }, []);
 
+
+  const handleUpgradePlan = (e) => {
+    e.preventDefault();
+    router.push("/upgradePlan");
+  };
+
   return (
     <>
       <h1 className="pageHeading">All your results</h1>
@@ -79,16 +89,30 @@ const AllResultsPage = () => {
                   <div className={styles.verified}>
                     <img src={VerifiedIcon} alt="Verified Icon" />
                   </div>
-                ) : (
-                  <div className={styles.verified}>
-                    <img src={UnverifiedIcon} alt="Unverified Icon" />
-                  </div>
                 )}
               </div>
             </NextLink>
           );
         })}
       </div>
+      {data.length >= 5 ? (
+        <Notice style={{ marginTop: '2rem' }}>
+          <h3>Your free tier has been expired</h3>
+          <p>To continue using medassist, upgrade your plan</p>
+          <div className={styles.buttonContainer} onClick={handleUpgradePlan}>
+            <button className={styles.button}>
+              Upgrade Plan
+            </button>
+          </div>
+        </Notice>
+      ) : (
+        <div className={styles.buttonContainer}>
+          <button className={styles.button}>
+            Upload Prescription
+          </button>
+        </div>
+      )}
+
     </>
   );
 };
