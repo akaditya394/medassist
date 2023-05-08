@@ -7,10 +7,12 @@ import "typeface-nunito-sans";
 import "typeface-roboto";
 import "../shared/global.scss";
 
-//Context
-import StateContext from "../Context/StateContext";
+//Context;
+import StateContext from "../Context/StateContext";;
 import DispatchContext from "../Context/DispatchContext";
-axios.defaults.baseURL = "http://localhost:8000/";
+axios.defaults.baseURL = "http://localhost:8000/";;
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
 
 const MyApp = ({ Component, pageProps }) => {
   const isBrowser = typeof window !== "undefined";
@@ -55,13 +57,16 @@ const MyApp = ({ Component, pageProps }) => {
       localStorage.removeItem("medassistPerson");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [state.loggedIn]);
+  }, [state.loggedIn]);;
   useEffect(() => {
-    setShowChild(true);
-  }, []);
+    setShowChild(true);;
+  }, []);;
+  // const stripePromise = loadStripe(
+  //   ""
+  // );
 
   if (!showChild) {
-    return null;
+    return null;;
   }
   if (typeof window === "undefined") {
     return <></>;
@@ -70,12 +75,17 @@ const MyApp = ({ Component, pageProps }) => {
       <StateContext.Provider value={state}>
         <DispatchContext.Provider value={dispatch}>
           <Layout>
-            <Component {...pageProps} />
-          </Layout>
+            {/* <Elements stripe={stripePromise}> */}
+        <Component {...pageProps} />
+            {/* </Elements> */}
+      </Layout>
         </DispatchContext.Provider>
       </StateContext.Provider>
-    );
+    );;
   }
+};
+
+export default MyApp;
 };
 
 export default MyApp;
