@@ -43,7 +43,7 @@ const PaymentScreen = ({ navigation }) => {
                         </Icon>
                     </IconsContainer>
                 </UpperContainer>
-                <StyledText>Choose your plan:</StyledText>
+                <StyledText>Enter your details:</StyledText>
                 <InputContainer>
                     <StyledInputLabel>Email</StyledInputLabel>
                     <StyledTextInput
