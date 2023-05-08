@@ -31,52 +31,64 @@ import { Colors } from '../../shared/variables'
 
 import SettingsImage from '../../images/icons/settings.svg'
 
-const drugsData = [
-    {
-        id: "1",
-        type: "text",
-        label: "Microcef CV 200 mg",
-        name: "Microcef CV 200 mg",
-        value: "",
-        approved: "Yes",
-    },
-    {
-        id: "2",
-        type: "text",
-        label: "Ventryl D",
-        name: "Ventryl D",
-        value: "",
-        approved: "Yes",
-    },
-    {
-        id: "3",
-        type: "text",
-        label: "Pantotav DSR",
-        name: "Pantotav DSR",
-        value: "",
-        approved: "Yes",
-    },
-    {
-        id: "4",
-        type: "text",
-        label: "BENZ Pearls",
-        name: "BENZ Pearls",
-        value: "",
-        approved: "Yes",
-    },
-    {
-        id: "5",
-        type: "text",
-        label: "Montak LC",
-        name: "Montak LC",
-        value: "",
-        approved: "Yes",
-    },
-];
-
 const PrescriptionScreen = ({ navigation }) => {
-    const [alternatives, setAlternatives] = useState('')
-    const [suggestions, setSuggesstions] = useState('')
+    const [drugsData, setDrugsData] = useState([
+        {
+            id: "1",
+            type: "text",
+            label: "Microcef CV 200 mg",
+            required: false,
+            name: "Microcef CV 200 mg",
+            value: "",
+            approved: "Yes",
+            alternatives: "",
+            suggestions: "",
+        },
+        {
+            id: "2",
+            type: "text",
+            label: "Ventryl D",
+            required: true,
+            name: "Ventryl D",
+            value: "",
+            approved: "Yes",
+            alternatives: "",
+            suggestions: "",
+        },
+        {
+            id: "3",
+            type: "text",
+            label: "Pantotav DSR",
+            required: true,
+            name: "Pantotav DSR",
+            value: "",
+            approved: "Yes",
+            alternatives: "",
+            suggestions: "",
+        },
+        {
+            id: "4",
+            type: "text",
+            label: "BENZ Pearls",
+            required: true,
+            name: "BENZ Pearls",
+            value: "",
+            approved: "Yes",
+            alternatives: "",
+            suggestions: "",
+        },
+        {
+            id: "5",
+            type: "text",
+            label: "Montak LC",
+            required: true,
+            name: "Montak LC",
+            value: "",
+            approved: "Yes",
+            alternatives: "",
+            suggestions: "",
+        },
+    ])
     const tableHead = ['Drug name', 'Symptoms']
     const tableData = [
         ['Microcef CV 200 mg', 'Throat infections'],
@@ -86,7 +98,17 @@ const PrescriptionScreen = ({ navigation }) => {
         ['Montak LC', 'Runny nose, watery eyes, sneezing']
     ]
 
-    const handleSubmit = () => { }
+    const handleDrugChange = (index, key, value) => {
+        setDrugsData((prevDrugs) => {
+            const newDrugs = [...prevDrugs]
+            newDrugs[index][key] = value
+            return newDrugs
+        })
+    }
+
+    const handleSubmit = () => {
+        console.log(drugsData)
+    }
 
     return (
         <StyledContainer>
@@ -116,25 +138,25 @@ const PrescriptionScreen = ({ navigation }) => {
                     </TableContainer>
                     <SuggestionsContainer>
                         <StyledText>Suggest alternatives and give suggestions:</StyledText>
-                        {drugsData.map((drug) => (
+                        {drugsData.map((drug, index) => (
                             <SuggestionContainer key={drug.id}>
-                                <StyledLabel>Approval for{' '}
+                                <StyledLabel>Suggestions & Alternative for{' '}
                                     <DrugName>"{drug.name}"</DrugName>:
                                 </StyledLabel>
                                 <InputContainer>
                                     <TextInputContainer>
                                         <StyledInputLabel>Suggest alternatives</StyledInputLabel>
                                         <StyledTextInput
-                                            onChangeText={(alternatives) => setAlternatives(alternatives)}
-                                            value={alternatives}
+                                            onChangeText={(alternatives) => handleDrugChange(index, "alternatives", alternatives)}
+                                            value={drug.alternatives}
                                             keyboardType="email-address"
                                         />
                                     </TextInputContainer>
                                     <TextInputContainer>
                                         <StyledInputLabel>Give suggestions</StyledInputLabel>
                                         <StyledTextInput
-                                            onChangeText={(suggestions) => setSuggesstions(suggestions)}
-                                            value={suggestions}
+                                            onChangeText={(suggestions) => handleDrugChange(index, "suggestions", suggestions)}
+                                            value={drug.suggestions}
                                             keyboardType="email-address"
                                         />
                                     </TextInputContainer>
