@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 
 import Input from "../components/input";
 import Notice from "../components/notice";
+import Loader from "../components/loader";
 
 import BackArrowIcon from "../images/icons/arrow-left.svg";
 import SignupPageIllustration from "../images/signup_page_illustration.svg";
@@ -50,6 +51,7 @@ const SignupPage = () => {
   const [age, setAge] = useState("");
   const router = useRouter();
   const [option, setOption] = useState("user");
+  const [isLoading, setIsLoading] = useState(false)
   const appDispatch = useContext(DispatchContext);
   const onOptionChange = (e) => {
     console.log(e.target.value);
@@ -184,7 +186,9 @@ const SignupPage = () => {
             </Notice>
           )}
           <button type={form.submitButton.type}>
-            {form.submitButton.label}
+            {!isLoading ? (
+              <>{form.submitButton.label}</>
+            ) : <Loader />}
           </button>
         </form>
       </div>

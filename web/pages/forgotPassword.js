@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 
 import Notice from "../components/notice";
 import Input from "../components/input";
+import Loader from "../components/loader";
 
 import BackArrowIcon from "../images/icons/arrow-left.svg";
 import ForgotPasswordPageIllustration from "../images/forgotPassword_page_illustration.svg";
@@ -28,6 +29,7 @@ const form = {
 const ForgotPasswordPage = () => {
   const RESET_NOTICE = { type: "", message: "" };
   const [notice, setNotice] = useState(RESET_NOTICE);
+  const [isLoading, setIsLoading] = useState(false)
   const router = useRouter();
   const option = router.query.person;
 
@@ -107,7 +109,9 @@ const ForgotPasswordPage = () => {
             </Notice>
           )}
           <button type={form.submitButton.type}>
-            {form.submitButton.label}
+            {!isLoading ? (
+              <>{form.submitButton.label}</>
+            ) : <Loader />}
           </button>
         </form>
       </div>
