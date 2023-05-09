@@ -63,6 +63,8 @@ The following are the key features of the MedAssist app:
 <img src="./screenshots/25.jpg" width="280" height="520">
 <img src="./screenshots/26.jpg" width="280" height="520">
 <img src="./screenshots/27.jpg" width="280" height="520">
+<img src="./screenshots/28.jpg" width="280" height="520">
+<img src="./screenshots/29.jpg" width="280" height="520">
 </p>
 
 ## Installation
