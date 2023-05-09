@@ -10,6 +10,27 @@ const data = [
   { id: 3, text: "What to do when stung by a bee" },
 ];
 
+const messages = [
+  {
+    id: 1, text: "If you're looking for random paragraphs, you've come to the right place. When a random word or a random sentence isn't quite enough.", fromSelf: false
+  },
+  {
+    id: 2, text: "If you're looking for random paragraphs, you've come to the right place. When a random word or a random sentence isn't quite enough.", fromSelf: true
+  },
+  {
+    id: 3, text: "If you're looking for random paragraphs, you've come to the right place. When a random word or a random sentence isn't quite enough.", fromSelf: false
+  },
+  {
+    id: 4, text: "If you're looking for random paragraphs, you've come to the right place. When a random word or a random sentence isn't quite enough.", fromSelf: true
+  },
+  {
+    id: 5, text: "If you're looking for random paragraphs, you've come to the right place. When a random word or a random sentence isn't quite enough.", fromSelf: false
+  },
+  {
+    id: 6, text: "If you're looking for random paragraphs, you've come to the right place. When a random word or a random sentence isn't quite enough.", fromSelf: true
+  }
+]
+
 const ChatModal = () => {
   const [value, setValue] = useState("");
   const [modalIsOpen, setIsOpen] = useState(false);
@@ -24,8 +45,8 @@ const ChatModal = () => {
 
   //   experimental
   const submitHandler = async () => {
-    const res = await axios.post("http://localhost:8000/chat", { value });
-    console.log(res);
+    // const res = await axios.post("http://localhost:8000/chat", { value });
+    console.log('hello');
   };
 
   console.log("value is", value);
@@ -72,26 +93,40 @@ const ChatModal = () => {
           />
         </div>
 
-        <div className={styles.suggestionsWrapper}>
-          <div className={styles.label}>Not sure where to start?</div>
-          <div className={styles.suggestionsContainer}>
-            {data.map((item, index) => {
-              return (
-                <div
-                  className={styles.suggestion}
-                  index={index}
-                  onClick={() => {
-                    setValue(item.text);
-                    //    experimental
-                    submitHandler();
-                  }}
-                >
-                  {item.text}?
+        <div className={styles.messageArea}>
+          {messages.map((item, index) => {
+            return (
+              <div className={`${item.fromSelf ? styles.senderSingleMessage : styles.singleMessage}`} key={index}>
+                <div className={`${item.fromSelf ? styles.senderMessageText : styles.messageText}`}>
+                  {item.text}
                 </div>
-              );
-            })}
-          </div>
+              </div>
+            )
+          })}
         </div>
+
+        {messages.length === 0 && (
+          <div className={styles.suggestionsWrapper}>
+            <div className={styles.label}>Not sure where to start?</div>
+            <div className={styles.suggestionsContainer}>
+              {data.map((item, index) => {
+                return (
+                  <div
+                    className={styles.suggestion}
+                    index={index}
+                    onClick={() => {
+                      setValue(item.text);
+                      //    experimental
+                      submitHandler();
+                    }}
+                  >
+                    {item.text}?
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
         <div className={styles.line} />
         <div className={styles.openai}>Powered by OpenAI</div>
         <span

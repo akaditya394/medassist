@@ -1,3 +1,4 @@
+import React, { useState } from 'react'
 import { StatusBar } from 'expo-status-bar'
 import * as WebBrowser from 'expo-web-browser'
 
@@ -27,9 +28,9 @@ const devTeam = [
 
 const handleLogout = () => { }
 
-let isPaidUser = false
-
 const SettingsScreen = ({ navigation }) => {
+    const [isPaidUser, setIsPaidUser] = useState(true)
+
     return (
         <StyledContainer>
             <StatusBar style='dark' />

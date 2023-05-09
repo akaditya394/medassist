@@ -27,7 +27,7 @@ import PaymentScreen from './screens/payment';
 const Stack = createNativeStackNavigator();
 
 export default function App() {
-  const [authSession, setAuthSession] = useState()
+  const [authSession, setAuthSession] = useState('sedfg')
 
   return (
     <StripeProvider publishableKey=''>
