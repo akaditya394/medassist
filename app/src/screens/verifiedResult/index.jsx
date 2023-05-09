@@ -15,7 +15,10 @@ import {
     StyledButton,
     ButtonText,
     Line,
-    TableContainer
+    TableContainer,
+    ScrollableContainer,
+    SelectImage,
+    PrescriptionImage
 } from './styles'
 
 import SettingsImage from '../../images/icons/settings.svg'
@@ -37,7 +40,7 @@ const VerifiedResultScreen = ({ navigation }) => {
             <InnerContainer>
                 <UpperContainer>
                     <PageTitle>
-                        Result
+                        Verified Result
                     </PageTitle>
                     <IconsContainer>
                         <Icon settings={true} onPress={() => navigation.navigate('Settings')}>
@@ -52,18 +55,23 @@ const VerifiedResultScreen = ({ navigation }) => {
                         , a trained medical professional.
                     </StyledText>
                 </Notice>
-                <ListTitle>Drugs' names and alternatives</ListTitle>
-                <TableContainer>
-                    <Table borderStyle={{ borderWidth: 1, borderColor: `${Colors.primary}` }}>
-                        <Row data={tableHead} style={{
-                            height: 50, backgroundColor: `${Colors.tertiary}`
-                        }} textStyle={{ margin: 6, fontWeight: 'bold' }} />
-                        <Rows data={tableData} textStyle={{ margin: 6 }} />
-                    </Table>
-                </TableContainer>
+                <ScrollableContainer>
+                    <SelectImage>
+                        <PrescriptionImage resizeMode="cover" source={require('../../images/test/prescription.jpg')} />
+                    </SelectImage>
+                    <ListTitle>Drugs' alternatives and suggestions:</ListTitle>
+                    <TableContainer>
+                        <Table borderStyle={{ borderWidth: 1, borderColor: `${Colors.primary}` }}>
+                            <Row data={tableHead} style={{
+                                height: 50, backgroundColor: `${Colors.tertiary}`
+                            }} textStyle={{ margin: 4, fontWeight: 'bold' }} />
+                            <Rows data={tableData} textStyle={{ margin: 6 }} />
+                        </Table>
+                    </TableContainer>
+                </ScrollableContainer>
                 <Line />
-                <StyledButton onPress={() => navigation.navigate('UpdatedPrescription')}>
-                    <ButtonText>Generate an updated prescription</ButtonText>
+                <StyledButton onPress={() => navigation.goBack()}>
+                    <ButtonText>Continue</ButtonText>
                 </StyledButton>
             </InnerContainer>
         </StyledContainer>

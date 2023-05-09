@@ -33,7 +33,7 @@ export default function App() {
     <StripeProvider publishableKey=''>
       <NavigationContainer independent>
         {authSession ? (
-          <Stack.Navigator initialRouteName="AllResults" screenOptions={{
+          <Stack.Navigator initialRouteName="AllPrescriptions" screenOptions={{
             headerShown: false
           }}>
             <Stack.Screen
