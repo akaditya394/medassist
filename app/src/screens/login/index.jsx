@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, ToastAndroid, Platform, AlertIOS, ActivityIndicator } from 'react-native'
+import { View, ToastAndroid, Platform, Alert, ActivityIndicator } from 'react-native'
 import { StatusBar } from 'expo-status-bar'
 import RadioButtonGroup, { RadioButtonItem } from "expo-radio-button"
 import axios from "axios"
@@ -53,8 +53,8 @@ const LoginScreen = ({ navigation }) => {
                 ToastAndroid.SHORT,
                 ToastAndroid.BOTTOM
             )
-        } else {
-            AlertIOS.alert("You need to fill all the required fields")
+        } else if (Platform.OS === 'ios') {
+            Alert.alert("You need to fill all the required fields")
         }
     }
 
@@ -64,31 +64,36 @@ const LoginScreen = ({ navigation }) => {
         } else {
             setIsLoading(true)
             // a http post request to login
-            const res = await axios.post(`${apiURL}/${current}/login`,
-                {
-                    email,
-                    password,
-                    current
-                }, {
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            })
-            setIsLoading(false)
-            switch (res.data.type) {
-                case "success":
-                    // setTimeout(() => {
-                    //     option === "user"
-                    //         ? router.replace("/medicalHistory")
-                    //         : router.replace("/prescriptions")
-                    // }, 3000)
-                    setNotice({ type: "SUCCESS", message: res.data.message })
-                    break
-                case "error":
-                    setNotice({ type: "ERROR", message: res.data.message })
-                    break
+            try {
+                const res = await axios.post(`${apiURL}/${current}/login`,
+                    {
+                        email,
+                        password,
+                        current
+                    }, {
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                })
+                setIsLoading(false)
+                switch (res.data.type) {
+                    case "success":
+                        // setTimeout(() => {
+                        //     option === "user"
+                        //         ? router.replace("/medicalHistory")
+                        //         : router.replace("/prescriptions")
+                        // }, 3000)
+                        console.log('Data is: ', res.data)
+                        setNotice({ type: "SUCCESS", message: res.data.message })
+                        break
+                    case "error":
+                        setNotice({ type: "ERROR", message: res.data.message })
+                        break
+                }
+            } catch (err) {
+                // setNotice({ type: "ERROR", message: err.response.data.message })
+                console.log(err)
             }
-
         }
     }
 
