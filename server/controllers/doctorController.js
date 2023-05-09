@@ -1,5 +1,6 @@
 const Doctor = require("../models/Doctor");
 const Prescription = require("../models/Prescriptions");
+const sendEmail = require("../utils/email");
 const { issueToken } = require("../utils/token");
 const jwt = require("jsonwebtoken");
 
@@ -152,8 +153,9 @@ exports.getAllUnverifiedPrescriptions = async (req, res) => {
       doctor: { $in: res.locals.id },
     });
     if (prescriptions.length === 0) {
-      return res.status(401).json({
-        type: "error",
+      return res.json({
+        type: "success",
+        prescriptions,
         message: "No unverified prescriptions",
       });
     }
@@ -165,6 +167,80 @@ exports.getAllUnverifiedPrescriptions = async (req, res) => {
     res.json({
       type: "error",
       message: error.message,
+    });
+  }
+};
+
+exports.forgotPassword = async (req, res) => {
+  try {
+    const doctor = await Doctor.findOne({ email: req.body.email });
+
+    if (!doctor) {
+      return res.json({
+        type: "error",
+        message: "There is no doctor registered with this email.",
+      });
+    }
+
+    const resetToken = doctor.createResetToken();
+    await doctor.save({ validateBeforeSave: false });
+    try {
+      await sendEmail(doctor, { title: "Reset Password", token: resetToken });
+
+      return res.status(200).json({
+        type: "success",
+        message:
+          "Email sent successfully. Check your registered email id and proceed to the given link",
+      });
+    } catch (err) {
+      doctor.passwordResetToken = undefined;
+      doctor.passwordResetExpires = undefined;
+      await doctor.save({ validateBeforeSave: false });
+      return res.json({
+        type: "error",
+        message: err.message,
+      });
+    }
+  } catch (err) {
+    res.json({
+      type: "error",
+      message: err.message,
+    });
+  }
+};
+
+exports.resetPassword = async (req, res) => {
+  try {
+    const hashedToken = crypto
+      .createHash("sha256")
+      .update(req.body.token)
+      .digest("hex");
+    const doctor = await Doctor.findOne({
+      passwordResetToken: hashedToken,
+      passwordResetExpires: { $gt: Date.now() },
+    });
+
+    if (!doctor) {
+      return res.json({
+        type: "error",
+        message: "Link is invalid or has expired. Please try again",
+      });
+    }
+
+    doctor.password = req.body.password;
+    doctor.passwordResetToken = undefined;
+    doctor.passwordResetExpires = undefined;
+
+    issueToken(res, doctor);
+    await doctor.save();
+    res.status(200).json({
+      type: "success",
+      message: "Password changed successfully",
+    });
+  } catch (err) {
+    res.json({
+      type: "error",
+      message: err.message,
     });
   }
 };

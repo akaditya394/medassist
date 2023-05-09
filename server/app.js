@@ -10,6 +10,8 @@ const userRoutes = require("./routes/userRoutes");
 const prescriptionRoutes = require("./routes/prescriptionRoutes");
 const doctorRoutes = require("./routes/doctorRoutes");
 const chatRoutes = require("./routes/chatRoutes");
+const bookingRoutes = require("./routes/bookingRoutes");
+const morgan = require("morgan");
 
 // middleware
 app.use(cors());
@@ -34,10 +36,15 @@ app.use(
 );
 app.use(cookieParser());
 
+if (process.env.NODE_ENV === "development") {
+  app.use(morgan("dev"));
+}
+
 //auth routes
 app.use("/user", userRoutes);
 app.use("/prescription", prescriptionRoutes);
 app.use("/doctor", doctorRoutes);
 app.use("/", chatRoutes);
+app.use("/booking", bookingRoutes);
 
 module.exports = app;

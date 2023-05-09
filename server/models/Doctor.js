@@ -27,6 +27,9 @@ const doctorSchema = new mongoose.Schema(
         ref: "Prescriptions",
       },
     ],
+    passwordChangedAt: Date,
+    passwordResetToken: String,
+    passwordResetExpires: Date,
   },
   {
     timestamps: true,
@@ -42,11 +45,29 @@ doctorSchema.pre("save", async function (next) {
   next();
 });
 
+doctorSchema.pre("save", function (next) {
+  if (!this.isModified("password") || this.isNew) return next();
+
+  this.passwordChangedAt = Date.now() - 1000;
+  next();
+});
+
 doctorSchema.methods.verifyPassword = async function (
   candidatePassword,
   userPassword
 ) {
   return await bcrypt.compare(candidatePassword, userPassword);
+};
+
+doctorSchema.methods.createResetToken = function () {
+  const resetToken = crypto.randomBytes(32).toString("hex");
+  this.passwordResetToken = crypto
+    .createHash("sha256")
+    .update(resetToken)
+    .digest("hex");
+
+  this.passwordResetExpires = Date.now() + 1 * 60 * 1000;
+  return resetToken;
 };
 
 const Doctor = mongoose.models.Doctor || mongoose.model("Doctor", doctorSchema);

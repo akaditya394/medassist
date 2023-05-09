@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import { View, ToastAndroid, Platform, AlertIOS } from 'react-native'
 import { StatusBar } from 'expo-status-bar'
+import Spinner from 'react-native-loading-spinner-overlay'
+import RadioButtonGroup, { RadioButtonItem } from "expo-radio-button"
 
 import { Octicons, Ionicons } from '@expo/vector-icons'
 
@@ -23,7 +25,9 @@ import {
     ExtraView,
     ExtraText,
     TextLink,
-    TextLinkContent
+    TextLinkContent,
+    StyledRoleSelector,
+    StyledText
 } from './styles'
 import { Colors } from '../../shared/variables'
 
@@ -33,6 +37,8 @@ const LoginScreen = ({ navigation }) => {
     const [hidePassword, setHidePassword] = useState(true)
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [isloading, setIsLoading] = useState(false)
+    const [current, setCurrent] = useState("user")
 
     const showToast = () => {
         if (Platform.OS === 'android') {
@@ -50,6 +56,7 @@ const LoginScreen = ({ navigation }) => {
         if (email === '' || password === '') {
             showToast()
         } else {
+            // setIsLoading(true)
             // console.log('email is: ', email)
             // console.log('password is: ', password)
         }
@@ -59,6 +66,11 @@ const LoginScreen = ({ navigation }) => {
         <StyledContainer>
             <StatusBar style='dark' />
             <InnerContainer>
+                <Spinner
+                    visible={isloading}
+                    textContent={'Loading...'}
+                    textStyle={{ color: '#FFF' }}
+                />
                 <Logo>
                     <LogoImage width="30px" height="30px" fill="#0F2E53" />
                     <PageTitle>
@@ -84,6 +96,35 @@ const LoginScreen = ({ navigation }) => {
                         hidePassword={hidePassword}
                         setHidePassword={setHidePassword}
                     />
+                    <StyledInputLabel>Select your role</StyledInputLabel>
+                    <StyledRoleSelector>
+                        <RadioButtonGroup
+                            containerStyle={{
+                                marginBottom: 10,
+                                marginTop: 10,
+                                display: 'flex',
+                                flexDirection: 'row',
+                                alignItems: 'center',
+                                justifyContent: 'space-between'
+                            }}
+                            selected={current}
+                            onSelected={(value) => setCurrent(value)}
+                            radioBackground="#0F2E53"
+                        >
+                            <RadioButtonItem
+                                value="user"
+                                label={
+                                    <StyledText>User</StyledText>
+                                }
+                            />
+                            <RadioButtonItem
+                                value="medical_professional"
+                                label={
+                                    <StyledText>Medical Professional</StyledText>
+                                }
+                            />
+                        </RadioButtonGroup>
+                    </StyledRoleSelector>
                     <MsgBox>...</MsgBox>
                     <StyledButton onPress={handleSubmit}>
                         <ButtonText>Login</ButtonText>
