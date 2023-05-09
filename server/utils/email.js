@@ -16,10 +16,11 @@ const sendEmail = async (user, subject, template) => {
   const html = pug.renderFile(`${__dirname}/../views/emails/${template}.pug`, {
     name: user.name,
     link: `Reset Password`,
+    token,
   });
 
   let mailOptions = {
-    from: `medassist<${process.env.USER_ADDRESS}>`,
+    from: `MedAssist<${process.env.USER_ADDRESS}>`,
     to,
     subject: title,
     html,
