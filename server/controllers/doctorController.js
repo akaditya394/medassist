@@ -227,7 +227,7 @@ exports.resetPassword = async (req, res) => {
       });
     }
 
-    doctor.password = req.body.formData.password;
+    doctor.password = req.body.password;
     doctor.passwordResetToken = undefined;
     doctor.passwordResetExpires = undefined;
 
