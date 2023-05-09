@@ -51,7 +51,7 @@ const SignupPage = () => {
   const [age, setAge] = useState("");
   const router = useRouter();
   const [option, setOption] = useState("user");
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false);
   const appDispatch = useContext(DispatchContext);
   const onOptionChange = (e) => {
     console.log(e.target.value);
@@ -79,37 +79,38 @@ const SignupPage = () => {
     if (option === "user") {
       personForm.append("age", age);
       personForm.append("weight", weight);
-    }
+      // setRole();
+      // a http post request to signup
+      const res = await axios.post(`/${option}/register`, personForm, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      switch (res.data.type) {
+        case "success":
+          appDispatch({
+            type: "login",
+            data: {
+              token: res.data.token,
+              role: option,
+              about: option === "user" ? res?.data?.user : res?.data?.doctor,
+            },
+          });
 
-    // setRole();
-
-    // a http post request to signup
-    const res = await axios.post(`/${option}/register`, personForm, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    switch (res.data.type) {
-      case "success":
-        appDispatch({
-          type: "login",
-          data: {
-            token: res.data.token,
-            role: option,
-            about: option === "user" ? res?.data?.user : res?.data?.doctor,
-          },
-        });
-
-        setTimeout(() => {
-          option === "user"
-            ? router.replace("/medicalHistory")
-            : router.replace("/prescriptions");
-        }, 3000);
-        setNotice({ type: "SUCCESS", message: res.data.message });
-        break;
-      case "error":
-        setNotice({ type: "ERROR", message: res.data.message });
-        break;
+          setTimeout(() => {
+            option === "user"
+              ? router.replace("/medicalHistory")
+              : router.replace("/prescriptions");
+          }, 3000);
+          setNotice({ type: "SUCCESS", message: res.data.message });
+          break;
+        case "error":
+          setNotice({ type: "ERROR", message: res.data.message });
+          break;
+      }
+    } else {
+      localStorage.setItem("tempSignup", JSON.stringify(formData));
+      router.replace("/verifyMedicalProfessional");
     }
   };
 
@@ -186,9 +187,7 @@ const SignupPage = () => {
             </Notice>
           )}
           <button type={form.submitButton.type}>
-            {!isLoading ? (
-              <>{form.submitButton.label}</>
-            ) : <Loader />}
+            {!isLoading ? <>{form.submitButton.label}</> : <Loader />}
           </button>
         </form>
       </div>

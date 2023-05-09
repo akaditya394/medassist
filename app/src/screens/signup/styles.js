@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { View, Text, Image, TextInput, TouchableOpacity } from 'react-native'
+import { View, Text, Image, TextInput, TouchableOpacity, ScrollView } from 'react-native'
 
 import { StatusBarHeight } from '../../shared/variables'
 import { Colors } from '../../shared/variables'
@@ -43,7 +43,7 @@ export const SubTitle = styled.Text`
     color: ${Colors.text};
 `;
 
-export const StyledFormArea = styled.View`
+export const StyledFormArea = styled.ScrollView`
     width: 90%;
 `;
 

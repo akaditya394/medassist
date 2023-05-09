@@ -26,6 +26,7 @@
     "nodemon": "^2.0.21",
     "openai": "^3.2.1",
     "pug": "^3.0.2",
+    "puppeteer": "^20.1.2",
     "stripe": "^12.4.0",
     "validator": "^13.9.0"
   }

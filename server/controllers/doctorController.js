@@ -1,5 +1,7 @@
 const Doctor = require("../models/Doctor");
 const Prescription = require("../models/Prescriptions");
+const crypto = require("crypto");
+const puppeteer = require("puppeteer");
 const sendEmail = require("../utils/email");
 const { issueToken } = require("../utils/token");
 const jwt = require("jsonwebtoken");
@@ -241,6 +243,61 @@ exports.resetPassword = async (req, res) => {
     res.json({
       type: "error",
       message: err.message,
+    });
+  }
+};
+exports.verifyDoctor = async (req, res) => {
+  try {
+    const { name, regNumber, value } = req.body;
+    const browser = await puppeteer.launch({
+      args: [
+        // all related chromium flags I could find
+        "--disable-background-timer-throttling",
+        "--disable-renderer-backgrounding",
+        "--override-plugin-power-saver-for-testing=never",
+        "--disable-extensions-http-throttling",
+      ],
+      headless: false,
+    });
+    const page = await browser.newPage();
+    await page.goto(
+      "https://www.nmc.org.in/information-desk/indian-medical-register/"
+    );
+    const docName = await page.$('input[id="doctorName"]');
+    await docName.type(name);
+    const docReg = await page.$('input[id="doctorRegdNo"]');
+    await docReg.type(regNumber);
+    // const selectElem = await page.$('select[id="advsmcId"]');
+    // await selectElem.type(value);
+    // const ran = await page.click('input[value="2023"]');
+    // console.log(ran.handle, "Ypo");
+
+    await page.click("#doctor_advance_Details");
+    await page.waitForSelector("#totalRecords5", {
+      visible: true,
+    });
+    const quotes = await page.evaluate(() => {
+      const quote = document.querySelector("#totalRecords5").innerText;
+      return quote;
+    });
+
+    await browser.close();
+    if (Number(quotes.split(":")[1]) === 0) {
+      return res.status(200).json({
+        type: "success",
+        message: "Doctor is not verified",
+        verified: false,
+      });
+    }
+    return res.status(200).json({
+      type: "success",
+      message: "Doctor is verified ",
+      verified: true,
+    });
+  } catch (err) {
+    res.status(500).json({
+      type: "error",
+      message: "Error in verifying doctor.",
     });
   }
 };
