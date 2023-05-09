@@ -21,9 +21,11 @@
     "express-fileupload": "^1.4.0",
     "jsonwebtoken": "^9.0.0",
     "mongoose": "^7.0.2",
+    "morgan": "^1.10.0",
     "nodemailer": "^6.9.1",
     "nodemon": "^2.0.21",
     "openai": "^3.2.1",
+    "pug": "^3.0.2",
     "stripe": "^12.4.0",
     "validator": "^13.9.0"
   }

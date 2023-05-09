@@ -1,7 +1,7 @@
-// nodemailer code to be written here
 const nodemailer = require("nodemailer");
+const pug = require("pug");
 
-const sendEmail = async (user, subject) => {
+const sendEmail = async (user, subject, template) => {
   let to = user.email;
   const { title, token } = subject;
 
@@ -13,11 +13,16 @@ const sendEmail = async (user, subject) => {
     },
   });
 
+  const html = pug.renderFile(`${__dirname}/../views/emails/${template}.pug`, {
+    name: user.name,
+    link: `Reset Password`,
+  });
+
   let mailOptions = {
     from: `medassist<${process.env.USER_ADDRESS}>`,
     to,
     subject: title,
-    html: `<a href="http://localhost:3000/resetPassword?token=${token}">http://localhost:3000/resetPassword?token=${token}</a>`,
+    html,
   };
 
   transport.sendMail(mailOptions, (err) => {

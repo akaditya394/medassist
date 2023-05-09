@@ -36,7 +36,7 @@ exports.register = async (req, res) => {
 
     const token = issueToken(res, user);
     await user.save();
-
+    await sendEmail(user, { title: "Welcome to MedAssist" }, "welcome");
     res.status(200).json({
       type: "success",
       user,
@@ -158,7 +158,11 @@ exports.forgotPassword = async (req, res) => {
     const resetToken = user.createResetToken();
     await user.save({ validateBeforeSave: false });
     try {
-      await sendEmail(user, { title: "Reset Password", token: resetToken });
+      await sendEmail(
+        user,
+        { title: "Reset Password", token: resetToken },
+        "resetPassword"
+      );
 
       return res.status(200).json({
         type: "success",
