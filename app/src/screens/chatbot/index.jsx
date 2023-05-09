@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { StatusBar } from 'expo-status-bar'
-import { ToastAndroid, Platform, AlertIOS } from 'react-native'
+import { ToastAndroid, Platform, Alert } from 'react-native'
 
 import { Ionicons } from '@expo/vector-icons'
 
@@ -36,8 +36,8 @@ const ChatbotScreen = ({ navigation }) => {
                 ToastAndroid.SHORT,
                 ToastAndroid.BOTTOM
             )
-        } else {
-            AlertIOS.alert("Cannot send a empty message")
+        } else if (Platform.OS === 'ios') {
+            Alert.alert("Cannot send a empty message")
         }
     }
 
