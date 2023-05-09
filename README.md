@@ -1,6 +1,6 @@
 # MedAssist
 
-<img src="logo.svg" width="130" height="130">
+<img src="./logo/logo.svg" width="130" height="130">
 
 <!-- ![MedAssist Logo](logo.svg) -->
 
