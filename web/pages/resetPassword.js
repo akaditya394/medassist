@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 
 import Notice from "../components/notice";
 import Input from "../components/input";
-import Loader from "../components/loader"
+import Loader from "../components/loader";
 
 import ResetPasswordPageIllustration from "../images/resetPassword_page_illustration.svg";
 import axios from "axios";
@@ -28,7 +28,7 @@ const form = {
 const ResetPasswordPage = () => {
   const RESET_NOTICE = { type: "", message: "" };
   const [notice, setNotice] = useState(RESET_NOTICE);
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
   const values = {};
@@ -47,8 +47,8 @@ const ResetPasswordPage = () => {
     } else {
       // a http post request to change password
       const res = await axios.post(
-        "http://localhost:8000/api/auth/resetPassword",
-        { formData, token: router.query.token },
+        `/${router.query.person}/resetPassword`,
+        { password: formData.password, token: router.query.token },
         {
           headers: {
             "Content-Type": "application/json",
@@ -58,14 +58,14 @@ const ResetPasswordPage = () => {
       switch (res.data.type) {
         case "success":
           setTimeout(() => {
-            router.replace("http://localhost:3000/login");
+            router.replace("/login");
           }, 3000);
 
           setNotice({ type: "SUCCESS", message: res.data.message });
           break;
         case "error":
           setTimeout(() => {
-            router.replace("http://localhost:3000/forgotPassword");
+            router.replace(`/forgotPassword?person=${router.query.person}`);
           }, 3000);
           setNotice({ type: "ERROR", message: res.data.message });
           break;
@@ -99,9 +99,7 @@ const ResetPasswordPage = () => {
             </Notice>
           )}
           <button type={form.submitButton.type}>
-            {!isLoading ? (
-              <>{form.submitButton.label}</>
-            ) : <Loader />}
+            {!isLoading ? <>{form.submitButton.label}</> : <Loader />}
           </button>
         </form>
       </div>
