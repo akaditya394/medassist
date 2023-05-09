@@ -153,8 +153,9 @@ exports.getAllUnverifiedPrescriptions = async (req, res) => {
       doctor: { $in: res.locals.id },
     });
     if (prescriptions.length === 0) {
-      return res.status(401).json({
+      return res.json({
         type: "success",
+        prescriptions,
         message: "No unverified prescriptions",
       });
     }
