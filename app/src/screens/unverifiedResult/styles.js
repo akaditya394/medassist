@@ -3,7 +3,7 @@ import { View, Text, Image, TextInput, TouchableOpacity, FlatList, ScrollView } 
 
 import { Colors, StatusBarHeight } from '../../shared/variables'
 
-export const StyledContainer = styled.ScrollView`
+export const StyledContainer = styled.View`
     flex: 1;
     padding: 25px;
     padding-top: ${StatusBarHeight + 10}px;
@@ -77,4 +77,22 @@ export const Line = styled.View`
 export const TableContainer = styled.View`
     width: 100%;
     background-color: white;
+    margin-top: 20px;
+`;
+
+export const ScrollableContainer = styled.ScrollView`
+    width: 100%;
+`;
+
+export const SelectImage = styled.View`
+    display: flex;
+    align-items: center;
+    justify-content: center; 
+    border: 1px solid ${Colors.primary};
+    border-radius: 5px;
+`;
+
+export const PrescriptionImage = styled.Image`
+    width: 100%;
+    height: 500px;
 `;

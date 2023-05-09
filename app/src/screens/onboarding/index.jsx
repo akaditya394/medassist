@@ -19,8 +19,8 @@ import Blob1Image from '../../images/svg/blob_1.svg'
 import Blob2Image from '../../images/svg/blob_2.svg'
 
 const data = [
-  { id: 1, text: "Upload prescriptions to see side-effects and alternatives to drugs" },
-  { id: 2, text: "View personalized health chart accorign to your medical history" },
+  { id: 1, text: "Upload prescriptions to see side-effects to drugs" },
+  { id: 2, text: "View personalized alternatives and suggestions according to your medical history" },
   { id: 3, text: "One to one consultation with trained medical professionals" },
 ]
 

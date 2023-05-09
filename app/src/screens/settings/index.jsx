@@ -43,7 +43,7 @@ const SettingsScreen = ({ navigation }) => {
                 {isPaidUser ? (
                     <StyledListItem onPress={handleLogout}>
                         <StyledListText>Manage Subscription</StyledListText>
-                        <RenewalDate>Your plan renews on June 7, 2023.</RenewalDate>
+                        <RenewalDate>Your plan renews on June 14, 2023.</RenewalDate>
                     </StyledListItem>
                 ) : (
                     <StyledListItem onPress={() => navigation.navigate("UpgradePlan")}>

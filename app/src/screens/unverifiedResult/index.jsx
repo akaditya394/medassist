@@ -11,7 +11,10 @@ import {
     Notice,
     StyledText,
     TableContainer,
-    Line
+    Line,
+    ScrollableContainer,
+    SelectImage,
+    PrescriptionImage
 } from './styles'
 import { Colors } from '../../shared/variables'
 
@@ -33,7 +36,7 @@ const UnverifiedResultScreen = ({ navigation }) => {
             <InnerContainer>
                 <UpperContainer>
                     <PageTitle>
-                        Result
+                        Unverified Result
                     </PageTitle>
                     <IconsContainer>
                         <Icon settings={true} onPress={() => navigation.navigate('Settings')}>
@@ -46,14 +49,19 @@ const UnverifiedResultScreen = ({ navigation }) => {
                         Your upload prescription has not yet been verified.
                     </StyledText>
                 </Notice>
-                <TableContainer>
-                    <Table borderStyle={{ borderWidth: 1, borderColor: `${Colors.primary}` }}>
-                        <Row data={tableHead} style={{
-                            height: 50, backgroundColor: `${Colors.tertiary}`
-                        }} textStyle={{ margin: 6, fontWeight: 'bold' }} />
-                        <Rows data={tableData} textStyle={{ margin: 6 }} />
-                    </Table>
-                </TableContainer>
+                <ScrollableContainer>
+                    <SelectImage>
+                        <PrescriptionImage resizeMode="cover" source={require('../../images/test/prescription.jpg')} />
+                    </SelectImage>
+                    <TableContainer>
+                        <Table borderStyle={{ borderWidth: 1, borderColor: `${Colors.primary}` }}>
+                            <Row data={tableHead} style={{
+                                height: 50, backgroundColor: `${Colors.tertiary}`
+                            }} textStyle={{ margin: 6, fontWeight: 'bold' }} />
+                            <Rows data={tableData} textStyle={{ margin: 6 }} />
+                        </Table>
+                    </TableContainer>
+                </ScrollableContainer>
                 <Line />
                 <StyledText>
                     Additonal info will be available as soon as your
