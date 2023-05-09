@@ -69,80 +69,40 @@ const ChatbotScreen = ({ navigation }) => {
                 <MessagesArea>
                     <SingleMessageContainer>
                         <MessageText>
-                            If you're looking for random paragraphs,
-                            you've come to the right place. When a
-                            random word or a random sentence isn't
-                            quite enough, the next logical step is to
-                            find a random paragraph. We created the Random
-                            Paragraph Generator with you in mind. The process
-                            is quite simple. Choose the number of random
-                            paragraphs you'd like to see and click the button.
-                            Your chosen number of paragraphs will instantly appear.
+                            Hey, What do want to know?
                         </MessageText>
                     </SingleMessageContainer>
                     <SingleMessageContainer isSender={true}>
                         <MessageText isSender={true}>
-                            If you're looking for random paragraphs,
-                            you've come to the right place. When a
-                            random word or a random sentence isn't
-                            quite enough, the next logical step is to
-                            find a random paragraph. We created the Random
-                            Paragraph Generator with you in mind. The process
-                            is quite simple. Choose the number of random
-                            paragraphs you'd like to see and click the button.
-                            Your chosen number of paragraphs will instantly appear.
+                            What are the ideal amount of glasses of water in a day
                         </MessageText>
                     </SingleMessageContainer>
                     <SingleMessageContainer>
                         <MessageText>
-                            If you're looking for random paragraphs,
-                            you've come to the right place. When a
-                            random word or a random sentence isn't
-                            quite enough, the next logical step is to
-                            find a random paragraph. We created the Random
-                            Paragraph Generator with you in mind. The process
-                            is quite simple. Choose the number of random
-                            paragraphs you'd like to see and click the button.
-                            Your chosen number of paragraphs will instantly appear.
+                            Here are some tips to help you make sure you are drinking
+                            enough fluids to maintain good levels of hydration. You
+                            are probably all aware of the “cardinal rule” that says
+                            adults should drink six to eight 8-ounce glasses of water
+                            per day.
                         </MessageText>
                     </SingleMessageContainer>
                     <SingleMessageContainer isSender={true}>
                         <MessageText isSender={true}>
-                            If you're looking for random paragraphs,
-                            you've come to the right place. When a
-                            random word or a random sentence isn't
-                            quite enough, the next logical step is to
-                            find a random paragraph. We created the Random
-                            Paragraph Generator with you in mind. The process
-                            is quite simple. Choose the number of random
-                            paragraphs you'd like to see and click the button.
-                            Your chosen number of paragraphs will instantly appear.
+                            Another thing, what is the first aid in case of a fracture
                         </MessageText>
                     </SingleMessageContainer>
                     <SingleMessageContainer>
                         <MessageText>
-                            If you're looking for random paragraphs,
-                            you've come to the right place. When a
-                            random word or a random sentence isn't
-                            quite enough, the next logical step is to
-                            find a random paragraph. We created the Random
-                            Paragraph Generator with you in mind. The process
-                            is quite simple. Choose the number of random
-                            paragraphs you'd like to see and click the button.
-                            Your chosen number of paragraphs will instantly appear.
+                            Cool the affected area by applying and ice pack or ice
+                            cubes wrapped in a clean cloth. Treat the patient's shock:
+                            help them get into a comfortable position, encourage them
+                            to rest, and reassure them. Cover them with a blanket or
+                            clothing to keep them warm.
                         </MessageText>
                     </SingleMessageContainer>
                     <SingleMessageContainer isSender={true}>
                         <MessageText isSender={true}>
-                            If you're looking for random paragraphs,
-                            you've come to the right place. When a
-                            random word or a random sentence isn't
-                            quite enough, the next logical step is to
-                            find a random paragraph. We created the Random
-                            Paragraph Generator with you in mind. The process
-                            is quite simple. Choose the number of random
-                            paragraphs you'd like to see and click the button.
-                            Your chosen number of paragraphs will instantly appear.
+                            Thank you
                         </MessageText>
                     </SingleMessageContainer>
                 </MessagesArea>

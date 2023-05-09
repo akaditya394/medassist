@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
-import { View, ToastAndroid, Platform, AlertIOS } from 'react-native'
+import { View, ToastAndroid, Platform, AlertIOS, ActivityIndicator } from 'react-native'
 import { StatusBar } from 'expo-status-bar'
-import Spinner from 'react-native-loading-spinner-overlay'
+import RadioButtonGroup, { RadioButtonItem } from "expo-radio-button"
+import axios from "axios"
 
 import { Octicons, Ionicons } from '@expo/vector-icons'
 
@@ -24,17 +25,26 @@ import {
     ExtraView,
     ExtraText,
     TextLink,
-    TextLinkContent
+    TextLinkContent,
+    StyledRoleSelector,
+    StyledText
 } from './styles'
 import { Colors } from '../../shared/variables'
+
+import KeyboardAvoidingWrapper from '../../components/keyboardAvoidingWrapper'
+import Notice from '../../components/notice'
+import { apiURL } from '../../util/apiURL'
 
 import LogoImage from '../../images/logo/logo.svg'
 
 const LoginScreen = ({ navigation }) => {
+    const RESET_NOTICE = { type: "", message: "" }
+    const [notice, setNotice] = useState(RESET_NOTICE)
     const [hidePassword, setHidePassword] = useState(true)
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [isloading, setIsLoading] = useState(false)
+    const [current, setCurrent] = useState("user")
 
     const showToast = () => {
         if (Platform.OS === 'android') {
@@ -48,70 +58,131 @@ const LoginScreen = ({ navigation }) => {
         }
     }
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         if (email === '' || password === '') {
             showToast()
         } else {
-            // setIsLoading(true)
-            // console.log('email is: ', email)
-            // console.log('password is: ', password)
+            setIsLoading(true)
+            // a http post request to login
+            const res = await axios.post(`${apiURL}/${current}/login`,
+                {
+                    email,
+                    password,
+                    current
+                }, {
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            })
+            setIsLoading(false)
+            switch (res.data.type) {
+                case "success":
+                    // setTimeout(() => {
+                    //     option === "user"
+                    //         ? router.replace("/medicalHistory")
+                    //         : router.replace("/prescriptions")
+                    // }, 3000)
+                    setNotice({ type: "SUCCESS", message: res.data.message })
+                    break
+                case "error":
+                    setNotice({ type: "ERROR", message: res.data.message })
+                    break
+            }
+
         }
     }
 
     return (
         <StyledContainer>
             <StatusBar style='dark' />
-            <InnerContainer>
-                <Spinner
-                    visible={isloading}
-                    textContent={'Loading...'}
-                    textStyle={{ color: '#FFF' }}
-                />
-                <Logo>
-                    <LogoImage width="30px" height="30px" fill="#0F2E53" />
-                    <PageTitle>
-                        med<Assist>assist</Assist>
-                    </PageTitle>
-                </Logo>
-                <SubTitle>Account Login</SubTitle>
-                <StyledFormArea>
-                    <MyTextInput
-                        label="Email Address"
-                        icon="mail"
-                        onChangeText={(email) => setEmail(email)}
-                        value={email}
-                        keyboardType="email-address"
-                    />
-                    <MyTextInput
-                        label="Password"
-                        icon="lock"
-                        onChangeText={(password) => setPassword(password)}
-                        value={password}
-                        secureTextEntry={hidePassword}
-                        isPassword={true}
-                        hidePassword={hidePassword}
-                        setHidePassword={setHidePassword}
-                    />
-                    <MsgBox>...</MsgBox>
-                    <StyledButton onPress={handleSubmit}>
-                        <ButtonText>Login</ButtonText>
-                    </StyledButton>
-                    <StyledButton forgotPassword={true} onPress={() => navigation.navigate('ForgotPassword')}>
-                        <ButtonText forgotPassword={true}>
-                            Forgot Password ?
-                        </ButtonText>
-                    </StyledButton>
-                    <Line />
-                    <ExtraView>
-                        <ExtraText>Don't have an account yet?</ExtraText>
-                        <TextLink>
-                            <TextLinkContent
-                                onPress={() => navigation.navigate('SignUp')}
-                            >{' '}Sign up here.</TextLinkContent>
-                        </TextLink>
-                    </ExtraView>
-                </StyledFormArea>
-            </InnerContainer>
+            <KeyboardAvoidingWrapper>
+                <InnerContainer>
+                    <Logo>
+                        <LogoImage width="30px" height="30px" fill="#0F2E53" />
+                        <PageTitle>
+                            med<Assist>assist</Assist>
+                        </PageTitle>
+                    </Logo>
+                    <SubTitle>Account Login</SubTitle>
+                    <StyledFormArea>
+                        <MyTextInput
+                            label="Email Address"
+                            icon="mail"
+                            onChangeText={(email) => setEmail(email)}
+                            value={email}
+                            keyboardType="email-address"
+                        />
+                        <MyTextInput
+                            label="Password"
+                            icon="lock"
+                            onChangeText={(password) => setPassword(password)}
+                            value={password}
+                            secureTextEntry={hidePassword}
+                            isPassword={true}
+                            hidePassword={hidePassword}
+                            setHidePassword={setHidePassword}
+                        />
+                        <StyledInputLabel>Select your role</StyledInputLabel>
+                        <StyledRoleSelector>
+                            <RadioButtonGroup
+                                containerStyle={{
+                                    marginBottom: 10,
+                                    marginTop: 10,
+                                    display: 'flex',
+                                    flexDirection: 'row',
+                                    alignItems: 'center',
+                                    justifyContent: 'space-between'
+                                }}
+                                selected={current}
+                                onSelected={(value) => setCurrent(value)}
+                                radioBackground="#0F2E53"
+                            >
+                                <RadioButtonItem
+                                    value="user"
+                                    label={
+                                        <StyledText>User</StyledText>
+                                    }
+                                />
+                                <RadioButtonItem
+                                    value="medical_professional"
+                                    label={
+                                        <StyledText>Medical Professional</StyledText>
+                                    }
+                                />
+                            </RadioButtonGroup>
+                        </StyledRoleSelector>
+                        <MsgBox>...</MsgBox>
+                        {notice.message && (
+                            <Notice status={notice.type}>
+                                {notice.message}
+                            </Notice>
+                        )}
+                        {!isloading ? (
+                            <StyledButton onPress={handleSubmit}>
+                                <ButtonText>Login</ButtonText>
+                            </StyledButton>
+                        ) : (
+                            <StyledButton disable={true}>
+                                <ActivityIndicator size="large" color="#fff" />
+                            </StyledButton>
+                        )}
+                        <StyledButton forgotPassword={true} onPress={() => navigation.navigate('ForgotPassword')}>
+                            <ButtonText forgotPassword={true}>
+                                Forgot Password ?
+                            </ButtonText>
+                        </StyledButton>
+                        <Line />
+                        <ExtraView>
+                            <ExtraText>Don't have an account yet?</ExtraText>
+                            <TextLink>
+                                <TextLinkContent
+                                    onPress={() => navigation.navigate('SignUp')}
+                                >{' '}Sign up here.</TextLinkContent>
+                            </TextLink>
+                        </ExtraView>
+                    </StyledFormArea>
+                </InnerContainer>
+            </KeyboardAvoidingWrapper>
         </StyledContainer>
     )
 }
