@@ -1,3 +1,4 @@
+import React from 'react'
 import { StatusBar } from 'expo-status-bar'
 
 import {
@@ -12,6 +13,7 @@ import {
 } from './styles'
 
 import SettingsImage from '../../images/icons/settings.svg'
+import { Text } from 'react-native'
 
 const data = [
     { id: 1, text: 'Prescription 1' },
@@ -20,6 +22,7 @@ const data = [
 ]
 
 const AllPrescriptionsScreen = ({ navigation }) => {
+
     return (
         <StyledContainer>
             <StatusBar style='dark' />

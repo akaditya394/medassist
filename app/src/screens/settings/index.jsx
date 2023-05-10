@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { StatusBar } from 'expo-status-bar'
 import * as WebBrowser from 'expo-web-browser'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 import {
     StyledContainer,
@@ -26,10 +27,10 @@ const devTeam = [
     { id: 4, text: 'Vansh Agrawal', link: 'https://www.linkedin.com/in/vansh-agarwal-94069a202' },
 ]
 
-const handleLogout = () => { }
-
 const SettingsScreen = ({ navigation }) => {
     const [isPaidUser, setIsPaidUser] = useState(true)
+
+    const handleLogout = () => { }
 
     return (
         <StyledContainer>
