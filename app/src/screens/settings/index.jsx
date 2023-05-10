@@ -1,3 +1,4 @@
+import React, { useState } from 'react'
 import { StatusBar } from 'expo-status-bar'
 import * as WebBrowser from 'expo-web-browser'
 
@@ -27,9 +28,9 @@ const devTeam = [
 
 const handleLogout = () => { }
 
-let isPaidUser = false
-
 const SettingsScreen = ({ navigation }) => {
+    const [isPaidUser, setIsPaidUser] = useState(true)
+
     return (
         <StyledContainer>
             <StatusBar style='dark' />
@@ -42,7 +43,7 @@ const SettingsScreen = ({ navigation }) => {
                 {isPaidUser ? (
                     <StyledListItem onPress={handleLogout}>
                         <StyledListText>Manage Subscription</StyledListText>
-                        <RenewalDate>Your plan renews on June 7, 2023.</RenewalDate>
+                        <RenewalDate>Your plan renews on June 14, 2023.</RenewalDate>
                     </StyledListItem>
                 ) : (
                     <StyledListItem onPress={() => navigation.navigate("UpgradePlan")}>

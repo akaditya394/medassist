@@ -23,11 +23,11 @@ import VerifiedImage from '../../images/icons/verified.svg'
 import UploadImage from '../../images/icons/upload.svg'
 
 const data = [
-    { id: 1, name: 'My Prescription', verified: true },
-    { id: 2, name: 'Prescription 1', verified: false },
-    { id: 3, name: 'Prescription 2', verified: true },
-    { id: 4, name: 'Prescription 2', verified: true },
-    { id: 5, name: 'Prescription 2', verified: true },
+    { id: 1, name: 'Prescription 1', verified: true },
+    { id: 2, name: 'Prescription 2', verified: false },
+    { id: 3, name: 'Prescription 3', verified: true },
+    { id: 4, name: 'Prescription 4', verified: true },
+    // { id: 5, name: 'Prescription 5', verified: true },
 ]
 
 const AllResultsScreen = ({ navigation }) => {
@@ -41,7 +41,7 @@ const AllResultsScreen = ({ navigation }) => {
                     </PageTitle>
                     <IconsContainer>
                         {data.length < 5 && (
-                            <Icon onPress={() => navigation.navigate('MedicalHistory')}>
+                            <Icon onPress={() => navigation.navigate('Upload')}>
                                 <UploadImage width="26px" height="26px" fill="#fff" />
                             </Icon>
                         )}

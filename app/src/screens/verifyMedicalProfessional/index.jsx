@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { StatusBar } from 'expo-status-bar'
-import { ToastAndroid, Platform, AlertIOS } from 'react-native'
+import { ToastAndroid, Platform, Alert } from 'react-native'
 import DropDownPicker from "react-native-dropdown-picker"
 
 import {
@@ -78,8 +78,8 @@ const VerifyMedicalProfessionalScreen = ({ navigation }) => {
                 ToastAndroid.SHORT,
                 ToastAndroid.BOTTOM
             )
-        } else {
-            AlertIOS.alert("You need to fill all the required fields")
+        } else if (Platform.OS === 'ios') {
+            Alert.alert("You need to fill all the required fields")
         }
     }
 

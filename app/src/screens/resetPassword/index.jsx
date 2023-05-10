@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import { View, ToastAndroid, Platform, AlertIOS } from 'react-native'
+import { View, ToastAndroid, Platform, Alert } from 'react-native'
 import { StatusBar } from 'expo-status-bar'
-import Spinner from 'react-native-loading-spinner-overlay'
+import axios from "axios"
 
 import { Octicons, Ionicons } from '@expo/vector-icons'
 
@@ -24,9 +24,15 @@ import {
 } from './styles'
 import { Colors } from '../../shared/variables'
 
+import KeyboardAvoidingWrapper from '../../components/keyboardAvoidingWrapper'
+import Notice from '../../components/notice'
+import { apiURL } from '../../util/apiURL'
+
 import LogoImage from '../../images/logo/logo.svg'
 
 const ResetPasswordScreen = () => {
+    const RESET_NOTICE = { type: "", message: "" }
+    const [notice, setNotice] = useState(RESET_NOTICE)
     const [hidePassword, setHidePassword] = useState(true)
     const [password, setPassword] = useState('')
     const [isloading, setIsLoading] = useState(false)
@@ -38,54 +44,83 @@ const ResetPasswordScreen = () => {
                 ToastAndroid.SHORT,
                 ToastAndroid.BOTTOM
             )
-        } else {
-            AlertIOS.alert("You need to fill all the required fields")
+        } else if (Platform.OS === 'ios') {
+            Alert.alert("You need to fill all the required fields")
         }
     }
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         if (password === '') {
             showToast()
         } else {
-            // setIsLoading(true)
-            // console.log('password is: ', password)
+            setIsLoading(true)
+            const res = await axios.post(`${apiURL}/${current}/api/auth/resetPassword`,
+                {
+                    email
+                }, {
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            })
+            setIsLoading(false)
+            switch (res.data.type) {
+                case "success":
+                    // setTimeout(() => {
+                    //     option === "user"
+                    //         ? router.replace("/medicalHistory")
+                    //         : router.replace("/prescriptions")
+                    // }, 3000)
+                    setNotice({ type: "SUCCESS", message: res.data.message })
+                    break
+                case "error":
+                    setNotice({ type: "ERROR", message: res.data.message })
+                    break
+            }
         }
     }
 
     return (
         <StyledContainer>
             <StatusBar style='dark' />
-            <InnerContainer>
-                <Spinner
-                    visible={isloading}
-                    textContent={'Loading...'}
-                    textStyle={{ color: '#FFF' }}
-                />
-                <Logo>
-                    <LogoImage width="30px" height="30px" fill="#0F2E53" />
-                    <PageTitle>
-                        med<Assist>assist</Assist>
-                    </PageTitle>
-                </Logo>
-                <SubTitle>Reset Password</SubTitle>
-                <StyledFormArea>
-                    <MyTextInput
-                        label="Password"
-                        icon="lock"
-                        onChangeText={(password) => setPassword(password)}
-                        value={password}
-                        secureTextEntry={hidePassword}
-                        isPassword={true}
-                        hidePassword={hidePassword}
-                        setHidePassword={setHidePassword}
-                    />
-                    <MsgBox>...</MsgBox>
-                    <StyledButton onPress={handleSubmit}>
-                        <ButtonText>Set New Password</ButtonText>
-                    </StyledButton>
-                    <Line />
-                </StyledFormArea>
-            </InnerContainer>
+            <KeyboardAvoidingWrapper>
+                <InnerContainer>
+                    <Logo>
+                        <LogoImage width="30px" height="30px" fill="#0F2E53" />
+                        <PageTitle>
+                            med<Assist>assist</Assist>
+                        </PageTitle>
+                    </Logo>
+                    <SubTitle>Reset Password</SubTitle>
+                    <StyledFormArea>
+                        <MyTextInput
+                            label="Password"
+                            icon="lock"
+                            onChangeText={(password) => setPassword(password)}
+                            value={password}
+                            secureTextEntry={hidePassword}
+                            isPassword={true}
+                            hidePassword={hidePassword}
+                            setHidePassword={setHidePassword}
+                        />
+                        <MsgBox>...</MsgBox>
+                        {notice.message && (
+                            <Notice status={notice.type}>
+                                {notice.message}
+                            </Notice>
+                        )}
+                        {!isloading ? (
+                            <StyledButton onPress={handleSubmit}>
+                                <ButtonText>Set New Password</ButtonText>
+                            </StyledButton>
+                        ) : (
+                            <StyledButton disable={true}>
+                                <ActivityIndicator size="large" color="#fff" />
+                            </StyledButton>
+                        )}
+                        <Line />
+                    </StyledFormArea>
+                </InnerContainer>
+            </KeyboardAvoidingWrapper>
         </StyledContainer>
     )
 }
