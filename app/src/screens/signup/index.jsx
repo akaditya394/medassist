@@ -66,32 +66,43 @@ const SignUpScreen = ({ navigation }) => {
         } else {
             setIsLoading(true)
             // a http post request to signup
-            const res = await axios.post(`${apiURL}/${current}/register`,
-                {
-                    username,
-                    email,
-                    password,
-                    current,
-                    weight,
-                    age
-                }, {
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            })
-            setIsLoading(false)
-            switch (res.data.type) {
-                case "success":
-                    // setTimeout(() => {
-                    //     option === "user"
-                    //         ? router.replace("/medicalHistory")
-                    //         : router.replace("/prescriptions")
-                    // }, 3000)
-                    setNotice({ type: "SUCCESS", message: res.data.message })
-                    break
-                case "error":
-                    setNotice({ type: "ERROR", message: res.data.message })
-                    break
+            try {
+                // const res = await axios.post(`${apiURL}/${current}/register`,
+                const res = await axios.post(`https://test-server-mcnj.onrender.com`,
+                    {
+                        // username,
+                        // email,
+                        // password,
+                        // current,
+                        // weight,
+                        // age
+                        name: "nishank",
+                        password: "password"
+                    }, {
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                })
+                // delete this line
+                console.log('Data is: ', res.data)
+                setIsLoading(false)
+                switch (res.data.type) {
+                    case "success":
+                        // setTimeout(() => {
+                        //     option === "user"
+                        //         ? router.replace("/medicalHistory")
+                        //         : router.replace("/prescriptions")
+                        // }, 3000)
+                        console.log('Data is: ', res.data)
+                        setNotice({ type: "SUCCESS", message: res.data.message })
+                        break
+                    case "error":
+                        setNotice({ type: "ERROR", message: res.data.message })
+                        break
+                }
+            } catch (err) {
+                // setNotice({ type: "ERROR", message: err.response.data.message })
+                console.log(err)
             }
         }
     }
