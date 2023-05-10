@@ -249,16 +249,7 @@ exports.resetPassword = async (req, res) => {
 exports.verifyDoctor = async (req, res) => {
   try {
     const { name, regNumber, value } = req.body;
-    const browser = await puppeteer.launch({
-      args: [
-        // all related chromium flags I could find
-        "--disable-background-timer-throttling",
-        "--disable-renderer-backgrounding",
-        "--override-plugin-power-saver-for-testing=never",
-        "--disable-extensions-http-throttling",
-      ],
-      headless: false,
-    });
+    const browser = await puppeteer.launch();
     const page = await browser.newPage();
     await page.goto(
       "https://www.nmc.org.in/information-desk/indian-medical-register/"
