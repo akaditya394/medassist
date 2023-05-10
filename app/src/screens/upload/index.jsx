@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { StatusBar } from 'expo-status-bar'
 import * as ImagePicker from 'expo-image-picker'
-import { ToastAndroid, Platform, AlertIOS } from 'react-native'
+import { ToastAndroid, Platform, Alert } from 'react-native'
 
 import {
     StyledContainer,
@@ -74,8 +74,8 @@ const UploadScreen = ({ navigation }) => {
                 ToastAndroid.LONG,
                 ToastAndroid.BOTTOM
             )
-        } else {
-            AlertIOS.alert("You need to fill the name of your prescription and upload it")
+        } else if (Platform.OS === 'ios') {
+            Alert.alert("You need to fill the name of your prescription and upload it")
         }
     }
 

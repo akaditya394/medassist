@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, ToastAndroid, Platform, AlertIOS, ActivityIndicator } from 'react-native'
+import { View, ToastAndroid, Platform, Alert, ActivityIndicator } from 'react-native'
 import { StatusBar } from 'expo-status-bar'
 import RadioButtonGroup, { RadioButtonItem } from "expo-radio-button"
 import axios from "axios"
@@ -52,8 +52,8 @@ const SignUpScreen = ({ navigation }) => {
                 ToastAndroid.SHORT,
                 ToastAndroid.BOTTOM
             )
-        } else {
-            AlertIOS.alert("You need to fill all the required fields")
+        } else if (Platform.OS === 'ios') {
+            Alert.alert("You need to fill all the required fields")
         }
     }
 

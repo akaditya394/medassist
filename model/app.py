@@ -30,9 +30,9 @@ def hello_world():
     return render_template('index.html')
 
 
-model = joblib.load("model.h5")
-le = joblib.load("labelencoder.h5")
-tokenizer = joblib.load("tokenizer.h5")
+model = joblib.load('model/drug-effect-prediction.h5')
+le = joblib.load('model/labelencoder.h5')
+tokenizer = joblib.load('model/tokenizer.h5')
 
 
 def getReactions(drugName):
@@ -54,7 +54,7 @@ def getReactions(drugName):
     return y
 
 
-getReactions("humira")
+print(getReactions("humira"))
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
