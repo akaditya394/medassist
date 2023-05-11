@@ -24,6 +24,7 @@
     "expo-image-picker": "^14.1.1",
     "expo-media-library": "^15.2.3",
     "expo-radio-button": "^1.0.8",
+    "expo-splash-screen": "~0.18.2",
     "expo-status-bar": "~1.4.4",
     "expo-web-browser": "^12.1.1",
     "react": "18.2.0",
@@ -36,8 +37,11 @@
     "react-native-svg": "13.4.0",
     "react-native-svg-transformer": "^1.0.0",
     "react-native-table-component": "^1.2.2",
-    "styled-components": "^5.3.9",
-    "expo-splash-screen": "~0.18.2"
+    "react-redux": "^8.0.5",
+    "redux": "^4.2.1",
+    "redux-persist": "^6.0.0",
+    "redux-thunk": "^2.4.2",
+    "styled-components": "^5.3.9"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"

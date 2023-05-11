@@ -1,4 +1,5 @@
-import React, { useState, useContext } from 'react'
+import React, { useState } from 'react'
+import { connect } from "react-redux"
 import { StatusBar } from 'expo-status-bar'
 import * as WebBrowser from 'expo-web-browser'
 import AsyncStorage from '@react-native-async-storage/async-storage'
@@ -27,10 +28,8 @@ const devTeam = [
     { id: 4, text: 'Vansh Agrawal', link: 'https://www.linkedin.com/in/vansh-agarwal-94069a202' },
 ]
 
-const SettingsScreen = ({ navigation }) => {
+const SettingsScreen = ({ navigation, logout }) => {
     const [isPaidUser, setIsPaidUser] = useState(true)
-
-    const handleLogout = () => { }
 
     return (
         <StyledContainer>
@@ -42,7 +41,7 @@ const SettingsScreen = ({ navigation }) => {
                     </PageTitle>
                 </UpperContainer>
                 {isPaidUser ? (
-                    <StyledListItem onPress={handleLogout}>
+                    <StyledListItem onPress={() => { }}>
                         <StyledListText>Manage Subscription</StyledListText>
                         <RenewalDate>Your plan renews on June 14, 2023.</RenewalDate>
                     </StyledListItem>
@@ -56,7 +55,7 @@ const SettingsScreen = ({ navigation }) => {
                     <StyledListText>Chatbot (experimental)</StyledListText>
                 </StyledListItem>
                 <Line />
-                <StyledListItem onPress={handleLogout}>
+                <StyledListItem onPress={() => logout()}>
                     <StyledListText>Logout</StyledListText>
                 </StyledListItem>
                 <Line />
@@ -77,4 +76,12 @@ const SettingsScreen = ({ navigation }) => {
     )
 }
 
-export default SettingsScreen
+const mapDispatch = {
+    logout: () => ({
+        type: "logout",
+    }),
+}
+
+const connector = connect(null, mapDispatch)
+
+export default connector(SettingsScreen)
