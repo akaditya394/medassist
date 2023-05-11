@@ -325,21 +325,31 @@ exports.assignDoctor = async (req, res) => {
 exports.addMedicalHistory = async (req, res) => {
   try {
     let { one, two } = req.body;
-    const user = await User.findById(res.locals.id);
-    one = one.filter((i) => i.text !== "Other");
-    console.log(one);
-    user.medicalHistory.main = one.map((i) => {
-      // if (i.text === "Other") con;
-      return i.text;
-    });
-    user.medicalHistory.other = two;
-    user.save();
-    res.json({
-      user,
+
+    if (one.length === 0) throw new Error("No fields recieved");
+
+    one = one
+      .filter((i) => i.text !== "Other")
+      .map((i) => {
+        return i.text;
+      });
+
+    await User.findByIdAndUpdate(
+      res.locals.id,
+      {
+        $set: {
+          "medicalHistory.main": one,
+          "medicalHistory.other": two,
+        },
+      },
+      { new: true }
+    );
+
+    res.status(200).json({
+      type: "success",
+      message: "Medical history added successfully",
     });
   } catch (error) {
-    // console.log(error, res.statusCode);
-
     res.json({
       type: "error",
       message: error.message,
