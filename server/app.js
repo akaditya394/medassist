@@ -41,6 +41,11 @@ if (process.env.NODE_ENV === "development") {
 }
 
 //auth routes
+app.use("/", (req, res) => {
+  res.json({
+    message: "Finallyyyy",
+  });
+});
 app.use("/user", userRoutes);
 app.use("/prescription", prescriptionRoutes);
 app.use("/doctor", doctorRoutes);
