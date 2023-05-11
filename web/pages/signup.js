@@ -81,32 +81,39 @@ const SignupPage = () => {
       personForm.append("weight", weight);
       // setRole();
       // a http post request to signup
-      const res = await axios.post(`/${option}/register`, personForm, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      switch (res.data.type) {
-        case "success":
-          appDispatch({
-            type: "login",
-            data: {
-              token: res.data.token,
-              role: option,
-              about: option === "user" ? res?.data?.user : res?.data?.doctor,
-            },
-          });
+      setIsLoading(true);
+      try {
+        const res = await axios.post(`/${option}/register`, personForm, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        setIsLoading(false);
+        switch (res.data.type) {
+          case "success":
+            appDispatch({
+              type: "login",
+              data: {
+                token: res.data.token,
+                role: option,
+                about: option === "user" ? res?.data?.user : res?.data?.doctor,
+              },
+            });
 
-          setTimeout(() => {
-            option === "user"
-              ? router.replace("/medicalHistory")
-              : router.replace("/prescriptions");
-          }, 3000);
-          setNotice({ type: "SUCCESS", message: res.data.message });
-          break;
-        case "error":
-          setNotice({ type: "ERROR", message: res.data.message });
-          break;
+            setTimeout(() => {
+              option === "user"
+                ? router.replace("/medicalHistory")
+                : router.replace("/prescriptions");
+            }, 3000);
+            setNotice({ type: "SUCCESS", message: res.data.message });
+            break;
+          case "error":
+            setNotice({ type: "ERROR", message: res.data.message });
+            break;
+        }
+      } catch (err) {
+        setIsLoading(false);
+        setNotice({ type: "ERROR", message: err.response.data.message });
       }
     } else {
       localStorage.setItem("tempSignup", JSON.stringify(formData));
