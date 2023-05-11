@@ -54,14 +54,19 @@ const ResetPasswordScreen = () => {
             showToast()
         } else {
             setIsLoading(true)
-            const res = await axios.post(`${apiURL}/${current}/api/auth/resetPassword`,
+            // const res = await axios.post(`${apiURL}/${current}/api/auth/resetPassword`,
+            const res = await axios.post(`https://test-server-mcnj.onrender.com`,
                 {
-                    email
+                    // password
+                    name: "nishank",
+                    password: "password"
                 }, {
                 headers: {
                     "Content-Type": "application/json",
                 },
             })
+            // delete this line
+            console.log('Data is: ', res.data)
             setIsLoading(false)
             switch (res.data.type) {
                 case "success":

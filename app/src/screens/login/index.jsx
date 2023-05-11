@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { View, ToastAndroid, Platform, Alert, ActivityIndicator } from 'react-native'
 import { StatusBar } from 'expo-status-bar'
 import RadioButtonGroup, { RadioButtonItem } from "expo-radio-button"
 import axios from "axios"
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { Octicons, Ionicons } from '@expo/vector-icons'
 
@@ -44,7 +45,7 @@ const LoginScreen = ({ navigation }) => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [isloading, setIsLoading] = useState(false)
-    const [current, setCurrent] = useState("user")
+    const [option, setOption] = useState("user")
 
     const showToast = () => {
         if (Platform.OS === 'android') {
@@ -65,31 +66,29 @@ const LoginScreen = ({ navigation }) => {
             setIsLoading(true)
             // a http post request to login
             try {
-                const res = await axios.post(`${apiURL}/${current}/login`,
+                // const res = await axios.post(`${apiURL}/${option}/login`,
+                const res = await axios.post(`https://test-server-mcnj.onrender.com`,
                     {
                         email,
                         password,
-                        current
+                        option
                     }, {
                     headers: {
                         "Content-Type": "application/json",
                     },
                 })
-                setIsLoading(false)
                 switch (res.data.type) {
                     case "success":
                         // setTimeout(() => {
-                        //     option === "user"
-                        //         ? router.replace("/medicalHistory")
-                        //         : router.replace("/prescriptions")
+                        //     option === "user" ? navigation.replace("MedicalHistory") : navigation.replace("AllPrescriptions")
                         // }, 3000)
-                        console.log('Data is: ', res.data)
                         setNotice({ type: "SUCCESS", message: res.data.message })
                         break
                     case "error":
                         setNotice({ type: "ERROR", message: res.data.message })
                         break
                 }
+                setIsLoading(false)
             } catch (err) {
                 // setNotice({ type: "ERROR", message: err.response.data.message })
                 console.log(err)
@@ -138,8 +137,8 @@ const LoginScreen = ({ navigation }) => {
                                     alignItems: 'center',
                                     justifyContent: 'space-between'
                                 }}
-                                selected={current}
-                                onSelected={(value) => setCurrent(value)}
+                                selected={option}
+                                onSelected={(value) => setOption(value)}
                                 radioBackground="#0F2E53"
                             >
                                 <RadioButtonItem
