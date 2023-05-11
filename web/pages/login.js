@@ -43,7 +43,7 @@ const LoginPage = () => {
   const RESET_NOTICE = { type: "", message: "" };
   const [notice, setNotice] = useState(RESET_NOTICE);
   const [option, setOption] = useState("user");
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const appDispatch = useContext(DispatchContext);
 
@@ -64,6 +64,7 @@ const LoginPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     // a http post request to login
+    setIsLoading(true);
     try {
       const res = await axios.post(
         `/${option}/login`,
@@ -74,6 +75,7 @@ const LoginPage = () => {
           },
         }
       );
+      setIsLoading(false);
       switch (res.data.type) {
         case "success":
           appDispatch({
@@ -96,6 +98,7 @@ const LoginPage = () => {
           break;
       }
     } catch (err) {
+      setIsLoading(false);
       setNotice({ type: "ERROR", message: err.response.data.message });
     }
   };
@@ -159,17 +162,17 @@ const LoginPage = () => {
               {notice.message}
             </Notice>
           )}
-          <button
-            type={form.submitButton.type}
-          // onClick={() => router.push("/results")}
-          >
-            {form.submitButton.label}
-          </button>
-          <button type={form.button.type} onClick={handlePasswordReset}>
-            {!isLoading ? (
-              <>{form.button.label}</>
-            ) : <Loader />}
-          </button>
+          <div style={{ display: "flex" }}>
+            <button
+              type={form.submitButton.type}
+              // onClick={() => router.push("/results")}
+            >
+              {!isLoading ? form.submitButton.label : <Loader />}
+            </button>
+            <button type={form.button.type} onClick={handlePasswordReset}>
+              {form.button.label}
+            </button>
+          </div>
         </form>
         <p>
           Don't have an account yet?{" "}

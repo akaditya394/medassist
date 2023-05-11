@@ -71,7 +71,7 @@ const Layout = ({ children }) => {
                 {
                   id: "upload",
                   label: "Upload Prescription",
-                  action: () => handleNavigation("/upload"),
+                  action: () => handleNavigation("/prescriptionUpload"),
                 },
                 {
                   id: "account",
