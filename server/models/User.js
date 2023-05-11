@@ -22,6 +22,17 @@ const userSchema = new mongoose.Schema(
       minlength: 8,
       select: false,
     },
+    medicalHistory: {
+      main: [
+        {
+          type: String,
+          required: true,
+        },
+      ],
+      other: {
+        type: String,
+      },
+    },
     age: {
       type: Number,
       required: [true, "please provide your age"],

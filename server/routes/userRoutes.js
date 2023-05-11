@@ -10,6 +10,7 @@ const {
   getAllUnverifiedPrescriptions,
   getAllVerifiedPrescriptions,
   assignDoctor,
+  addMedicalHistory,
 } = require("../controllers/userController");
 
 const router = require("express").Router();
@@ -23,5 +24,6 @@ router.post("/uploadImage", protect, uploadImage);
 router.get("/unverifiedPrescriptions", protect, getAllUnverifiedPrescriptions);
 router.get("/verifiedPrescriptions", protect, getAllVerifiedPrescriptions);
 router.post("/assignDoctor", protect, assignDoctor);
+router.post("/addMedicalHistory", protect, addMedicalHistory);
 
 module.exports = router;

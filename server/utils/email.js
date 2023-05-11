@@ -3,7 +3,7 @@ const pug = require("pug");
 
 const sendEmail = async (user, subject, template) => {
   let to = user.email;
-  const { title, token } = subject;
+  const { title, token, role } = subject;
 
   let transport = nodemailer.createTransport({
     service: "gmail",
@@ -17,6 +17,7 @@ const sendEmail = async (user, subject, template) => {
     name: user.name,
     link: `Reset Password`,
     token,
+    role,
   });
 
   let mailOptions = {
