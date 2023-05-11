@@ -11,7 +11,7 @@ import Loader from "../loader";
 const LoginPage = () => {
   const RESET_NOTICE = { type: "", message: "" };
   const [notice, setNotice] = useState(RESET_NOTICE);
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const appState = useContext(StateContext);
 
@@ -69,7 +69,7 @@ const LoginPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    state.selectedPdfs && setIsLoading(true)
+    state.selectedPdfs && setIsLoading(true);
     const data = new FormData();
     if (!state.selectedPdfs) {
       setNotice({
@@ -93,12 +93,16 @@ const LoginPage = () => {
     );
     switch (res.data.type) {
       case "success":
-        // setTimeout(() => {
-        //   router.replace("/");
-        // }, 3000);
+        setIsLoading(false);
+        setTimeout(() => {
+          router.replace("/prescriptions");
+        }, 3000);
         setNotice({ type: "SUCCESS", message: res.data.message });
         break;
       case "error":
+        setIsLoading(false);
+        setState({ ...state, selectedPdfs: null });
+        setFormData({ ...formData, name: "" });
         setNotice({ type: "ERROR", message: res.data.message });
         break;
     }
@@ -142,7 +146,7 @@ const LoginPage = () => {
             </Notice>
           )}
           <button type="submit" onClick={handleSubmit}>
-            {!isLoading ? 'Upload' : <Loader />}
+            {!isLoading ? "Upload" : <Loader />}
           </button>
         </form>
       </div>
