@@ -36,7 +36,11 @@ exports.register = async (req, res) => {
 
     const token = issueToken(res, user);
     await user.save();
-    await sendEmail(user, { title: "Welcome to MedAssist" }, "welcome");
+    await sendEmail(
+      user,
+      { title: "Welcome to MedAssist", role: "user" },
+      "welcome"
+    );
     res.status(200).json({
       type: "success",
       user,
@@ -78,6 +82,7 @@ exports.login = async (req, res) => {
     res.status(200).json({
       type: "success",
       token,
+      user,
       message: "Logged in successfully",
     });
   } catch (error) {
@@ -160,7 +165,7 @@ exports.forgotPassword = async (req, res) => {
     try {
       await sendEmail(
         user,
-        { title: "Reset Password", token: resetToken },
+        { title: "Reset Password", token: resetToken, role: "user" },
         "resetPassword"
       );
 
@@ -311,6 +316,41 @@ exports.assignDoctor = async (req, res) => {
     });
   } catch (error) {
     res.status(200).json({
+      type: "error",
+      message: error.message,
+    });
+  }
+};
+
+exports.addMedicalHistory = async (req, res) => {
+  try {
+    let { one, two } = req.body;
+
+    if (one.length === 0) throw new Error("No fields recieved");
+
+    one = one
+      .filter((i) => i.text !== "Other")
+      .map((i) => {
+        return i.text;
+      });
+
+    await User.findByIdAndUpdate(
+      res.locals.id,
+      {
+        $set: {
+          "medicalHistory.main": one,
+          "medicalHistory.other": two,
+        },
+      },
+      { new: true }
+    );
+
+    res.status(200).json({
+      type: "success",
+      message: "Medical history added successfully",
+    });
+  } catch (error) {
+    res.json({
       type: "error",
       message: error.message,
     });

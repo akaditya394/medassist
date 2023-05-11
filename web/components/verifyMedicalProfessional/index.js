@@ -6,6 +6,7 @@ import Notice from "../notice";
 import styles from "./styles.module.scss";
 import UploadPageIllustration from "../../images/upload_page_illustration.svg";
 import { useRouter } from "next/router";
+import Loader from "../loader";
 
 const data = [
   { label: "None", value: "0" },
@@ -104,6 +105,7 @@ const VerifyMedicalProfessional = () => {
   const [regNumber, setRegNumber] = useState("");
   const RESET_NOTICE = { type: "", message: "" };
   const [notice, setNotice] = useState(RESET_NOTICE);
+  const [isLoading, setIsLoading] = useState(false);
   const [value, setValue] = useState("");
   const router = useRouter();
   const appDispatch = useContext(DispatchContext);
@@ -114,53 +116,84 @@ const VerifyMedicalProfessional = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const res = await axios.post(
-      `/doctor/verify`,
-      {
-        name,
-        regNumber,
-        value,
-      },
-      {
-        headers: {
-          "Content-Type": "application/json",
+    setIsLoading(true);
+    setNotice({
+      type: "SUCCESS",
+      message: "Verification in process. This process may take few seconds.",
+    });
+    try {
+      const res = await axios.post(
+        `/doctor/verify`,
+        {
+          name,
+          regNumber,
+          value,
         },
-      }
-    );
-    if (res.data.verified) {
-      const doctorForm = localStorage.getItem("tempSignup");
-      localStorage.removeItem("tempSignup");
-      const res = await axios.post(`/doctor/register`, doctorForm, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
       switch (res.data.type) {
         case "success":
-          appDispatch({
-            type: "login",
-            data: {
-              token: res.data.token,
-              role: "doctor",
-              about: res?.data?.doctor,
-            },
-          });
+          if (res.data.verified) {
+            setNotice({
+              type: "SUCCESS",
+              message: "Doctor is verified. Registration is in process.",
+            });
+            const doctorForm = localStorage.getItem("tempSignup");
 
-          setTimeout(() => {
-            router.replace("/prescriptions");
-          }, 3000);
-          setNotice({ type: "SUCCESS", message: res.data.message });
+            localStorage.removeItem("tempSignup");
+            try {
+              const res = await axios.post(`/doctor/register`, doctorForm, {
+                headers: {
+                  "Content-Type": "application/json",
+                },
+              });
+              setIsLoading(false);
+              switch (res.data.type) {
+                case "success":
+                  appDispatch({
+                    type: "login",
+                    data: {
+                      token: res.data.token,
+                      role: "doctor",
+                      about: res?.data?.doctor,
+                    },
+                  });
+
+                  setTimeout(() => {
+                    router.replace("/prescriptions");
+                  }, 3000);
+                  setNotice({ type: "SUCCESS", message: res.data.message });
+                  break;
+                case "error":
+                  setNotice({ type: "ERROR", message: res.data.message });
+                  break;
+              }
+            } catch (err) {
+              setNotice({ type: "ERROR", message: err.response.data.message });
+            }
+          } else {
+            setIsLoading(false);
+            // localStorage.removeItem("tempSignup");
+            setNotice({ type: "ERROR", message: res.data.message });
+            // setTimeout(() => {
+            //   router.replace("/");
+            // }, 3000);
+          }
           break;
         case "error":
-          setNotice({ type: "ERROR", message: res.data.message });
+          setNotice({
+            type: "ERROR",
+            message: "Error in verifying doctor.Try again.",
+          });
           break;
       }
-    } else {
-      localStorage.removeItem("tempSignup");
-      setNotice({ type: "ERROR", message: res.data.message });
-      setTimeout(() => {
-        router.replace("/");
-      }, 3000);
+    } catch (err) {
+      setIsLoading(false);
+      setNotice({ type: "ERROR", message: err.response.data.message });
     }
   };
   return (
@@ -205,7 +238,7 @@ const VerifyMedicalProfessional = () => {
               {notice.message}
             </Notice>
           )}
-          <button type="submit">Verify</button>
+          <button type="submit">{!isLoading ? "Verify" : <Loader />}</button>
         </form>
       </div>
       <div className="ContentPageIllustration">

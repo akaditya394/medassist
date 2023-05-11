@@ -45,32 +45,39 @@ const ResetPasswordPage = () => {
     if (!formData.password) {
       setNotice({ type: "ERROR", message: "Password cannot be empty" });
     } else {
-      // a http post request to change password
-      const res = await axios.post(
-        `/${router.query.person}/resetPassword`,
-        { password: formData.password, token: router.query.token },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      switch (res.data.type) {
-        case "success":
-          setTimeout(() => {
-            router.replace("/login");
-          }, 3000);
+      setIsLoading(true);
+      try {
+        // a http post request to change password
+        const res = await axios.post(
+          `/${router.query.person}/resetPassword`,
+          { password: formData.password, token: router.query.token },
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        setIsLoading(false);
+        switch (res.data.type) {
+          case "success":
+            setTimeout(() => {
+              router.replace("/login");
+            }, 3000);
 
-          setNotice({ type: "SUCCESS", message: res.data.message });
-          break;
-        case "error":
-          setTimeout(() => {
-            router.replace(`/forgotPassword?person=${router.query.person}`);
-          }, 3000);
-          setNotice({ type: "ERROR", message: res.data.message });
-          break;
+            setNotice({ type: "SUCCESS", message: res.data.message });
+            break;
+          case "error":
+            setTimeout(() => {
+              router.replace(`/forgotPassword?person=${router.query.person}`);
+            }, 3000);
+            setNotice({ type: "ERROR", message: res.data.message });
+            break;
+        }
+        console.log(res.data);
+      } catch (err) {
+        setIsLoading(false);
+        setNotice({ type: "ERROR", message: "Error in resetting password" });
       }
-      console.log(res.data);
     }
   };
 

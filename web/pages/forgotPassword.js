@@ -29,7 +29,7 @@ const form = {
 const ForgotPasswordPage = () => {
   const RESET_NOTICE = { type: "", message: "" };
   const [notice, setNotice] = useState(RESET_NOTICE);
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const option = router.query.person;
 
@@ -45,6 +45,7 @@ const ForgotPasswordPage = () => {
     e.preventDefault();
     // a http post request to send reset password email
     try {
+      setIsLoading(true);
       const res = await axios.post(
         `/${option}/forgotPassword`,
         JSON.stringify(formData),
@@ -54,6 +55,7 @@ const ForgotPasswordPage = () => {
           },
         }
       );
+      setIsLoading(false);
       switch (res.data.type) {
         case "success":
           setNotice({ type: "SUCCESS", message: res.data.message });
@@ -75,7 +77,7 @@ const ForgotPasswordPage = () => {
           query: { person: option },
         });
       }, 3000);
-      setNotice({ type: "ERROR", message: err.response.data.message });
+      setNotice({ type: "ERROR", message: "Internal Server Error." });
     }
   };
 
@@ -109,9 +111,7 @@ const ForgotPasswordPage = () => {
             </Notice>
           )}
           <button type={form.submitButton.type}>
-            {!isLoading ? (
-              <>{form.submitButton.label}</>
-            ) : <Loader />}
+            {!isLoading ? <>{form.submitButton.label}</> : <Loader />}
           </button>
         </form>
       </div>
