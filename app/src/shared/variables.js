@@ -5,8 +5,8 @@ export const Colors = {
     secondary: '#EDEDED',
     tertiary: '#F5F6FB',
     text: '#484848',
-    error: '#ff0033',
-    success: '#00ff33'
+    error: '#FF0033',
+    success: '#0B6623'
 }
 
 export const StatusBarHeight = Constants.statusBarHeight

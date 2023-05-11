@@ -1,8 +1,8 @@
-import React, { useState, useContext } from 'react'
+import React, { useState } from 'react'
+import { connect } from "react-redux"
 import { View, ToastAndroid, Platform, Alert, ActivityIndicator } from 'react-native'
 import { StatusBar } from 'expo-status-bar'
 import RadioButtonGroup, { RadioButtonItem } from "expo-radio-button"
-import axios from "axios"
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { Octicons, Ionicons } from '@expo/vector-icons'
@@ -34,18 +34,22 @@ import { Colors } from '../../shared/variables'
 
 import KeyboardAvoidingWrapper from '../../components/keyboardAvoidingWrapper'
 import Notice from '../../components/notice'
-import { apiURL } from '../../util/apiURL'
+import { loginUser } from '../../store/actions/auth-actions'
+import { apiURL } from '../../config/contants'
 
 import LogoImage from '../../images/logo/logo.svg'
+import { store } from '../../store'
 
 const LoginScreen = ({ navigation }) => {
     const RESET_NOTICE = { type: "", message: "" }
     const [notice, setNotice] = useState(RESET_NOTICE)
     const [hidePassword, setHidePassword] = useState(true)
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
     const [isloading, setIsLoading] = useState(false)
     const [option, setOption] = useState("user")
+    const [identifier, setIdentifier] = useState({
+        email: "",
+        password: "",
+    })
 
     const showToast = () => {
         if (Platform.OS === 'android') {
@@ -60,32 +64,25 @@ const LoginScreen = ({ navigation }) => {
     }
 
     const handleSubmit = async () => {
-        if (email === '' || password === '') {
+        if (identifier.email === '' || identifier.password === '') {
             showToast()
         } else {
             setIsLoading(true)
             // a http post request to login
             try {
-                // const res = await axios.post(`${apiURL}/${option}/login`,
-                const res = await axios.post(`https://test-server-mcnj.onrender.com`,
-                    {
-                        email,
-                        password,
-                        option
-                    }, {
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                })
-                switch (res.data.type) {
+                const res = await loginUser(`${apiURL}`, identifier)
+                switch (res.type) {
                     case "success":
-                        // setTimeout(() => {
-                        //     option === "user" ? navigation.replace("MedicalHistory") : navigation.replace("AllPrescriptions")
-                        // }, 3000)
-                        setNotice({ type: "SUCCESS", message: res.data.message })
+                        console.log('redux store is: ', store)
+                        // validate(res.data.token, option, option === "user" ? res?.data?.user : res?.data?.doctor)
+                        setTimeout(() => {
+                            option === "user" ? navigation.replace("MedicalHistory") : navigation.replace("AllPrescriptions")
+                        }, 3000)
+                        setNotice({ type: "SUCCESS", message: res.message })
                         break
                     case "error":
-                        setNotice({ type: "ERROR", message: res.data.message })
+                        setNotice({ type: "ERROR", message: res.message })
+                        loginError()
                         break
                 }
                 setIsLoading(false)
@@ -112,15 +109,15 @@ const LoginScreen = ({ navigation }) => {
                         <MyTextInput
                             label="Email Address"
                             icon="mail"
-                            onChangeText={(email) => setEmail(email)}
-                            value={email}
+                            onChangeText={(text) => setIdentifier({ ...identifier, email: text })}
+                            value={identifier.email}
                             keyboardType="email-address"
                         />
                         <MyTextInput
                             label="Password"
                             icon="lock"
-                            onChangeText={(password) => setPassword(password)}
-                            value={password}
+                            onChangeText={(text) => setIdentifier({ ...identifier, password: text })}
+                            value={identifier.password}
                             secureTextEntry={hidePassword}
                             isPassword={true}
                             hidePassword={hidePassword}
@@ -208,4 +205,20 @@ const MyTextInput = ({ label, icon, isPassword, hidePassword, setHidePassword, .
     )
 }
 
-export default LoginScreen
+const mapDispatch = {
+    validate: (token, option, about) => ({
+        type: "login",
+        payload: {
+            token: token,
+            role: option,
+            about: about
+        },
+    }),
+    loginError: () => ({
+        type: "error",
+    }),
+}
+
+const connector = connect(null, mapDispatch)
+
+export default connector(LoginScreen)
