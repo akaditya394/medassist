@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { connect } from "react-redux"
 import { View, ToastAndroid, Platform, Alert, ActivityIndicator } from 'react-native'
 import { StatusBar } from 'expo-status-bar'
 import RadioButtonGroup, { RadioButtonItem } from "expo-radio-button"
@@ -29,7 +30,7 @@ import { Colors } from '../../shared/variables'
 
 import KeyboardAvoidingWrapper from '../../components/keyboardAvoidingWrapper'
 import Notice from '../../components/notice'
-import { apiURL } from '../../util/apiURL'
+import { apiURL } from '../../config/contants'
 
 import LogoImage from '../../images/logo/logo.svg'
 
@@ -37,13 +38,15 @@ const SignUpScreen = ({ navigation }) => {
     const RESET_NOTICE = { type: "", message: "" }
     const [notice, setNotice] = useState(RESET_NOTICE)
     const [hidePassword, setHidePassword] = useState(true)
-    const [username, setUsername] = useState('')
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
     const [current, setCurrent] = useState("user")
-    const [weight, setWeight] = useState('')
-    const [age, setAge] = useState('')
     const [isloading, setIsLoading] = useState(false)
+    const [identifier, setIdentifier] = useState({
+        name: "",
+        email: "",
+        password: "",
+        age: "",
+        weight: ""
+    })
 
     const showToast = () => {
         if (Platform.OS === 'android') {
@@ -88,13 +91,12 @@ const SignUpScreen = ({ navigation }) => {
                 setIsLoading(false)
                 switch (res.data.type) {
                     case "success":
+                        createUser(res.data.token, option, option === "user" ? res?.data?.user : res?.data?.doctor)
                         // setTimeout(() => {
                         //     option === "user"
                         //         ? router.replace("/medicalHistory")
                         //         : router.replace("/prescriptions")
                         // }, 3000)
-                        console.log('Data is: ', res.data)
-                        setNotice({ type: "SUCCESS", message: res.data.message })
                         break
                     case "error":
                         setNotice({ type: "ERROR", message: res.data.message })
@@ -125,24 +127,24 @@ const SignUpScreen = ({ navigation }) => {
                     <SubTitle>Account Signup</SubTitle>
                     <StyledFormArea>
                         <MyTextInput
-                            label="Username"
+                            label="Name"
                             icon="person"
-                            onChangeText={(username) => setUsername(username)}
-                            value={username}
+                            onChangeText={(text) => setIdentifier({ ...identifier, name: text })}
+                            value={identifier.name}
                             keyboardType="default"
                         />
                         <MyTextInput
                             label="Email Address"
                             icon="mail"
-                            onChangeText={(email) => setEmail(email)}
-                            value={email}
+                            onChangeText={(text) => setIdentifier({ ...identifier, email: text })}
+                            value={identifier.email}
                             keyboardType="email-address"
                         />
                         <MyTextInput
                             label="Password"
                             icon="lock"
-                            onChangeText={(password) => setPassword(password)}
-                            value={password}
+                            onChangeText={(text) => setIdentifier({ ...identifier, password: text })}
+                            value={identifier.password}
                             secureTextEntry={hidePassword}
                             isPassword={true}
                             hidePassword={hidePassword}
@@ -183,8 +185,8 @@ const SignUpScreen = ({ navigation }) => {
                                     <StyledInputLabel>Weight in kg</StyledInputLabel>
                                     <StyledTextInput
                                         isUser={true}
-                                        onChangeText={(weight) => setWeight(weight)}
-                                        value={weight}
+                                        onChangeText={(text) => setIdentifier({ ...identifier, weight: text })}
+                                        value={identifier.weight}
                                         keyboardType="decimal-pad"
                                     />
                                 </View>
@@ -192,8 +194,8 @@ const SignUpScreen = ({ navigation }) => {
                                     <StyledInputLabel>Age</StyledInputLabel>
                                     <StyledTextInput
                                         isUser={true}
-                                        onChangeText={(age) => setAge(age)}
-                                        value={age}
+                                        onChangeText={(text) => setIdentifier({ ...identifier, age: text })}
+                                        value={identifier.age}
                                         keyboardType="decimal-pad"
                                     />
                                 </View>
@@ -240,4 +242,21 @@ const MyTextInput = ({ label, icon, isPassword, hidePassword, setHidePassword, .
     )
 }
 
-export default SignUpScreen
+const mapDispatch = {
+    createUser: (token, option, about) => ({
+        type: "signup",
+        payload: {
+            token: token,
+            role: option,
+            about: about
+        },
+    }),
+
+    signupError: () => ({
+        type: "error",
+    }),
+}
+
+const connector = connect(null, mapDispatch)
+
+export default connector(SignUpScreen)

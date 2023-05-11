@@ -32,8 +32,6 @@ const RootStack = ({ onLayoutRootView }) => {
             <Stack.Navigator initialRouteName="Onboarding" screenOptions={{
                 headerShown: false
             }}>
-
-
                 <Stack.Screen
                     name="Onboarding"
                     component={OnboardingScreen}

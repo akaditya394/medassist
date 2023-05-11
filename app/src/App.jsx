@@ -2,8 +2,11 @@ import { useState, useEffect, useCallback } from 'react'
 import { StripeProvider } from "@stripe/stripe-react-native";
 import * as SplashScreen from 'expo-splash-screen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Provider } from "react-redux";
+import { PersistGate } from "redux-persist/integration/react";
 
 import RootStack from './navigators/RootStack';
+import { persistor, store } from "./store";
 
 export default function App() {
   const [appIsReady, setAppIsReady] = useState(false)
@@ -14,7 +17,7 @@ export default function App() {
       try {
         await SplashScreen.preventAutoHideAsync()
         await new Promise(resolve => setTimeout(resolve, 2000))
-        checkLoginCredentials()
+        helper()
       } catch (error) {
         console.warn(error)
       } finally {
@@ -25,13 +28,15 @@ export default function App() {
     prepare()
   }, [])
 
-  const checkLoginCredentials = () => {
-    AsyncStorage.getItem('medassistCredentials')
+  const helper = () => {
+    AsyncStorage.getItem('medassistPerson')
       .then((result) => {
         if (result != null) {
-          setStoredCredentials(JSON.parse(result))
+          // setStoredCredentials(JSON.parse(result))
+          console.log(result)
         } else {
-          setStoredCredentials(null)
+          // setStoredCredentials(null)
+          console.log('hello')
         }
       })
       .catch((error) => console.log(error))
@@ -47,19 +52,13 @@ export default function App() {
     return null
   }
 
-  // if (!appIsReady) {
-  //   return (
-  //     <AppLoading
-  //       startAsync={checkLoginCredentials}
-  //       onFinish={() => setAppIsReady(true)}
-  //       onError={console.warn}
-  //     />
-  //   )
-  // }
-
   return (
-    <StripeProvider publishableKey=''>
-      <RootStack onLayoutRootView={onLayoutRootView} />
-    </StripeProvider>
+    <Provider store={store}>
+      <PersistGate persistor={persistor} loading={null}>
+        <StripeProvider publishableKey=''>
+          <RootStack onLayoutRootView={onLayoutRootView} />
+        </StripeProvider>
+      </PersistGate>
+    </Provider>
   );
 }

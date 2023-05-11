@@ -26,7 +26,7 @@ import { Colors } from '../../shared/variables'
 
 import KeyboardAvoidingWrapper from '../../components/keyboardAvoidingWrapper'
 import Notice from '../../components/notice'
-import { apiURL } from '../../util/apiURL'
+import { apiURL } from '../../config/contants'
 
 import LogoImage from '../../images/logo/logo.svg'
 
