@@ -1,7 +1,8 @@
 const initialState = {
     isAuth: false,
     token: null,
-    user: null,
+    role: null,
+    about: null
 }
 
 export const AuthReducer = (state = initialState, action) => {
@@ -30,13 +31,14 @@ export const AuthReducer = (state = initialState, action) => {
                 role: null,
                 about: null
             }
-        // case "error":
-        //     return {
-        //         ...state,
-        //         isAuth: false,
-        //         token: null,
-        //         user: null,
-        //     }
+        case "error":
+            return {
+                ...state,
+                isAuth: false,
+                token: null,
+                role: null,
+                about: null
+            }
         default:
             return state
     }
