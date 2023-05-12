@@ -4,6 +4,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
+import NetInfo from "@react-native-community/netinfo";
 
 import RootStack from './navigators/RootStack';
 import { persistor, store } from "./store";
@@ -11,6 +12,15 @@ import { persistor, store } from "./store";
 export default function App() {
   const [appIsReady, setAppIsReady] = useState(false)
   const [isAppFirstLaunched, setIsAppFirstLaunched] = useState(null)
+  const [isConnected, setIsConnected] = useState(false)
+
+  useEffect(() => {
+    const unsubscribe = NetInfo.addEventListener(state => {
+      setIsConnected(state.isConnected)
+    })
+
+    return () => unsubscribe()
+  }, [])
 
   useEffect(() => {
     async function prepare() {
@@ -68,7 +78,11 @@ export default function App() {
     <Provider store={store}>
       <PersistGate persistor={persistor} loading={null}>
         <StripeProvider publishableKey=''>
-          <RootStack onLayoutRootView={onLayoutRootView} isAppFirstLaunched={isAppFirstLaunched} />
+          <RootStack
+            onLayoutRootView={onLayoutRootView}
+            isAppFirstLaunched={isAppFirstLaunched}
+            isConnected={isConnected}
+          />
         </StripeProvider>
       </PersistGate>
     </Provider>
