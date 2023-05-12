@@ -1,0 +1,9 @@
+Flask==2.3.2
+joblib==1.2.0
+numpy
+Pillow==9.5.0
+Requests==2.30.0
+scikit_learn
+tensorflow==2.12.0
+torch==2.0.1
+Werkzeug==2.3.4
