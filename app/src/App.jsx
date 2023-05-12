@@ -33,7 +33,7 @@ export default function App() {
       .then((result) => {
         if (result != null) {
           // setStoredCredentials(JSON.parse(result))
-          console.log(result)
+          console.log(JSON.parse(result))
         } else {
           // setStoredCredentials(null)
           console.log('hello')

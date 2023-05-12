@@ -3,7 +3,6 @@ import { connect } from "react-redux"
 import { View, ToastAndroid, Platform, Alert, ActivityIndicator } from 'react-native'
 import { StatusBar } from 'expo-status-bar'
 import RadioButtonGroup, { RadioButtonItem } from "expo-radio-button"
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { Octicons, Ionicons } from '@expo/vector-icons'
 
@@ -43,7 +42,7 @@ const LoginScreen = ({ navigation }) => {
     const RESET_NOTICE = { type: "", message: "" }
     const [notice, setNotice] = useState(RESET_NOTICE)
     const [hidePassword, setHidePassword] = useState(true)
-    const [isloading, setIsLoading] = useState(false)
+    const [isLoading, setIsLoading] = useState(false)
     const [option, setOption] = useState("user")
     const [identifier, setIdentifier] = useState({
         email: "",
@@ -164,7 +163,7 @@ const LoginScreen = ({ navigation }) => {
                                 {notice.message}
                             </Notice>
                         )}
-                        {!isloading ? (
+                        {!isLoading ? (
                             <StyledButton onPress={handleSubmit}>
                                 <ButtonText>Login</ButtonText>
                             </StyledButton>
