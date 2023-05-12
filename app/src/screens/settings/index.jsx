@@ -55,7 +55,10 @@ const SettingsScreen = ({ navigation, logout }) => {
                     <StyledListText>Chatbot (experimental)</StyledListText>
                 </StyledListItem>
                 <Line />
-                <StyledListItem onPress={() => logout()}>
+                <StyledListItem onPress={() => {
+                    mapDispatch.logout()
+                    navigation.navigate("SignUp")
+                }}>
                     <StyledListText>Logout</StyledListText>
                 </StyledListItem>
                 <Line />

@@ -41,7 +41,8 @@
     "redux": "^4.2.1",
     "redux-persist": "^6.0.0",
     "redux-thunk": "^2.4.2",
-    "styled-components": "^5.3.9"
+    "styled-components": "^5.3.9",
+    "@react-native-community/netinfo": "9.3.7"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"

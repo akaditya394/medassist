@@ -3,7 +3,6 @@ import { connect } from "react-redux"
 import { View, ToastAndroid, Platform, Alert, ActivityIndicator } from 'react-native'
 import { StatusBar } from 'expo-status-bar'
 import RadioButtonGroup, { RadioButtonItem } from "expo-radio-button"
-import axios from "axios"
 
 import { Octicons, Ionicons } from '@expo/vector-icons'
 
@@ -24,7 +23,11 @@ import {
     ButtonText,
     MsgBox,
     Line,
-    StyledText
+    StyledText,
+    ExtraView,
+    ExtraText,
+    TextLink,
+    TextLinkContent
 } from './styles'
 import { Colors } from '../../shared/variables'
 
@@ -33,12 +36,13 @@ import Notice from '../../components/notice'
 import { apiURL } from '../../config/contants'
 
 import LogoImage from '../../images/logo/logo.svg'
+import axios from 'axios'
 
 const SignUpScreen = ({ navigation }) => {
     const RESET_NOTICE = { type: "", message: "" }
     const [notice, setNotice] = useState(RESET_NOTICE)
     const [hidePassword, setHidePassword] = useState(true)
-    const [current, setCurrent] = useState("user")
+    const [option, setOption] = useState("user")
     const [isloading, setIsLoading] = useState(false)
     const [identifier, setIdentifier] = useState({
         name: "",
@@ -60,57 +64,59 @@ const SignUpScreen = ({ navigation }) => {
         }
     }
 
+    const showPasswordToast = () => {
+        if (Platform.OS === 'android') {
+            ToastAndroid.show(
+                "Password should be minimum of eight characters",
+                ToastAndroid.SHORT,
+                ToastAndroid.BOTTOM
+            )
+        } else if (Platform.OS === 'ios') {
+            Alert.alert("Password should be minimum of eight characters")
+        }
+    }
+
     const handleSubmit = async () => {
-        if (username === '' || email === '' || password === '' || (current === 'user' && (weight === '' || age === ''))
+        if (identifier.name === '' || identifier.email === '' || identifier.password === '' ||
+            (option === 'user' && (identifier.weight === '' || identifier.age === ''))
         ) {
+            setNotice({ type: "", message: "" })
             showToast()
-        } else if (current === 'medical_professional') {
-            navigateToVerifyScreen()
+        } else if (identifier.password.length < 8) {
+            setNotice({ type: "ERROR", message: "" })
+            showPasswordToast()
         } else {
             setIsLoading(true)
             // a http post request to signup
             try {
-                // const res = await axios.post(`${apiURL}/${current}/register`,
-                const res = await axios.post(`https://test-server-mcnj.onrender.com`,
+                const res = await axios.post(`${apiURL}/${option}/register`, JSON.stringify(identifier),
                     {
-                        // username,
-                        // email,
-                        // password,
-                        // current,
-                        // weight,
-                        // age
-                        name: "nishank",
-                        password: "password"
-                    }, {
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                })
-                // delete this line
-                console.log('Data is: ', res.data)
+                        "headers": {
+                            "content-type": "application/json",
+                        },
+                    }
+                )
+                console.log(res.data)
                 setIsLoading(false)
-                switch (res.data.type) {
+                switch (res?.data?.type) {
                     case "success":
-                        createUser(res.data.token, option, option === "user" ? res?.data?.user : res?.data?.doctor)
-                        // setTimeout(() => {
-                        //     option === "user"
-                        //         ? router.replace("/medicalHistory")
-                        //         : router.replace("/prescriptions")
-                        // }, 3000)
+                        mapDispatch.createUser(res.data.token, option, option === "user" ? res?.data?.user : res?.data?.doctor)
+                        setTimeout(() => {
+                            option === "user" ? navigation.replace("MedicalHistory") : navigation.replace("VerifyMedicalProfessional")
+                        }, 3000)
+                        setNotice({ type: "SUCCESS", message: res.data.message })
                         break
                     case "error":
                         setNotice({ type: "ERROR", message: res.data.message })
+                        mapDispatch.signupError()
                         break
                 }
-            } catch (err) {
-                // setNotice({ type: "ERROR", message: err.response.data.message })
-                console.log(err)
+            } catch (error) {
+                setIsLoading(false)
+                setNotice({ type: "ERROR", message: error.response.data.message })
+                mapDispatch.signupError()
             }
         }
-    }
-
-    const navigateToVerifyScreen = () => {
-        navigation.navigate("VerifyMedicalProfessional")
     }
 
     return (
@@ -161,8 +167,8 @@ const SignUpScreen = ({ navigation }) => {
                                     alignItems: 'center',
                                     justifyContent: 'space-between'
                                 }}
-                                selected={current}
-                                onSelected={(value) => setCurrent(value)}
+                                selected={option}
+                                onSelected={(value) => setOption(value)}
                                 radioBackground="#0F2E53"
                             >
                                 <RadioButtonItem
@@ -179,7 +185,7 @@ const SignUpScreen = ({ navigation }) => {
                                 />
                             </RadioButtonGroup>
                         </StyledRoleSelector>
-                        {current === "user" && (
+                        {option === "user" && (
                             <>
                                 <View>
                                     <StyledInputLabel>Weight in kg</StyledInputLabel>
@@ -217,6 +223,14 @@ const SignUpScreen = ({ navigation }) => {
                             </StyledButton>
                         )}
                         <Line />
+                        <ExtraView>
+                            <ExtraText>Already have an account?</ExtraText>
+                            <TextLink>
+                                <TextLinkContent
+                                    onPress={() => navigation.navigate('Login')}
+                                >{' '}Login here.</TextLinkContent>
+                            </TextLink>
+                        </ExtraView>
                     </StyledFormArea>
                 </InnerContainer>
             </KeyboardAvoidingWrapper>

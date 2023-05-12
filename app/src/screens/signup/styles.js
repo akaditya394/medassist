@@ -123,3 +123,28 @@ export const StyledText = styled.Text`
     font-size: 16px;
     font-weight: 500;
 `;
+
+export const ExtraView = styled.View`
+    justify-content: center;
+    flex-direction: row;
+    align-items: center;
+    padding: 10px;
+`;
+
+export const ExtraText = styled.Text`
+    justify-content: center;
+    align-content: center;
+    color: ${Colors.primary};
+    font-size: 15px;
+`;
+
+export const TextLink = styled.TouchableOpacity`
+    justify-content: center;
+    align-items: center;
+`;
+
+export const TextLinkContent = styled.Text`
+    color: ${Colors.text};
+    font-weight: bold;
+    font-size: 15px;
+`;
