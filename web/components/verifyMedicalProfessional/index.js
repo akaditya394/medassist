@@ -4,7 +4,7 @@ import axios from "axios";
 import DispatchContext from "../../Context/DispatchContext";
 import Notice from "../notice";
 import styles from "./styles.module.scss";
-import UploadPageIllustration from "../../images/upload_page_illustration.svg";
+import VerifyMedicalProfessionalPageIllustration from "../../images/svgs/verifyMedicalProfessional_page_illustration.svg";
 import { useRouter } from "next/router";
 import Loader from "../loader";
 
@@ -242,7 +242,7 @@ const VerifyMedicalProfessional = () => {
         </form>
       </div>
       <div className="ContentPageIllustration">
-        <img src={UploadPageIllustration} alt="" />
+        <img src={VerifyMedicalProfessionalPageIllustration} alt="" />
       </div>
     </div>
   );

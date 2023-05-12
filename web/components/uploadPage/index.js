@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 
 import Notice from "../notice";
 import styles from "./styles.module.scss";
-import UploadPageIllustration from "../../images/upload_page_illustration.svg";
+import UploadPageIllustration from "../../images/svgs/upload_page_illustration.svg";
 import axios from "axios";
 import StateContext from "../../Context/StateContext";
 import Loader from "../loader";
