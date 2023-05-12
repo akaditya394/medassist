@@ -1,7 +1,12 @@
 import React, { useState } from 'react'
 import { StatusBar } from 'expo-status-bar'
-import { ToastAndroid, Platform, Alert } from 'react-native'
+import { connect } from "react-redux"
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import { ToastAndroid, Platform, Alert, ActivityIndicator } from 'react-native'
 import DropDownPicker from "react-native-dropdown-picker"
+
+import Notice from '../../components/notice'
+import { apiURL } from '../../config/contants'
 
 import {
     StyledContainer,
@@ -16,7 +21,8 @@ import {
     StyledTextInput,
     InputContainer,
     DropDownContainer,
-    BottomContainer
+    BottomContainer,
+    MsgBox
 } from './styles'
 
 const data = [
@@ -111,8 +117,11 @@ const data = [
 ]
 
 const VerifyMedicalProfessionalScreen = ({ navigation }) => {
+    const RESET_NOTICE = { type: "", message: "" }
+    const [notice, setNotice] = useState(RESET_NOTICE)
     const [name, setName] = useState('')
     const [regNumber, setRegNumber] = useState('')
+    const [isLoading, setIsLoading] = useState(false)
 
     const [medicalCouncilOpen, setMedicalCouncilOpen] = useState(false)
     const [medicalCouncilValue, setMedicalCouncilValue] = useState(null)
@@ -131,13 +140,85 @@ const VerifyMedicalProfessionalScreen = ({ navigation }) => {
         }
     }
 
-    const handleVerify = () => {
+    const handleVerify = async () => {
         if (name === '' || regNumber === '' || medicalCouncilValue === null) {
             showToast()
         } else {
-            // console.log(medicalCouncilValue)
+            setIsLoading(true)
+            setNotice({
+                type: "SUCCESS",
+                message: "Verification in process. Please wait...",
+            })
+            setIsLoading(false)
             // http post request to verify
+            try {
+                const res = await axios.post(`${apiURL}/doctor/verify`, {
+                    name, regNumber, medicalCouncilValue
+                },
+                    {
+                        "headers": {
+                            "content-type": "application/json",
+                        },
+                    }
+                )
+                switch (res?.data?.type) {
+                    case "success":
+                        if (res.data.verified) {
+                            setNotice({
+                                type: "SUCCESS",
+                                message: "Doctor is verified. Registration is in process...",
+                            })
 
+                            const doctorForm = AsyncStorage.getItem("tempSignup")
+                            AsyncStorage.removeItem("tempSignup")
+
+                            try {
+                                const _res = await axios.post(`${apiURL}/doctor/register`, doctorForm,
+                                    {
+                                        "headers": {
+                                            "content-type": "application/json",
+                                        },
+                                    }
+                                )
+                                setIsLoading(false)
+
+                                switch (_res.data.type) {
+                                    case "success":
+                                        mapDispatch.validate(_res.data.token, "doctor", _res?.data?.doctor)
+                                        setTimeout(() => {
+                                            navigation.navigate('AllPrescriptions')
+                                        }, 3000)
+                                        setNotice({ type: "SUCCESS", message: _res.data.message })
+                                        break
+                                    case "error":
+                                        setNotice({ type: "ERROR", message: _res.data.message })
+                                        mapDispatch.loginError()
+                                        break
+                                }
+                            } catch (error) {
+                                setNotice({ type: "ERROR", message: error.response.data.message })
+                                mapDispatch.loginError()
+                            }
+                        } else {
+                            setIsLoading(false)
+                            // AsyncStorage.removeItem("tempSignup")
+                            setNotice({ type: "ERROR", message: res.data.message })
+                            // setTimeout(() => {
+                            //   navigation.replace('SignUp')
+                            // }, 3000)
+                        }
+                        break
+                    case "error":
+                        setNotice({
+                            type: "ERROR",
+                            message: "Error in verifying doctor.Try again.",
+                        })
+                        break
+                }
+            } catch (error) {
+                setIsLoading(false)
+                setNotice({ type: "ERROR", message: error.response.data.message })
+            }
         }
     }
 
@@ -194,14 +275,42 @@ const VerifyMedicalProfessionalScreen = ({ navigation }) => {
                     </InputContainer>
                 </StyledFormArea>
                 <BottomContainer>
+                    <MsgBox>...</MsgBox>
+                    {notice.message && (
+                        <Notice status={notice.type}>
+                            {notice.message}
+                        </Notice>
+                    )}
+                    {!isLoading ? (
+                        <StyledButton onPress={handleVerify}>
+                            <ButtonText>Verify</ButtonText>
+                        </StyledButton>
+                    ) : (
+                        <StyledButton disable={true}>
+                            <ActivityIndicator size="large" color="#fff" />
+                        </StyledButton>
+                    )}
                     <Line />
-                    <StyledButton onPress={handleVerify}>
-                        <ButtonText>Verify</ButtonText>
-                    </StyledButton>
                 </BottomContainer>
             </InnerContainer>
         </StyledContainer>
     )
 }
 
-export default VerifyMedicalProfessionalScreen
+const mapDispatch = {
+    validate: (token, option, about) => ({
+        type: "login",
+        payload: {
+            token: token,
+            role: option,
+            about: about
+        },
+    }),
+    loginError: () => ({
+        type: "error",
+    }),
+}
+
+const connector = connect(null, mapDispatch)
+
+export default connector(VerifyMedicalProfessionalScreen)
