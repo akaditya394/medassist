@@ -48,10 +48,10 @@ const OnboardingScreen = ({ navigation }) => {
           keyExtractor={(item) => item.id.toString()}
         />
         <BottomContainer>
-          <StyledButton onPress={() => navigation.navigate("SignUp")}>
+          <StyledButton onPress={() => navigation.replace("SignUp")}>
             <ButtonText>Get Started</ButtonText>
           </StyledButton>
-          <StyledButton login={true} onPress={() => navigation.navigate("Login")}>
+          <StyledButton login={true} onPress={() => navigation.replace("Login")}>
             <ButtonText login={true}>Login</ButtonText>
           </StyledButton>
         </BottomContainer>

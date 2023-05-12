@@ -223,8 +223,8 @@ const SignUpScreen = ({ navigation }) => {
                         )}
                         {!isLoading ? (
                             <StyledButton onPress={
-                                // handleSubmit
-                                () => navigation.navigate('VerifyMedicalProfessional')
+                                handleSubmit
+                                // () => navigation.navigate('VerifyMedicalProfessional')
                             }>
                                 <ButtonText>Sign up</ButtonText>
                             </StyledButton>
