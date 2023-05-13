@@ -8,65 +8,90 @@ import TestPrescription from "../../images/test/prescription.jpg";
 import Notice from "../notice";
 import LoaderDarkBig from "../loaderDarkBig";
 
+const doctorData = [
+  { id: "1", name: "nishank" },
+  { id: "2", name: "rahul" },
+  { id: "3", name: "naman" },
+  { id: "4", name: "vansh" },
+  { id: "3", name: "aditya" },
+];
+
 const UnverifiedResult = () => {
   const appState = useContext(StateContext);
   const router = useRouter();
   const [data, setData] = useState([]);
+  const [value, setValue] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
-    async function getPrescription() {
-      try {
-        const token = appState.person.token;
-        console.log(router?.query);
-        // if (!token) {
-        //   router.replace("/login");
-        // }
-        setIsLoading(true);
-        const res = await axios.post(
-          "/prescription/getSide",
-          JSON.stringify({
-            id: router?.query?.id,
-          }),
-          {
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+  // useEffect(() => {
+  //   async function getPrescription() {
+  //     try {
+  //       const token = appState.person.token;
+  //       console.log(router?.query);
+  //       // if (!token) {
+  //       //   router.replace("/login");
+  //       // }
+  //       setIsLoading(true);
+  //       const res = await axios.post(
+  //         "/prescription/getSide",
+  //         JSON.stringify({
+  //           id: router?.query?.id,
+  //         }),
+  //         {
+  //           headers: {
+  //             "Content-Type": "application/json",
+  //             Authorization: `Bearer ${token}`,
+  //           },
+  //         }
+  //       );
 
-        switch (res.data.type) {
-          case "success":
-            setIsLoading(false);
-            setData(res.data.prescriptions);
-            break;
-          case "error":
-            setIsLoading(false);
-            console.log(res);
-            break;
-        }
-        // console.log(res, "ResPres");
-        // setData([
-        //   { id: 1, name: "my prescription", verified: true },
-        //   { id: 2, name: "test prescription", verified: false },
-        //   { id: 3, name: "Item 2", verified: false },
-        //   { id: 4, name: "Item 3", verified: true },
-        // ]);
-      } catch (err) {
-        setIsLoading(false);
-        console.log(err);
-      }
-    }
+  //       switch (res.data.type) {
+  //         case "success":
+  //           setIsLoading(false);
+  //           setData(res.data.prescriptions);
+  //           break;
+  //         case "error":
+  //           setIsLoading(false);
+  //           console.log(res);
+  //           break;
+  //       }
+  //       // console.log(res, "ResPres");
+  //       // setData([
+  //       //   { id: 1, name: "my prescription", verified: true },
+  //       //   { id: 2, name: "test prescription", verified: false },
+  //       //   { id: 3, name: "Item 2", verified: false },
+  //       //   { id: 4, name: "Item 3", verified: true },
+  //       // ]);
+  //     } catch (err) {
+  //       setIsLoading(false);
+  //       console.log(err);
+  //     }
+  //   }
 
-    router?.query?.id && getPrescription();
-  }, [router?.query]);
+  //   router?.query?.id && getPrescription();
+  // }, [router?.query]);
   return (
     <>
       <Notice>
         <h3>Not yet verified</h3>
         <p>Your uploaded prescription has not yet been verified.</p>
       </Notice>
+      <div className={styles.inputWrapper}>
+        <label>Choose a doctor to verify your prescription</label>
+        <select
+          value={value}
+          required={true}
+          onChange={(e) => setValue(e.target.value)}
+        >
+          {doctorData.map((item, index) => {
+            return (
+              <option key={index} value={item.id}>
+                {item.name}
+              </option>
+            );
+          })}
+        </select>
+      </div>
       <h1 className="pageHeading">Your unverified Prescription</h1>
       {!isLoading ? (
         <>
