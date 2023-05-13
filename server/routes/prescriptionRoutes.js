@@ -11,7 +11,7 @@ const { protect } = require("../controllers/userController");
 
 router.get("/allPrescriptions", protect, getAllPrescriptions);
 router.post("/uploadPrescription", protect, addPrescriptions, addDrugs);
-router.post("/getSide", getSideEffects);
+router.post("/getSide", protect, getSideEffects);
 router.post(
   "/addAlternativeAndSuggestion",
   protect,
