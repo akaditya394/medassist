@@ -5,6 +5,7 @@ const puppeteer = require("puppeteer");
 const sendEmail = require("../utils/email");
 const { issueToken } = require("../utils/token");
 const jwt = require("jsonwebtoken");
+const User = require("../models/User");
 
 exports.register = async (req, res) => {
   const { name, email, password } = req.body;
@@ -289,6 +290,26 @@ exports.verifyDoctor = async (req, res) => {
     res.status(500).json({
       type: "error",
       message: "Error in verifying doctor.",
+    });
+  }
+};
+
+exports.viewMedicalHistory = async (req, res) => {
+  try {
+    const { userId } = req.query;
+    const user = await User.findById(userId).lean();
+    if (!user) throw new Error("There exists no such user");
+
+    user.medicalHistory.main.push(user.medicalHistory.other);
+
+    return res.status(200).json({
+      type: "success",
+      medicalHistory: user.medicalHistory.main,
+    });
+  } catch (error) {
+    res.json({
+      type: "error",
+      message: error.message,
     });
   }
 };
