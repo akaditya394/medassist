@@ -96,3 +96,17 @@ export const PrescriptionImage = styled.Image`
     width: 100%;
     height: 500px;
 `;
+
+export const InputContainer = styled.View`
+    width: 100%;
+`;
+
+export const StyledInputLabel = styled.Text`
+    color: ${Colors.primary};
+    font-size: 13px;
+    text-align: left;
+`;
+
+export const DropDownContainer = styled.View`
+    z-index: 1;
+`;
