@@ -1,8 +1,7 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { StatusBar } from 'expo-status-bar'
-import { Text } from 'react-native'
-import { Table, Row, Rows } from 'react-native-table-component'
-import { ActivityIndicator } from 'react-native'
+import { Text, ScrollView, ActivityIndicator, View } from 'react-native'
+import { DataTable } from 'react-native-paper'
 
 import {
     StyledContainer,
@@ -27,16 +26,9 @@ import SettingsImage from '../../images/icons/settings.svg'
 import { Colors } from '../../shared/variables'
 
 const VerifiedResultScreen = ({ navigation, route }) => {
-    // const id = route.params.query.id
+    const id = route.params.query.id
     const [isLoading, setIsLoading] = useState(false)
-    const tableHead = ['Drug name', 'Symptoms', 'Alternatives', 'Suggestions']
-    const tableData = [
-        ['Microcef CV 200 mg', 'Throat infections', 'Goodcif CV 200mg', '-'],
-        ['Ventryl D', 'Sore throat', 'Chericof', 'Avoid cold beverages'],
-        ['Pantotav DSR', 'Acidity', 'Pantin D', 'Drink warm water in morning'],
-        ['BENZ Pearls', 'Dry cough', '-', '-'],
-        ['Montak LC', 'Runny nose, watery eyes, sneezing', 'Levocet M', 'Avoid sour edibles']
-    ]
+    const [data, setData] = useState([])
 
     return (
         <StyledContainer>
@@ -69,12 +61,40 @@ const VerifiedResultScreen = ({ navigation, route }) => {
                             </SelectImage>
                             <ListTitle>Drugs' alternatives and suggestions:</ListTitle>
                             <TableContainer>
-                                <Table borderStyle={{ borderWidth: 1, borderColor: `${Colors.primary}` }}>
-                                    <Row data={tableHead} style={{
-                                        height: 50, backgroundColor: `${Colors.tertiary}`
-                                    }} textStyle={{ margin: 4, fontWeight: 'bold' }} />
-                                    <Rows data={tableData} textStyle={{ margin: 6 }} />
-                                </Table>
+                                <ScrollView horizontal>
+                                    <DataTable>
+                                        <DataTable.Header style={{
+                                            height: 50, backgroundColor: `${Colors.tertiary}`
+                                        }}>
+                                            <DataTable.Title>Drug name</DataTable.Title>
+                                            <DataTable.Title>Side Effects</DataTable.Title>
+                                            <DataTable.Title>Alternatives</DataTable.Title>
+                                            <DataTable.Title>Suggestions</DataTable.Title>
+                                        </DataTable.Header>
+                                        {data?.drugs?.map((drug, index) => {
+                                            return (
+                                                <DataTable.Row key={index}>
+                                                    <DataTable.Cell>{drug}</DataTable.Cell>
+                                                    <DataTable.Cell>
+                                                        <View style={{ width: 100, flexShrink: 1 }}>
+                                                            <Text style={{ textAlign: 'center' }}>{data?.sideEffects?.[index]}</Text>
+                                                        </View>
+                                                    </DataTable.Cell>
+                                                    <DataTable.Cell>
+                                                        <View style={{ width: 100, flexShrink: 1 }}>
+                                                            <Text style={{ textAlign: 'center' }}>{data?.alternatives?.[index]}</Text>
+                                                        </View>
+                                                    </DataTable.Cell>
+                                                    <DataTable.Cell>
+                                                        <View style={{ width: 100, flexShrink: 1 }}>
+                                                            <Text style={{ textAlign: 'center' }}>{data?.suggestions?.[index]}</Text>
+                                                        </View>
+                                                    </DataTable.Cell>
+                                                </DataTable.Row>
+                                            )
+                                        })}
+                                    </DataTable>
+                                </ScrollView>
                             </TableContainer>
                         </ScrollableContainer>
                         <Line />

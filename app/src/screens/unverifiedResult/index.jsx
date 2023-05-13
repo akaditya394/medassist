@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { StatusBar } from 'expo-status-bar'
-import { ActivityIndicator } from 'react-native'
+import { ActivityIndicator, View, Text } from 'react-native'
 import { DataTable } from 'react-native-paper'
 
 import {
@@ -104,7 +104,11 @@ const UnverifiedResultScreen = ({ navigation, route }) => {
                                         return (
                                             <DataTable.Row key={index}>
                                                 <DataTable.Cell>{drug}</DataTable.Cell>
-                                                <DataTable.Cell>{data?.sideEffects?.[index]}</DataTable.Cell>
+                                                <DataTable.Cell>
+                                                    <View style={{ width: 100, flexShrink: 1 }}>
+                                                        <Text style={{ textAlign: 'left' }}>{data?.sideEffects?.[index]}</Text>
+                                                    </View>
+                                                </DataTable.Cell>
                                             </DataTable.Row>
                                         )
                                     })}
