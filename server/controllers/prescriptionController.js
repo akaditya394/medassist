@@ -27,7 +27,7 @@ exports.getAllPrescriptions = async (req, res) => {
       prescriptions,
     });
   } catch (error) {
-    res.status(error.status).json({
+    res.json({
       type: "error",
       message: error.message,
     });
@@ -145,7 +145,7 @@ exports.getSideEffects = async (req, res) => {
     if (presc.sideEffects.length > 0) {
       return res.status(200).json({
         type: "success",
-        sideEffects: presc.sideEffects,
+        prescriptions: presc,
       });
     }
     let requests = [];
@@ -174,8 +174,37 @@ exports.getSideEffects = async (req, res) => {
 
       return res.status(200).json({
         type: "success",
-        newPresc,
+        prescriptions: newPresc,
       });
+    });
+  } catch (error) {
+    res.json({
+      type: "error",
+      message: error.message,
+    });
+  }
+};
+
+exports.addAlternativeAndSuggestion = async (req, res) => {
+  const { id } = req.query;
+  const { suggestions, alternatives } = req.body;
+
+  try {
+    const newPresc = await Prescription.findByIdAndUpdate(
+      id,
+      {
+        $set: {
+          suggestions,
+          alternatives,
+          isVerified: true,
+        },
+      },
+      { new: true }
+    );
+
+    return res.status(200).json({
+      type: "success",
+      newPresc,
     });
   } catch (error) {
     res.json({
