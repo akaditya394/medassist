@@ -59,6 +59,11 @@ const myMessages = [
         text: "If you're looking for random paragraphs, you've come to the right place. When a random word or a random sentence isn't quite enough.",
         fromSelf: true,
     },
+    {
+        id: 7,
+        text: "If you're looking for random paragraphs, you've come to the right place. When a random word or a random sentence isn't quite enough.",
+        fromSelf: true,
+    },
 ];
 
 const ChatbotScreen = ({ navigation }) => {
@@ -118,14 +123,17 @@ const ChatbotScreen = ({ navigation }) => {
                     </IconsContainer>
                 </UpperContainer>
                 <MessagesArea>
-                    {myMessages.map((item, index) => {
-                        <SingleMessageContainer key={index} isSender={item.fromSelf}>
-                            <MessageText>
-                                {item.text}
-                            </MessageText>
-                        </SingleMessageContainer>
+                    {messages.map((item, index) => {
+                        return (
+                            <SingleMessageContainer key={index} isSender={item.fromSelf}>
+                                <MessageText isSender={item.fromSelf}>
+                                    {item.text}
+                                </MessageText>
+                            </SingleMessageContainer>
+                        )
                     })}
                 </MessagesArea>
+                <Line />
                 <BottomContainer>
                     {notice.message && (
                         <Notice status={notice.type}>
