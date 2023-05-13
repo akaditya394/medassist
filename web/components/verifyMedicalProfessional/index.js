@@ -173,6 +173,7 @@ const VerifyMedicalProfessional = () => {
                   break;
               }
             } catch (err) {
+              setIsLoading(false);
               setNotice({ type: "ERROR", message: err.response.data.message });
             }
           } else {

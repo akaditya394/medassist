@@ -5,6 +5,7 @@ import axios from "axios";
 import StateContext from "../../Context/StateContext";
 import styles from "./styles.module.scss";
 import { useRouter } from "next/router";
+import LoaderDarkBig from "../loaderDarkBig";
 
 const data = [
   { id: 1, name: "my prescription" },
@@ -17,27 +18,30 @@ const AllPrescriptionsPage = () => {
   const [notice, setNotice] = useState(RESET_NOTICE);
   const router = useRouter();
   const [data, setData] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const appState = useContext(StateContext);
 
   useEffect(() => {
     async function unverifiedPrescriptions() {
       try {
         const token = appState.person.token;
+        setIsLoading(true);
         // if (!token) {
         //   router.replace("/login");
         // }
         const res = await axios.get("/doctor/unverifiedPrescriptions", {
           headers: {
-            "Content-Type": "multipart/form-data",
             Authorization: `Bearer ${token}`,
           },
         });
 
         switch (res.data.type) {
           case "success":
+            setIsLoading(false);
             setData(res.data.prescriptions);
             break;
           case "error":
+            setIsLoading(false);
             console.log(res);
             break;
         }
@@ -49,6 +53,7 @@ const AllPrescriptionsPage = () => {
         //   { id: 4, name: "Item 3", verified: true },
         // ]);
       } catch (err) {
+        setIsLoading(false);
         console.log(err);
       }
     }
@@ -58,15 +63,21 @@ const AllPrescriptionsPage = () => {
   return (
     <>
       <h1 className="pageHeading">All your unverified prescriptions</h1>
-      <div className={styles.gridContainer}>
-        {data.map((data, key) => {
-          return (
-            <NextLink href={`/prescriptions/1`} key={key}>
-              <div className={styles.box}>{data.name}</div>
-            </NextLink>
-          );
-        })}
-      </div>
+      {!isLoading ? (
+        <div className={styles.gridContainer}>
+          {data.map((data, key) => {
+            return (
+              <NextLink href={`/prescriptions/1`} key={key}>
+                <div className={styles.box}>{data.name}</div>
+              </NextLink>
+            );
+          })}
+        </div>
+      ) : (
+        <div className={styles.loader}>
+          <LoaderDarkBig />
+        </div>
+      )}
     </>
   );
 };

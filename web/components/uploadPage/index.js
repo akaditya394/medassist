@@ -78,33 +78,39 @@ const LoginPage = () => {
       });
       return;
     }
+    console.log(state.selectedPdfs, "Hey");
     data.append("file", state.selectedPdfs);
     const token = appState.person.token;
-    // a http post request to upload prescription
-    const res = await axios.post(
-      "/prescription/uploadPrescription",
-      { file: state.selectedPdfs, name: formData.name },
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${token}`,
-        },
+    try {
+      // a http post request to upload prescription
+      const res = await axios.post(
+        "/prescription/uploadPrescription",
+        { file: state.selectedPdfs, name: formData.name },
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      switch (res.data.type) {
+        case "success":
+          setIsLoading(false);
+          setTimeout(() => {
+            router.replace("/results");
+          }, 3000);
+          setNotice({ type: "SUCCESS", message: res.data.message });
+          break;
+        case "error":
+          setIsLoading(false);
+          setState({ ...state, selectedPdfs: null });
+          setFormData({ ...formData, name: "" });
+          setNotice({ type: "ERROR", message: res.data.message });
+          break;
       }
-    );
-    switch (res.data.type) {
-      case "success":
-        setIsLoading(false);
-        setTimeout(() => {
-          router.replace("/prescriptions");
-        }, 3000);
-        setNotice({ type: "SUCCESS", message: res.data.message });
-        break;
-      case "error":
-        setIsLoading(false);
-        setState({ ...state, selectedPdfs: null });
-        setFormData({ ...formData, name: "" });
-        setNotice({ type: "ERROR", message: res.data.message });
-        break;
+    } catch (err) {
+      setIsLoading(false);
+      setNotice({ type: "ERROR", message: "Error in uploading prescription" });
     }
   };
 

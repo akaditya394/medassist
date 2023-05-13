@@ -140,8 +140,9 @@ exports.addDrugs = async (req, res) => {
 exports.getSideEffects = async (req, res) => {
   try {
     const { id } = req.body;
+    // console.log(req.body, "id");
     const presc = await Prescription.findById(id);
-
+    // console.log(presc);
     if (presc.sideEffects.length > 0) {
       return res.status(200).json({
         type: "success",
@@ -153,7 +154,7 @@ exports.getSideEffects = async (req, res) => {
 
     requests = presc.drugs.map((drug) => {
       console.log(drug);
-      return `http://127.0.0.1:5000/predict?med=${drug}`;
+      return `https://medassist-386411.el.r.appspot.com/predict?med=${drug}`;
     });
 
     Promise.all(
@@ -161,7 +162,8 @@ exports.getSideEffects = async (req, res) => {
         return axios.get(request);
       })
     ).then(async (data) => {
-      sides = data.map((sideEffect) => sideEffect.data);
+      sides = data.map((sideEffect) => sideEffect?.data?.reaction?.join(","));
+      console.log(data, sides, "Yo");
       const newPresc = await Prescription.findByIdAndUpdate(
         id,
         {
@@ -171,7 +173,7 @@ exports.getSideEffects = async (req, res) => {
         },
         { new: true }
       );
-
+      console.log(newPresc);
       return res.status(200).json({
         type: "success",
         prescriptions: newPresc,
