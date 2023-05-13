@@ -13,18 +13,10 @@ const prescriptionSchema = new mongoose.Schema(
     image: {
       type: String,
     },
-    drugs: [
-      {
-        name: String,
-      },
-    ],
-    alternatives: [
-      {
-        drug_name: String,
-        alter_name: String,
-      },
-    ],
+    drugs: [String],
+    alternatives: [String],
     suggestions: [String],
+    sideEffects: [String],
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",

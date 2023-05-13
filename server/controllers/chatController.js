@@ -11,14 +11,7 @@ const openaiClient = new openai.OpenAIApi(configuration);
 exports.chat = async (req, res) => {
   const completion = await openaiClient.createChatCompletion({
     model: "gpt-3.5-turbo",
-    messages: [
-      {
-        role: "system",
-        content:
-          "You are a bot. You can answer the questions asked very accurately",
-      },
-      { role: "user", content: req.body.value },
-    ],
+    messages: [{ role: "user", content: req.body.value }],
   });
 
   res.json({

@@ -1,6 +1,14 @@
 const Prescription = require("../models/Prescriptions");
 const User = require("../models/User");
 const cloudinary = require("cloudinary").v2;
+const vision = require("@google-cloud/vision");
+const fs = require("fs");
+const axios = require("axios");
+const path = require("path");
+
+const client = new vision.ImageAnnotatorClient({
+  keyFileName: "../APIKey.json",
+});
 
 cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,
@@ -26,7 +34,7 @@ exports.getAllPrescriptions = async (req, res) => {
   }
 };
 
-exports.addPrescriptions = async (req, res) => {
+exports.addPrescriptions = async (req, res, next) => {
   const { file } = req.files;
   const { name } = req.body;
 
@@ -55,14 +63,29 @@ exports.addPrescriptions = async (req, res) => {
           });
         }
 
-        await User.findByIdAndUpdate(res.locals.id, {
-          $push: { prescriptions: prescription },
-        });
+        const user = await User.findByIdAndUpdate(
+          res.locals.id,
+          {
+            $push: { prescriptions: prescription },
+          },
+          { new: true }
+        );
 
-        return res.status(200).json({
-          type: "success",
-          message: "Prescription uploaded successfully",
-        });
+        if (!user) {
+          return res.json({
+            type: "error",
+            message:
+              "There was an error updating the prescription to your profile",
+          });
+        }
+        res.locals.presc = prescription;
+        // res.status(200).json({
+        //   type: "success",
+        //   prescription,
+        //   message: "Prescription uploaded successfully",
+        // });
+
+        next();
       })
       .catch((err) => {
         res.status(err.status).json({
@@ -70,6 +93,90 @@ exports.addPrescriptions = async (req, res) => {
           message: err.message,
         });
       });
+  } catch (error) {
+    res.json({
+      type: "error",
+      message: error.message,
+    });
+  }
+};
+
+exports.addDrugs = async (req, res) => {
+  let detections;
+  // console.log(res.locals);
+  try {
+    const [result] = await client.textDetection(res.locals.presc.image);
+    detections = result.textAnnotations;
+    console.log("Text:");
+    // detections.forEach((text) => console.log(text.description));
+    detections = detections.map((text) => text.description);
+    let ans = ["STALOPAM"];
+    detections.forEach(async (i) => {
+      // console.log(i);
+      if (ans.includes(i)) {
+        const prescription = await Prescription.findByIdAndUpdate(
+          res.locals.presc._id,
+          {
+            $push: { drugs: i },
+          },
+          { new: true }
+        );
+        // console.log(i, " mine");
+        return res.status(200).json({
+          type: "success",
+          message: "Prescription uploaded successfully",
+          prescription,
+        });
+      }
+    });
+  } catch (error) {
+    res.json({
+      type: "error",
+      message: error.message,
+    });
+  }
+};
+
+exports.getSideEffects = async (req, res) => {
+  try {
+    const { id } = req.body;
+    const presc = await Prescription.findById(id);
+
+    if (presc.sideEffects.length > 0) {
+      return res.status(200).json({
+        type: "success",
+        sideEffects: presc.sideEffects,
+      });
+    }
+    let requests = [];
+    let sides = [];
+
+    requests = presc.drugs.map((drug) => {
+      console.log(drug);
+      return `http://127.0.0.1:5000/predict?med=${drug}`;
+    });
+
+    Promise.all(
+      requests.map((request) => {
+        return axios.get(request);
+      })
+    ).then(async (data) => {
+      sides = data.map((sideEffect) => sideEffect.data);
+      const newPresc = await Prescription.findByIdAndUpdate(
+        id,
+        {
+          $set: {
+            sideEffects: sides,
+          },
+        },
+        { new: true }
+      );
+
+      return res.status(200).json({
+        type: "success",
+        newPresc,
+      });
+    });
   } catch (error) {
     res.json({
       type: "error",
