@@ -22,6 +22,8 @@ const UnverifiedResult = () => {
   const [data, setData] = useState([]);
   const [value, setValue] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [doctorLoading, setDoctorLoading] = useState(false);
+  const [doctorData, setDoctorData] = useState([]);
 
   console.log(data);
   useEffect(() => {
@@ -49,7 +51,7 @@ const UnverifiedResult = () => {
         switch (res.data.type) {
           case "success":
             setIsLoading(false);
-            setData(res.data.prescriptions);
+            setDoctorData(res.data);
             break;
           case "error":
             setIsLoading(false);
@@ -61,8 +63,37 @@ const UnverifiedResult = () => {
         console.log(err);
       }
     }
+    async function getDoctors() {
+      try {
+        const token = appState.person.token;
+        console.log(router?.query);
+        // if (!token) {
+        //   router.replace("/login");
+        // }
+        setDoctorLoading(true);
+        const res = await axios.get({
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
 
-    router?.query?.id && getPrescription();
+        switch (res.data.type) {
+          case "success":
+            setDoctorLoading(false);
+            setDoctorData(res.data.prescriptions);
+            break;
+          case "error":
+            setDoctorLoading(false);
+            console.log(res);
+            break;
+        }
+      } catch (err) {
+        setDoctorLoading(false);
+        console.log(err);
+      }
+    }
+    router?.query?.id && getPrescription() && getDoctors();
   }, [router?.query]);
   return (
     <>
@@ -70,25 +101,26 @@ const UnverifiedResult = () => {
         <h3>Not yet verified</h3>
         <p>Your uploaded prescription has not yet been verified.</p>
       </Notice>
-      <div className={styles.inputWrapper}>
-        <label>Choose a doctor to verify your prescription</label>
-        <select
-          value={value}
-          required={true}
-          onChange={(e) => setValue(e.target.value)}
-        >
-          {doctorData.map((item, index) => {
-            return (
-              <option key={index} value={item.id}>
-                {item.name}
-              </option>
-            );
-          })}
-        </select>
-      </div>
+
       <h1 className="pageHeading">Your unverified Prescription</h1>
-      {!isLoading ? (
+      {!isLoading && !doctorLoading ? (
         <>
+          <div className={styles.inputWrapper}>
+            <label>Choose a doctor to verify your prescription</label>
+            <select
+              value={value}
+              required={true}
+              onChange={(e) => setValue(e.target.value)}
+            >
+              {doctorData.map((item, index) => {
+                return (
+                  <option key={index} value={item.id}>
+                    {item.name}
+                  </option>
+                );
+              })}
+            </select>
+          </div>
           <div className={styles.prescription}>
             <img src={data.image} alt="Prescription" />
           </div>
