@@ -23,53 +23,53 @@ const UnverifiedResult = () => {
   const [value, setValue] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  // useEffect(() => {
-  //   async function getPrescription() {
-  //     try {
-  //       const token = appState.person.token;
-  //       console.log(router?.query);
-  //       // if (!token) {
-  //       //   router.replace("/login");
-  //       // }
-  //       setIsLoading(true);
-  //       const res = await axios.post(
-  //         "/prescription/getSide",
-  //         JSON.stringify({
-  //           id: router?.query?.id,
-  //         }),
-  //         {
-  //           headers: {
-  //             "Content-Type": "application/json",
-  //             Authorization: `Bearer ${token}`,
-  //           },
-  //         }
-  //       );
+  useEffect(() => {
+    async function getPrescription() {
+      try {
+        const token = appState.person.token;
+        console.log(router?.query);
+        // if (!token) {
+        //   router.replace("/login");
+        // }
+        setIsLoading(true);
+        const res = await axios.post(
+          "/prescription/getSide",
+          JSON.stringify({
+            id: router?.query?.id,
+          }),
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
 
-  //       switch (res.data.type) {
-  //         case "success":
-  //           setIsLoading(false);
-  //           setData(res.data.prescriptions);
-  //           break;
-  //         case "error":
-  //           setIsLoading(false);
-  //           console.log(res);
-  //           break;
-  //       }
-  //       // console.log(res, "ResPres");
-  //       // setData([
-  //       //   { id: 1, name: "my prescription", verified: true },
-  //       //   { id: 2, name: "test prescription", verified: false },
-  //       //   { id: 3, name: "Item 2", verified: false },
-  //       //   { id: 4, name: "Item 3", verified: true },
-  //       // ]);
-  //     } catch (err) {
-  //       setIsLoading(false);
-  //       console.log(err);
-  //     }
-  //   }
+        switch (res.data.type) {
+          case "success":
+            setIsLoading(false);
+            setData(res.data.prescriptions);
+            break;
+          case "error":
+            setIsLoading(false);
+            console.log(res);
+            break;
+        }
+        // console.log(res, "ResPres");
+        // setData([
+        //   { id: 1, name: "my prescription", verified: true },
+        //   { id: 2, name: "test prescription", verified: false },
+        //   { id: 3, name: "Item 2", verified: false },
+        //   { id: 4, name: "Item 3", verified: true },
+        // ]);
+      } catch (err) {
+        setIsLoading(false);
+        console.log(err);
+      }
+    }
 
-  //   router?.query?.id && getPrescription();
-  // }, [router?.query]);
+    router?.query?.id && getPrescription();
+  }, [router?.query]);
   return (
     <>
       <Notice>
