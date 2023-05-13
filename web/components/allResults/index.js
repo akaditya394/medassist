@@ -30,7 +30,6 @@ const AllResultsPage = () => {
         const token = appState.person.token;
         const res = await axios.get("/prescription/allPrescriptions", {
           headers: {
-            "Content-Type": "multipart/form-data",
             Authorization: `Bearer ${token}`,
           },
         });
@@ -108,7 +107,14 @@ const AllResultsPage = () => {
         </Notice>
       ) : (
         <div className={styles.buttonContainer}>
-          <button className={styles.button}>Upload Prescription</button>
+          <button
+            className={styles.button}
+            onClick={() => {
+              router.push("/prescriptionUpload");
+            }}
+          >
+            Upload Prescription
+          </button>
         </div>
       )}
     </>

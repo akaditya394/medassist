@@ -28,7 +28,6 @@ const AllPrescriptionsPage = () => {
         // }
         const res = await axios.get("/doctor/unverifiedPrescriptions", {
           headers: {
-            "Content-Type": "multipart/form-data",
             Authorization: `Bearer ${token}`,
           },
         });
