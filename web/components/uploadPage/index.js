@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
 import Notice from "../notice";
@@ -14,6 +14,11 @@ const LoginPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const appState = useContext(StateContext);
+
+  // useEffect(() => {
+  //   // checks if the user is authenticated
+  //   if (!appState.loggedIn) router.replace("/login");
+  // }, []);
 
   const [state, setState] = useState({
     selectedPdfs: null,
@@ -162,5 +167,13 @@ const LoginPage = () => {
     </div>
   );
 };
+
+export async function getStaticProps(context) {
+  return {
+    props: {
+      protected: true,
+    },
+  };
+}
 
 export default LoginPage;

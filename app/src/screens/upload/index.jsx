@@ -106,6 +106,9 @@ const UploadScreen = ({ navigation }) => {
                 })
                 switch (res.data.type) {
                     case "success":
+                        setTimeout(() => {
+                            navigation.replace("AllPrescriptions")
+                        }, 3000)
                         setNotice({ type: "SUCCESS", message: res.data.message })
                         break
                     case "error":
@@ -114,6 +117,8 @@ const UploadScreen = ({ navigation }) => {
                 }
             } catch (error) {
                 setIsLoading(false)
+                setImageName('')
+                setImage(null)
                 setNotice({ type: "ERROR", message: error.response.data.message })
             }
         }

@@ -5,8 +5,7 @@ const {
   forgotPassword,
   resetPassword,
   verifyDoctor,
-} = require("../controllers/doctorController");
-const {
+  viewMedicalHistory,
   getAllUnverifiedPrescriptions,
 } = require("../controllers/doctorController");
 
@@ -22,5 +21,6 @@ router.get(
   protectDoc,
   getAllUnverifiedPrescriptions
 );
+router.get("/medicalHistory", viewMedicalHistory);
 
 module.exports = router;

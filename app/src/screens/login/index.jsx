@@ -69,27 +69,34 @@ const LoginScreen = ({ navigation, validate, loginError }) => {
             setIsLoading(true)
             // a http post request to login
             try {
-                const res = await axios.post(`${apiURL}/${option}/login`, JSON.stringify(identifier),
-                    {
-                        "headers": {
-                            "content-type": "application/json",
-                        },
-                    }
-                )
+                // const res = await axios.post(`${apiURL}/${option}/login`, JSON.stringify(identifier),
+                //     {
+                //         "headers": {
+                //             "content-type": "application/json",
+                //         },
+                //     }
+                // )
+                console.log(`${apiURL}/${option}/login`)
+                await axios.post(`${apiURL}/${option}/login`, JSON.stringify(identifier), {
+                    "headers": {
+                        "content-type": "application/json",
+                    },
+                }).then((res) => console.log('res is:', res)).catch((error) => console.log('error is:', error.message))
+                // await axios.get(`${apiURL}`).then((res) => console.log('res is:', res.data)).catch((error) => console.log('error is:', error.message))
                 setIsLoading(false)
-                switch (res?.data?.type) {
-                    case "success":
-                        validate(res.data.token, option, option === "user" ? res?.data?.user : res?.data?.doctor)
-                        setTimeout(() => {
-                            option === "user" ? navigation.replace("AllResults") : navigation.replace("AllPrescriptions")
-                        }, 3000)
-                        setNotice({ type: "SUCCESS", message: res.data.message })
-                        break
-                    case "error":
-                        setNotice({ type: "ERROR", message: res.data.message })
-                        loginError()
-                        break
-                }
+                // switch (res?.data?.type) {
+                //     case "success":
+                //         validate(res.data.token, option, option === "user" ? res?.data?.user : res?.data?.doctor)
+                //         setTimeout(() => {
+                //             option === "user" ? navigation.replace("AllResults") : navigation.replace("AllPrescriptions")
+                //         }, 3000)
+                //         setNotice({ type: "SUCCESS", message: res.data.message })
+                //         break
+                //     case "error":
+                //         setNotice({ type: "ERROR", message: res.data.message })
+                //         loginError()
+                //         break
+                // }
             } catch (error) {
                 setIsLoading(false)
                 setNotice({ type: "ERROR", message: error.response.data.message })

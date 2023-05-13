@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { StatusBar } from 'expo-status-bar'
-import { Table, Row, Rows } from 'react-native-table-component'
 import { ActivityIndicator } from 'react-native'
+import { DataTable } from 'react-native-paper'
 
 import {
     StyledContainer,
@@ -20,19 +20,47 @@ import {
 } from './styles'
 import { Colors } from '../../shared/variables'
 
+import { store } from '../../store'
+import { apiURL } from '../../config/constants'
+
 import SettingsImage from '../../images/icons/settings.svg'
 
 const UnverifiedResultScreen = ({ navigation, route }) => {
-    // const id = route.params.query.id
     const [isLoading, setIsLoading] = useState(false)
-    const tableHead = ['Drug name', 'Symptoms']
-    const tableData = [
-        ['Microcef CV 200 mg', 'Throat infections'],
-        ['Ventryl D', 'Sore throat'],
-        ['Pantotav DSR', 'Acidity'],
-        ['BENZ Pearls', 'Dry cough'],
-        ['Montak LC', 'Runny nose, watery eyes, sneezing']
-    ]
+    const [data, setData] = useState([])
+
+    useEffect(() => {
+        async function getPrescription() {
+            try {
+                const token = store.getState().auth.token
+                setIsLoading(true)
+                const res = await axios.post(`${apiURL}/prescription/getSide`, JSON.stringify({
+                    id: route.params.query.id,
+                }),
+                    {
+                        headers: {
+                            "Content-Type": "application/json",
+                            Authorization: `Bearer ${token}`,
+                        },
+                    }
+                )
+                switch (res.data.type) {
+                    case "success":
+                        setIsLoading(false);
+                        setData(res.data.prescriptions)
+                        break
+                    case "error":
+                        setIsLoading(false)
+                        console.log(res)
+                        break
+                }
+            } catch (error) {
+                setIsLoading(false)
+                console.log(error)
+            }
+        }
+        route.params.query.id && getPrescription()
+    }, [route.params.query])
 
     return (
         <StyledContainer>
@@ -59,15 +87,28 @@ const UnverifiedResultScreen = ({ navigation, route }) => {
                         </Notice>
                         <ScrollableContainer>
                             <SelectImage>
-                                <PrescriptionImage resizeMode="cover" source={require('../../images/test/prescription.jpg')} />
+                                <PrescriptionImage resizeMode="cover" source={
+                                    // require('../../images/test/prescription.jpg')
+                                    data.image
+                                } />
                             </SelectImage>
                             <TableContainer>
-                                <Table borderStyle={{ borderWidth: 1, borderColor: `${Colors.primary}` }}>
-                                    <Row data={tableHead} style={{
+                                <DataTable>
+                                    <DataTable.Header style={{
                                         height: 50, backgroundColor: `${Colors.tertiary}`
-                                    }} textStyle={{ margin: 6, fontWeight: 'bold' }} />
-                                    <Rows data={tableData} textStyle={{ margin: 6 }} />
-                                </Table>
+                                    }}>
+                                        <DataTable.Title>Drug name</DataTable.Title>
+                                        <DataTable.Title>Side Effects</DataTable.Title>
+                                    </DataTable.Header>
+                                    {data?.drugs?.map((drug, index) => {
+                                        return (
+                                            <DataTable.Row key={index}>
+                                                <DataTable.Cell>{drug}</DataTable.Cell>
+                                                <DataTable.Cell>{data?.sideEffects?.[index]}</DataTable.Cell>
+                                            </DataTable.Row>
+                                        )
+                                    })}
+                                </DataTable>
                             </TableContainer>
                         </ScrollableContainer>
                         <Line />
