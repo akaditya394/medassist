@@ -78,6 +78,7 @@ const Prescription = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [submitLoading, setSubmitLoading] = useState(false);
   const [imageUrl, setImageUrl] = useState("");
+  const [user, setUser] = useState("");
   //   const [alternatives, setAlternatives] = useState(
   //     new Array(drugsData.length).fill("")
   //   );
@@ -115,6 +116,7 @@ const Prescription = () => {
               }))
             );
             setImageUrl(res.data.prescriptions?.image);
+            setUser(res.data.prescriptions?.user);
             break;
           case "error":
             setIsLoading(false);
@@ -237,7 +239,7 @@ const Prescription = () => {
                   className={styles.button}
                   onClick={(e) => {
                     e.preventDefault();
-                    router.push("/viewMedicalHistory");
+                    router.push(`/viewMedicalHistory?id=${user}`);
                   }}
                 >
                   View Patient's medical history

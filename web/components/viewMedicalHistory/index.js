@@ -3,6 +3,7 @@ import styles from "./styles.module.scss";
 import axios from "axios";
 import StateContext from "../../Context/StateContext";
 import LoaderDarkBig from "../loaderDarkBig";
+import { useRouter } from "next/router";
 const data = [
   { id: "1", text: "Diabetes" },
   { id: "2", text: "High Blood pressure" },
@@ -20,21 +21,27 @@ const ViewMedicalHistory = () => {
   const [data, setData] = useState([]);
   const appState = useContext(StateContext);
   const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
   useEffect(() => {
     async function getMedicalHistory() {
       try {
         const token = appState.person.token;
         setIsLoading(true);
-        const res = await axios.get("/doctor/medicalHistory", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const res = await axios.get(
+          `/doctor/medicalHistory?userId=${router?.query?.id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
 
         switch (res.data.type) {
           case "success":
             setIsLoading(false);
-            setData(res.data.prescriptions);
+            setData(
+              res.data.medicalHistory?.map((hist, i) => ({ id: i, text: hist }))
+            );
             break;
           case "error":
             setIsLoading(false);
@@ -46,8 +53,8 @@ const ViewMedicalHistory = () => {
         console.log(err);
       }
     }
-    getMedicalHistory();
-  }, []);
+    router?.query?.id && getMedicalHistory();
+  }, [router?.query]);
   return (
     <>
       <h1 className="pageHeading">Here is the patient's medical History:</h1>
