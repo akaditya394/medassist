@@ -21,6 +21,7 @@ The MedAssist app is built using various in-demand technologies like:
 - MongoDB
 - React Native with Expo
 - Express
+- Redux
 
 ## Features
 

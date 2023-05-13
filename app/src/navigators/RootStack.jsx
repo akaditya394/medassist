@@ -1,5 +1,6 @@
 import { NavigationContainer } from "@react-navigation/native"
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
+import { connect } from "react-redux"
 
 import LoginScreen from "../screens/login"
 import SignUpScreen from "../screens/signup"
@@ -29,7 +30,11 @@ const RootStack = ({ onLayoutRootView, isAppFirstLaunched, isConnected }) => {
 
     return (
         isAppFirstLaunched != null && (
-            <NavigationContainer independent onReady={onLayoutRootView}>
+            <NavigationContainer
+                independent
+                initialRouteName="Onboarding"
+                onReady={onLayoutRootView}
+            >
                 {!isConnected ? (
                     <Stack.Screen
                         name="NoInternet"
@@ -128,4 +133,10 @@ const RootStack = ({ onLayoutRootView, isAppFirstLaunched, isConnected }) => {
     )
 }
 
-export default RootStack
+const mapState = (state) => ({
+    auth: state.auth.isAuth,
+})
+
+const connector = connect(mapState)
+
+export default connector(RootStack)

@@ -20,7 +20,8 @@ import { Colors } from '../../shared/variables'
 
 import SettingsImage from '../../images/icons/settings.svg'
 
-const UnverifiedResultScreen = ({ navigation }) => {
+const UnverifiedResultScreen = ({ navigation, route }) => {
+    const id = route.params.query.id
     const tableHead = ['Drug name', 'Symptoms']
     const tableData = [
         ['Microcef CV 200 mg', 'Throat infections'],
