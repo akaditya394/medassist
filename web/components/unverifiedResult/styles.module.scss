@@ -1,22 +1,32 @@
 @import "../../shared/variables.scss";
 
 .prescription {
-    width: auto;
-    height: auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 2rem;
+  width: auto;
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 2rem;
 
-    img {
-        width: 20rem;
-        height: 28rem;
-    }
+  img {
+    width: 20rem;
+    height: 28rem;
+  }
 }
 
 .table {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.loader {
+  display: flex;
+  justify-content: center;
+  height: 300px;
+  svg {
+    align-self: center;
+    size: 200px !important;
+  }
 }
