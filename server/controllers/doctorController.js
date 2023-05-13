@@ -149,6 +149,28 @@ exports.logout = (req, res) => {
   });
 };
 
+exports.getAllDoctors = async (req, res) => {
+  try {
+    const doctors = await Doctor.find();
+    if (doctors.length === 0) {
+      return res.json({
+        type: "success",
+        doctors,
+        message: "No doctors present",
+      });
+    }
+    return res.status(200).json({
+      type: "success",
+      doctors,
+    });
+  } catch (error) {
+    return res.json({
+      type: "error",
+      message: error.message,
+    });
+  }
+};
+
 exports.getAllUnverifiedPrescriptions = async (req, res) => {
   try {
     const prescriptions = await Prescription.find({

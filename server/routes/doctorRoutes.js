@@ -7,7 +7,9 @@ const {
   verifyDoctor,
   viewMedicalHistory,
   getAllUnverifiedPrescriptions,
+  getAllDoctors,
 } = require("../controllers/doctorController");
+const { protect } = require("../controllers/userController");
 
 const router = require("express").Router();
 
@@ -22,5 +24,6 @@ router.get(
   getAllUnverifiedPrescriptions
 );
 router.get("/medicalHistory", viewMedicalHistory);
+router.get("/allDoctors", protect, getAllDoctors);
 
 module.exports = router;
