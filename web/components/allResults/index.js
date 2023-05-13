@@ -30,7 +30,6 @@ const AllResultsPage = () => {
         const token = appState.person.token;
         const res = await axios.get("/prescription/allPrescriptions", {
           headers: {
-            "Content-Type": "multipart/form-data",
             Authorization: `Bearer ${token}`,
           },
         });
