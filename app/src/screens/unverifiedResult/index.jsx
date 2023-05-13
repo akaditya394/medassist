@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { StatusBar } from 'expo-status-bar'
 import { ActivityIndicator, View, Text } from 'react-native'
 import { DataTable } from 'react-native-paper'
+import DropDownPicker from "react-native-dropdown-picker"
+import axios from "axios"
 
 import {
     StyledContainer,
@@ -16,7 +18,10 @@ import {
     Line,
     ScrollableContainer,
     SelectImage,
-    PrescriptionImage
+    PrescriptionImage,
+    InputContainer,
+    StyledInputLabel,
+    DropDownContainer
 } from './styles'
 import { Colors } from '../../shared/variables'
 
@@ -25,9 +30,22 @@ import { apiURL } from '../../config/constants'
 
 import SettingsImage from '../../images/icons/settings.svg'
 
+const doctorData = [
+    { id: "1", name: "nishank" },
+    { id: "2", name: "rahul" },
+    { id: "3", name: "naman" },
+    { id: "4", name: "vansh" },
+    { id: "3", name: "aditya" },
+];
+
 const UnverifiedResultScreen = ({ navigation, route }) => {
     const [isLoading, setIsLoading] = useState(false)
     const [data, setData] = useState([])
+
+    const [doctorsListOpen, setDoctorsListOpen] = useState(false)
+    const [doctorsListValue, setDoctorsListValue] = useState(null)
+    const [doctorsListData, setDoctorsListData] = useState(doctorData)
+    const [loading, setLoading] = useState(false)
 
     useEffect(() => {
         async function getPrescription() {
@@ -76,6 +94,31 @@ const UnverifiedResultScreen = ({ navigation, route }) => {
                         </Icon>
                     </IconsContainer>
                 </UpperContainer>
+                <InputContainer>
+                    <StyledInputLabel>Choose a doctor to verify your prescription</StyledInputLabel>
+                    <DropDownContainer>
+                        <DropDownPicker
+                            style={{
+                                borderColor: "#F5F6FB",
+                                backgroundColor: "#F5F6FB"
+                            }}
+                            open={doctorsListOpen}
+                            value={doctorsListValue}
+                            items={doctorsListData}
+                            setOpen={setDoctorsListOpen}
+                            setValue={setDoctorsListValue}
+                            setItems={setDoctorsListData}
+                            placeholder="Select Medical Council"
+                            loading={loading}
+                            activityIndicatorColor="#F5F6FB"
+                            searchable={true}
+                            searchPlaceholder="Search..."
+                            onChangeValue={(doctorsListValue) => setDoctorsListValue(doctorsListValue)}
+                            zIndex={1000}
+                            zIndexInverse={3000}
+                        />
+                    </DropDownContainer>
+                </InputContainer>
                 {isLoading ? (
                     <ActivityIndicator size="large" color="#0F2E53" />
                 ) : (
@@ -89,7 +132,7 @@ const UnverifiedResultScreen = ({ navigation, route }) => {
                             <SelectImage>
                                 <PrescriptionImage resizeMode="cover" source={
                                     // require('../../images/test/prescription.jpg')
-                                    data.image
+                                    data?.image
                                 } />
                             </SelectImage>
                             <TableContainer>
