@@ -13,6 +13,7 @@ export default function App() {
   const [appIsReady, setAppIsReady] = useState(false)
   const [isAppFirstLaunched, setIsAppFirstLaunched] = useState(null)
   const [isConnected, setIsConnected] = useState(false)
+  const [loggedIn, setLoggedIn] = useState(null)
 
   useEffect(() => {
     const unsubscribe = NetInfo.addEventListener(state => {
@@ -56,9 +57,10 @@ export default function App() {
     AsyncStorage.getItem('medassistPerson')
       .then((result) => {
         if (result != null) {
-          console.log(JSON.parse(result))
+          // setLoggedIn(JSON.parse(result))
         } else {
-          console.log('hello')
+          // setLoggedIn(null)
+          console.log('nothing')
         }
       })
       .catch((error) => console.log(error))
@@ -82,6 +84,7 @@ export default function App() {
             onLayoutRootView={onLayoutRootView}
             isAppFirstLaunched={isAppFirstLaunched}
             isConnected={isConnected}
+          // loggedIn={loggedIn}
           />
         </StripeProvider>
       </PersistGate>

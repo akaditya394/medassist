@@ -56,7 +56,7 @@ const SettingsScreen = ({ navigation, logout }) => {
                 </StyledListItem>
                 <Line />
                 <StyledListItem onPress={() => {
-                    mapDispatch.logout()
+                    logout()
                     navigation.navigate("SignUp")
                 }}>
                     <StyledListText>Logout</StyledListText>

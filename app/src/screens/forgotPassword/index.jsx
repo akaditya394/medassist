@@ -30,11 +30,14 @@ import { apiURL } from '../../config/contants'
 
 import LogoImage from '../../images/logo/logo.svg'
 
-const ForgotPasswordScreen = () => {
+const ForgotPasswordScreen = ({ navigation, route }) => {
+    const option = route.params.query.person
     const RESET_NOTICE = { type: "", message: "" }
     const [notice, setNotice] = useState(RESET_NOTICE)
-    const [email, setEmail] = useState('')
     const [isloading, setIsLoading] = useState(false)
+    const [identifier, setIdentifier] = useState({
+        email: "",
+    })
 
     const showToast = () => {
         if (Platform.OS === 'android') {
@@ -49,42 +52,37 @@ const ForgotPasswordScreen = () => {
     }
 
     const handleSubmit = async () => {
-        if (email === '') {
+        if (identifier.email === '') {
+            setNotice({ type: "", message: "" })
             showToast()
         } else {
             setIsLoading(true)
+            // a http post request to forgot password
             try {
-                // a http post request to forgot password
-                // const res = await axios.post(`${apiURL}/${current}/forgotPassword`,
-                const res = await axios.post(`https://test-server-mcnj.onrender.com`,
+                const res = await axios.post(`${apiURL}/${option}/forgotPassword`, JSON.stringify(identifier),
                     {
-                        // email
-                        name: "nishank",
-                        password: "password"
-                    }, {
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                })
-                // delete this line
-                console.log('Data is: ', res.data)
+                        "headers": {
+                            "content-type": "application/json",
+                        },
+                    }
+                )
                 setIsLoading(false)
-                switch (res.data.type) {
+                switch (res?.data?.type) {
                     case "success":
-                        // setTimeout(() => {
-                        //     option === "user"
-                        //         ? router.replace("/medicalHistory")
-                        //         : router.replace("/prescriptions")
-                        // }, 3000)
                         setNotice({ type: "SUCCESS", message: res.data.message })
                         break
                     case "error":
+                        setTimeout(() => {
+                            navigation.navigate('ForgotPassword', {
+                                query: { person: option }
+                            })
+                        }, 3000)
                         setNotice({ type: "ERROR", message: res.data.message })
                         break
                 }
-            } catch (err) {
-                // setNotice({ type: "ERROR", message: err.response.data.message })
-                console.log(err)
+            } catch (error) {
+                setIsLoading(false)
+                setNotice({ type: "ERROR", message: error.response.data.message })
             }
         }
     }
@@ -105,8 +103,8 @@ const ForgotPasswordScreen = () => {
                         <MyTextInput
                             label="Email Address"
                             icon="mail"
-                            onChangeText={(email) => setEmail(email)}
-                            value={email}
+                            onChangeText={(text) => setIdentifier({ ...identifier, email: text })}
+                            value={identifier.email}
                             keyboardType="email-address"
                         />
                         <MsgBox>...</MsgBox>
