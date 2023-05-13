@@ -5,6 +5,8 @@ import io
 from PIL import Image
 import cv2
 import argparse
+# import jsonify
+import pickle
 import numpy as np
 import tensorflow as tf
 from re import DEBUG, sub
@@ -30,9 +32,18 @@ def hello_world():
     return render_template('index.html')
 
 
-model = joblib.load('model/drug-effect-prediction.h5')
+file = open("model/model-new.pkl", "rb")
+model = pickle.load(file)
+# model = joblib.load('model/drug-effect-prediction.h5')
 le = joblib.load('model/labelencoder.h5')
 tokenizer = joblib.load('model/tokenizer.h5')
+
+
+@app.route("/predict", methods=['GET'])
+def getSideEffects():
+    args = request.args
+    args.to_dict()
+    return getReactions(args.get("med"))
 
 
 def getReactions(drugName):
@@ -51,7 +62,7 @@ def getReactions(drugName):
     x = tf.keras.preprocessing.sequence.pad_sequences(x, maxlen=64)
     y = model.predict(x)
     y = le.inverse_transform(y)
-    return y
+    return y[0]
 
 
 print(getReactions("humira"))

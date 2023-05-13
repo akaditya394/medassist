@@ -34,7 +34,11 @@ export const Line = styled.View`
     width: 100%;
     background-color: ${Colors.primary};
     margin-top: 10px;
-    margin-bottom: 10px;
+`;
+
+export const MsgBox = styled.Text`
+    text-align: center;
+    font-size: 13px;
 `;
 
 export const StyledFormArea = styled.View`

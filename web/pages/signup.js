@@ -6,7 +6,7 @@ import Notice from "../components/notice";
 import Loader from "../components/loader";
 
 import BackArrowIcon from "../images/icons/arrow-left.svg";
-import SignupPageIllustration from "../images/signup_page_illustration.svg";
+import SignupPageIllustration from "../images/svgs/signup_page_illustration.svg";
 import DispatchContext from "../Context/DispatchContext";
 import axios from "axios";
 

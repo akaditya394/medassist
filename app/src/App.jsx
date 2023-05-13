@@ -4,20 +4,31 @@ import * as SplashScreen from 'expo-splash-screen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
+import NetInfo from "@react-native-community/netinfo";
 
 import RootStack from './navigators/RootStack';
 import { persistor, store } from "./store";
 
 export default function App() {
   const [appIsReady, setAppIsReady] = useState(false)
-  const [storedCredentials, setStoredCredentials] = useState('')
+  const [isAppFirstLaunched, setIsAppFirstLaunched] = useState(null)
+  const [isConnected, setIsConnected] = useState(false)
+
+  useEffect(() => {
+    const unsubscribe = NetInfo.addEventListener(state => {
+      setIsConnected(state.isConnected)
+    })
+
+    return () => unsubscribe()
+  }, [])
 
   useEffect(() => {
     async function prepare() {
       try {
         await SplashScreen.preventAutoHideAsync()
         await new Promise(resolve => setTimeout(resolve, 2000))
-        helper()
+        isAuthenticatedChecker()
+        isAppFirstLaunchedChecker()
       } catch (error) {
         console.warn(error)
       } finally {
@@ -28,14 +39,25 @@ export default function App() {
     prepare()
   }, [])
 
-  const helper = () => {
+  const isAppFirstLaunchedChecker = () => {
+    AsyncStorage.getItem('isAppFirstLaunched')
+      .then((result) => {
+        if (result == null) {
+          setIsAppFirstLaunched(true)
+          AsyncStorage.setItem('isAppFirstLaunched', 'false')
+        } else {
+          setIsAppFirstLaunched(false)
+        }
+      })
+      .catch((error) => console.log(error))
+  }
+
+  const isAuthenticatedChecker = () => {
     AsyncStorage.getItem('medassistPerson')
       .then((result) => {
         if (result != null) {
-          // setStoredCredentials(JSON.parse(result))
-          console.log(result)
+          console.log(JSON.parse(result))
         } else {
-          // setStoredCredentials(null)
           console.log('hello')
         }
       })
@@ -56,7 +78,11 @@ export default function App() {
     <Provider store={store}>
       <PersistGate persistor={persistor} loading={null}>
         <StripeProvider publishableKey=''>
-          <RootStack onLayoutRootView={onLayoutRootView} />
+          <RootStack
+            onLayoutRootView={onLayoutRootView}
+            isAppFirstLaunched={isAppFirstLaunched}
+            isConnected={isConnected}
+          />
         </StripeProvider>
       </PersistGate>
     </Provider>

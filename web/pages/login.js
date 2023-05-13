@@ -8,7 +8,7 @@ import Input from "../components/input";
 import Loader from "../components/loader";
 
 import BackArrowIcon from "../images/icons/arrow-left.svg";
-import LoginPageIllustration from "../images/login_page_illustration.svg";
+import LoginPageIllustration from "../images/svgs/login_page_illustration.svg";
 import axios from "axios";
 
 const form = {
@@ -165,7 +165,7 @@ const LoginPage = () => {
           <div style={{ display: "flex" }}>
             <button
               type={form.submitButton.type}
-              // onClick={() => router.push("/results")}
+            // onClick={() => router.push("/results")}
             >
               {!isLoading ? form.submitButton.label : <Loader />}
             </button>

@@ -3,7 +3,6 @@ import { connect } from "react-redux"
 import { View, ToastAndroid, Platform, Alert, ActivityIndicator } from 'react-native'
 import { StatusBar } from 'expo-status-bar'
 import RadioButtonGroup, { RadioButtonItem } from "expo-radio-button"
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { Octicons, Ionicons } from '@expo/vector-icons'
 
@@ -34,17 +33,16 @@ import { Colors } from '../../shared/variables'
 
 import KeyboardAvoidingWrapper from '../../components/keyboardAvoidingWrapper'
 import Notice from '../../components/notice'
-import { loginUser } from '../../store/actions/auth-actions'
 import { apiURL } from '../../config/contants'
 
 import LogoImage from '../../images/logo/logo.svg'
-import { store } from '../../store'
+import axios from 'axios'
 
 const LoginScreen = ({ navigation }) => {
     const RESET_NOTICE = { type: "", message: "" }
     const [notice, setNotice] = useState(RESET_NOTICE)
     const [hidePassword, setHidePassword] = useState(true)
-    const [isloading, setIsLoading] = useState(false)
+    const [isLoading, setIsLoading] = useState(false)
     const [option, setOption] = useState("user")
     const [identifier, setIdentifier] = useState({
         email: "",
@@ -65,30 +63,37 @@ const LoginScreen = ({ navigation }) => {
 
     const handleSubmit = async () => {
         if (identifier.email === '' || identifier.password === '') {
+            setNotice({ type: "", message: "" })
             showToast()
         } else {
             setIsLoading(true)
             // a http post request to login
             try {
-                const res = await loginUser(`${apiURL}`, identifier)
-                switch (res.type) {
+                const res = await axios.post(`${apiURL}/${option}/login`, JSON.stringify(identifier),
+                    {
+                        "headers": {
+                            "content-type": "application/json",
+                        },
+                    }
+                )
+                setIsLoading(false)
+                switch (res?.data?.type) {
                     case "success":
-                        console.log('redux store is: ', store)
-                        // validate(res.data.token, option, option === "user" ? res?.data?.user : res?.data?.doctor)
+                        mapDispatch.validate(res.data.token, option, option === "user" ? res?.data?.user : res?.data?.doctor)
                         setTimeout(() => {
-                            option === "user" ? navigation.replace("MedicalHistory") : navigation.replace("AllPrescriptions")
+                            option === "user" ? navigation.replace("AllResults") : navigation.replace("AllPrescriptions")
                         }, 3000)
-                        setNotice({ type: "SUCCESS", message: res.message })
+                        setNotice({ type: "SUCCESS", message: res.data.message })
                         break
                     case "error":
-                        setNotice({ type: "ERROR", message: res.message })
-                        loginError()
+                        setNotice({ type: "ERROR", message: res.data.message })
+                        mapDispatch.loginError()
                         break
                 }
+            } catch (error) {
                 setIsLoading(false)
-            } catch (err) {
-                // setNotice({ type: "ERROR", message: err.response.data.message })
-                console.log(err)
+                setNotice({ type: "ERROR", message: error.response.data.message })
+                mapDispatch.loginError()
             }
         }
     }
@@ -158,7 +163,7 @@ const LoginScreen = ({ navigation }) => {
                                 {notice.message}
                             </Notice>
                         )}
-                        {!isloading ? (
+                        {!isLoading ? (
                             <StyledButton onPress={handleSubmit}>
                                 <ButtonText>Login</ButtonText>
                             </StyledButton>

@@ -6,7 +6,7 @@ import Input from "../components/input";
 import Loader from "../components/loader";
 
 import BackArrowIcon from "../images/icons/arrow-left.svg";
-import ForgotPasswordPageIllustration from "../images/forgotPassword_page_illustration.svg";
+import ForgotPasswordPageIllustration from "../images/svgs/forgotPassword_page_illustration.svg";
 import axios from "axios";
 
 const form = {

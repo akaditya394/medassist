@@ -1,7 +1,7 @@
 import styles from "./styles.module.scss"
 import { useRouter } from "next/router"
 
-import LoginPageIllustration from "../../images/login_page_illustration.svg"
+import LoginPageIllustration from "../../images/svgs/login_page_illustration.svg"
 
 const LandingPage = () => {
     const router = useRouter()

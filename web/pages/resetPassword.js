@@ -5,7 +5,7 @@ import Notice from "../components/notice";
 import Input from "../components/input";
 import Loader from "../components/loader";
 
-import ResetPasswordPageIllustration from "../images/resetPassword_page_illustration.svg";
+import ResetPasswordPageIllustration from "../images/svgs/resetPassword_page_illustration.svg";
 import axios from "axios";
 
 const form = {
