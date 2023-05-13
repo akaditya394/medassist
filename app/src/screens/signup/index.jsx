@@ -223,8 +223,8 @@ const SignUpScreen = ({ navigation, createUser, signupError }) => {
                         )}
                         {!isLoading ? (
                             <StyledButton onPress={
-                                // handleSubmit
-                                () => navigation.navigate('Result')
+                                handleSubmit
+                                // () => navigation.navigate('UnverifiedResult')
                             }>
                                 <ButtonText>Sign up</ButtonText>
                             </StyledButton>
