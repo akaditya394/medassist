@@ -1,14 +1,14 @@
 import { useState } from "react";
+import { ToastAndroid, Platform, Alert, ActivityIndicator } from 'react-native'
 import { StatusBar } from "expo-status-bar";
 import Checkbox from 'expo-checkbox'
+import axios from "axios"
 
 import {
   StyledContainer,
   InnerContainer,
   UpperContainer,
-  IconsContainer,
   PageTitle,
-  Icon,
   StyledText,
   StyledFormArea,
   StyledButton,
@@ -24,6 +24,11 @@ import {
   StyledTextInput
 } from "./styles";
 import { Colors } from "../../shared/variables";
+
+import { store } from '../../store'
+import KeyboardAvoidingWrapper from '../../components/keyboardAvoidingWrapper'
+import Notice from "../../components/notice";
+import { apiURL } from '../../config/constants'
 
 import SettingsImage from "../../images/icons/settings.svg";
 
@@ -44,6 +49,7 @@ const conditionsArray = [
 const MedicalHistoryScreen = ({ navigation }) => {
   const RESET_NOTICE = { type: "", message: "" }
   const [notice, setNotice] = useState(RESET_NOTICE)
+  const [isLoading, setIsLoading] = useState(false)
   const [conditions, setConditions] = useState(conditionsArray)
   const [finalConditions, setFinalConditions] = useState([])
   const [otherCondition, setOtherCondition] = useState('')
@@ -64,25 +70,65 @@ const MedicalHistoryScreen = ({ navigation }) => {
     return item.text === "Other"
   }
 
-  const handleSubmit = () => {
-    console.log(otherCondition)
-    console.log(finalConditions)
+  const showToast = () => {
+    if (Platform.OS === 'android') {
+      ToastAndroid.show(
+        "You need to select atleast one checkbox",
+        ToastAndroid.SHORT,
+        ToastAndroid.BOTTOM
+      )
+    } else if (Platform.OS === 'ios') {
+      Alert.alert("You need to select atleast one checkbox")
+    }
+  }
+
+  const handleSubmit = async () => {
+    if (finalConditions.length === 0) {
+      setNotice({ type: "", message: "" })
+      showToast()
+    } else {
+      setIsLoading(true)
+      // a http post request to submit
+      try {
+        const token = store.getState().auth.token
+        const res = await axios.post(`${apiURL}/user/addMedicalHistory`,
+          {
+            one: finalConditions,
+            two: otherCondition,
+          },
+          {
+            "headers": {
+              "content-type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        )
+        setIsLoading(false)
+        switch (res?.data?.type) {
+          case "success":
+            setTimeout(() => {
+              navigation.replace("AllResults")
+            }, 3000)
+            setNotice({ type: "SUCCESS", message: res.data.message })
+            break
+          case "error":
+            setNotice({ type: "ERROR", message: res.data.message })
+            break
+        }
+      } catch (error) {
+        setIsLoading(false)
+        setNotice({ type: "ERROR", message: error.response.data.message })
+      }
+    }
   }
 
   return (
     <StyledContainer>
       <StatusBar style="dark" />
+      {/* <KeyboardAvoidingWrapper> */}
       <InnerContainer>
         <UpperContainer>
           <PageTitle>Medical History</PageTitle>
-          <IconsContainer>
-            <Icon
-              settings={true}
-              onPress={() => navigation.navigate("Settings")}
-            >
-              <SettingsImage width="30px" height="30px" fill="#0F2E53" />
-            </Icon>
-          </IconsContainer>
         </UpperContainer>
         <StyledText>Please select your medical history</StyledText>
         <StyledFormArea>
@@ -101,23 +147,37 @@ const MedicalHistoryScreen = ({ navigation }) => {
               );
             })}
           </ConditionsContainer>
-          {conditions.find(otherMedicalHistoryChecker).isChecked && (
-            <InputContainer>
-              <StyledInputLabel>Type your medical history</StyledInputLabel>
-              <StyledTextInput
-                onChangeText={(otherCondition) => setOtherCondition(otherCondition)}
-                value={otherCondition}
-                keyboardType="default"
-              />
-            </InputContainer>
-          )}
+          <>
+            {conditions.find(otherMedicalHistoryChecker).isChecked && (
+              <InputContainer>
+                <StyledInputLabel>Type your medical history:</StyledInputLabel>
+                <StyledTextInput
+                  onChangeText={(otherCondition) => setOtherCondition(otherCondition)}
+                  value={otherCondition}
+                  keyboardType="default"
+                />
+              </InputContainer>
+            )}
+          </>
         </StyledFormArea>
         <MsgBox>...</MsgBox>
-        <StyledButton onPress={handleSubmit}>
-          <ButtonText>Submit</ButtonText>
-        </StyledButton>
+        {notice.message && (
+          <Notice status={notice.type}>
+            {notice.message}
+          </Notice>
+        )}
+        {!isLoading ? (
+          <StyledButton onPress={handleSubmit}>
+            <ButtonText>Submit</ButtonText>
+          </StyledButton>
+        ) : (
+          <StyledButton disable={true}>
+            <ActivityIndicator size="large" color="#fff" />
+          </StyledButton>
+        )}
         <Line />
       </InnerContainer>
+      {/* </KeyboardAvoidingWrapper> */}
     </StyledContainer>
   );
 };

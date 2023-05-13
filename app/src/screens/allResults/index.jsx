@@ -22,7 +22,7 @@ import {
 
 import { store } from '../../store'
 import Notice from '../../components/notice'
-import { apiURL } from '../../config/contants'
+import { apiURL } from '../../config/constants'
 
 import SettingsImage from '../../images/icons/settings.svg'
 import VerifiedImage from '../../images/icons/verified.svg'

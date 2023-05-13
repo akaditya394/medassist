@@ -30,29 +30,6 @@ export const PageTitle = styled.Text`
     font-weight: 700;
 `;
 
-export const IconsContainer = styled.View`
-    position: absolute;
-    right: 0;
-    display: flex;
-    flex-direction: row;
-`;
-
-export const Icon = styled.TouchableOpacity`
-    width: 37px;
-    height: 37px;
-    margin-right: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 5px;
-    background-color: ${Colors.primary};
-
-    ${(props) => props.settings == true && `
-        background-color: ${Colors.secondary};
-        margin-right: 0px;
-    `}
-`;
-
 export const StyledText = styled.Text`
     color: ${Colors.primary};
     font-size: 18px;

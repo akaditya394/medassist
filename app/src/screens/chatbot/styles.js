@@ -39,6 +39,7 @@ export const Line = styled.View`
 
 export const BottomContainer = styled.View`
     width: 100%;
+    margin-top: 5px;
 `;
 
 export const IconsContainer = styled.View`
@@ -66,7 +67,7 @@ export const Icon = styled.TouchableOpacity`
 
 export const InputContainer = styled.View`
     width: 100%;
-    margin-top: 10px;
+    margin-top: 5px;
 `;
 
 export const StyledTextInput = styled.TextInput`
@@ -89,6 +90,7 @@ export const RightIcon = styled.TouchableOpacity`
 
 export const MessagesArea = styled.ScrollView`
     width: 100%;
+    border: 1px solid black;
 `;
 
 export const SingleMessageContainer = styled.View`
