@@ -110,7 +110,20 @@ exports.addDrugs = async (req, res) => {
     console.log("Text:");
     // detections.forEach((text) => console.log(text.description));
     detections = detections.map((text) => text.description);
-    let ans = ["STALOPAM"];
+    let ans = [
+      "STALOPAM",
+      "DOLO",
+      "ASPIRIN",
+      "Zerodol",
+      "Humira",
+      "Cetirizine",
+      "Calpol",
+      "IBUPROFEN",
+      "Mucinex",
+      "Delsym",
+      "Abreva",
+      "Carmex",
+    ];
     detections.forEach(async (i) => {
       // console.log(i);
       if (ans.includes(i)) {
