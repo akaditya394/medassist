@@ -3,6 +3,7 @@ import { connect } from "react-redux"
 import { View, ToastAndroid, Platform, Alert, ActivityIndicator } from 'react-native'
 import { StatusBar } from 'expo-status-bar'
 import RadioButtonGroup, { RadioButtonItem } from "expo-radio-button"
+import axios from 'axios'
 
 import { Octicons, Ionicons } from '@expo/vector-icons'
 
@@ -36,9 +37,8 @@ import Notice from '../../components/notice'
 import { apiURL } from '../../config/contants'
 
 import LogoImage from '../../images/logo/logo.svg'
-import axios from 'axios'
 
-const LoginScreen = ({ navigation }) => {
+const LoginScreen = ({ navigation, validate, loginError }) => {
     const RESET_NOTICE = { type: "", message: "" }
     const [notice, setNotice] = useState(RESET_NOTICE)
     const [hidePassword, setHidePassword] = useState(true)
@@ -79,7 +79,7 @@ const LoginScreen = ({ navigation }) => {
                 setIsLoading(false)
                 switch (res?.data?.type) {
                     case "success":
-                        mapDispatch.validate(res.data.token, option, option === "user" ? res?.data?.user : res?.data?.doctor)
+                        validate(res.data.token, option, option === "user" ? res?.data?.user : res?.data?.doctor)
                         setTimeout(() => {
                             option === "user" ? navigation.replace("AllResults") : navigation.replace("AllPrescriptions")
                         }, 3000)
@@ -87,13 +87,13 @@ const LoginScreen = ({ navigation }) => {
                         break
                     case "error":
                         setNotice({ type: "ERROR", message: res.data.message })
-                        mapDispatch.loginError()
+                        loginError()
                         break
                 }
             } catch (error) {
                 setIsLoading(false)
                 setNotice({ type: "ERROR", message: error.response.data.message })
-                mapDispatch.loginError()
+                loginError()
             }
         }
     }
@@ -172,7 +172,9 @@ const LoginScreen = ({ navigation }) => {
                                 <ActivityIndicator size="large" color="#fff" />
                             </StyledButton>
                         )}
-                        <StyledButton forgotPassword={true} onPress={() => navigation.navigate('ForgotPassword')}>
+                        <StyledButton forgotPassword={true} onPress={() => navigation.navigate('ForgotPassword', {
+                            query: { person: option }
+                        })}>
                             <ButtonText forgotPassword={true}>
                                 Forgot Password ?
                             </ButtonText>

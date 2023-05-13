@@ -42,6 +42,8 @@ const conditionsArray = [
 ]
 
 const MedicalHistoryScreen = ({ navigation }) => {
+  const RESET_NOTICE = { type: "", message: "" }
+  const [notice, setNotice] = useState(RESET_NOTICE)
   const [conditions, setConditions] = useState(conditionsArray)
   const [finalConditions, setFinalConditions] = useState([])
   const [otherCondition, setOtherCondition] = useState('')
