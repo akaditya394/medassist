@@ -14,6 +14,7 @@ const UnverifiedResult = () => {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
+  console.log(data);
   useEffect(() => {
     async function getPrescription() {
       try {
@@ -46,13 +47,6 @@ const UnverifiedResult = () => {
             console.log(res);
             break;
         }
-        // console.log(res, "ResPres");
-        // setData([
-        //   { id: 1, name: "my prescription", verified: true },
-        //   { id: 2, name: "test prescription", verified: false },
-        //   { id: 3, name: "Item 2", verified: false },
-        //   { id: 4, name: "Item 3", verified: true },
-        // ]);
       } catch (err) {
         setIsLoading(false);
         console.log(err);

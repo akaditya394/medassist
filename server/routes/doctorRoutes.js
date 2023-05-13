@@ -1,7 +1,7 @@
 const {
   register,
   login,
-  protect,
+  protectDoc,
   forgotPassword,
   resetPassword,
   verifyDoctor,
@@ -17,6 +17,10 @@ router.post("/login", login);
 router.post("/forgotPassword", forgotPassword);
 router.post("/resetPassword", resetPassword);
 router.post("/verify", verifyDoctor);
-router.get("/unverifiedPrescriptions", protect, getAllUnverifiedPrescriptions);
+router.get(
+  "/unverifiedPrescriptions",
+  protectDoc,
+  getAllUnverifiedPrescriptions
+);
 
 module.exports = router;

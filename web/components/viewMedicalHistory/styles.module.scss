@@ -1,7 +1,15 @@
 @import "../../shared/variables.scss";
 
 .conditionContainer {
-    margin-left: 1rem;
-    margin-right: 1rem;
-    margin-bottom: 0.5rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  margin-bottom: 0.5rem;
+}
+.loader {
+  display: flex;
+  justify-content: center;
+  height: 300px;
+  svg {
+    align-self: center;
+  }
 }

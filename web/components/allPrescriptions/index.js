@@ -45,13 +45,6 @@ const AllPrescriptionsPage = () => {
             console.log(res);
             break;
         }
-        // console.log(res, "ResPres");
-        // setData([
-        //   { id: 1, name: "my prescription", verified: true },
-        //   { id: 2, name: "test prescription", verified: false },
-        //   { id: 3, name: "Item 2", verified: false },
-        //   { id: 4, name: "Item 3", verified: true },
-        // ]);
       } catch (err) {
         setIsLoading(false);
         console.log(err);
@@ -67,7 +60,7 @@ const AllPrescriptionsPage = () => {
         <div className={styles.gridContainer}>
           {data.map((data, key) => {
             return (
-              <NextLink href={`/prescriptions/1`} key={key}>
+              <NextLink href={`/prescriptions/${data?._id}`} key={key}>
                 <div className={styles.box}>{data.name}</div>
               </NextLink>
             );
