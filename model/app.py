@@ -25,11 +25,11 @@ def hello_world():
     return render_template('index.html')
 
 
-file = open("model/model-new.pkl", "rb")
+file = open("./model-new.pkl", "rb")
 model = pickle.load(file)
 # model = joblib.load('model/drug-effect-prediction.h5')
-le = joblib.load('model/labelencoder.h5')
-tokenizer = joblib.load('model/tokenizer.h5')
+le = joblib.load('./labelencoder.h5')
+tokenizer = joblib.load('./tokenizer.h5')
 
 
 @app.route("/predict", methods=['GET'])
