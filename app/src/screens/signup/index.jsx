@@ -35,11 +35,11 @@ import { Colors } from '../../shared/variables'
 
 import KeyboardAvoidingWrapper from '../../components/keyboardAvoidingWrapper'
 import Notice from '../../components/notice'
-import { apiURL } from '../../config/contants'
+import { apiURL } from '../../config/constants'
 
 import LogoImage from '../../images/logo/logo.svg'
 
-const SignUpScreen = ({ navigation }) => {
+const SignUpScreen = ({ navigation, createUser, signupError }) => {
     const RESET_NOTICE = { type: "", message: "" }
     const [notice, setNotice] = useState(RESET_NOTICE)
     const [hidePassword, setHidePassword] = useState(true)
@@ -101,7 +101,7 @@ const SignUpScreen = ({ navigation }) => {
                     setIsLoading(false)
                     switch (res?.data?.type) {
                         case "success":
-                            mapDispatch.createUser(res.data.token, option, option === "user" ? res?.data?.user : res?.data?.doctor)
+                            createUser(res.data.token, option, option === "user" ? res?.data?.user : res?.data?.doctor)
                             setTimeout(() => {
                                 option === "user" ? navigation.replace("MedicalHistory") : navigation.replace("AllPrescriptions")
                             }, 3000)
@@ -115,7 +115,7 @@ const SignUpScreen = ({ navigation }) => {
                 } catch (error) {
                     setIsLoading(false)
                     setNotice({ type: "ERROR", message: error.response.data.message })
-                    mapDispatch.signupError()
+                    signupError()
                 }
             }
         } else {
@@ -223,8 +223,8 @@ const SignUpScreen = ({ navigation }) => {
                         )}
                         {!isLoading ? (
                             <StyledButton onPress={
-                                handleSubmit
-                                // () => navigation.navigate('VerifyMedicalProfessional')
+                                // handleSubmit
+                                () => navigation.navigate('Chatbot')
                             }>
                                 <ButtonText>Sign up</ButtonText>
                             </StyledButton>

@@ -26,16 +26,19 @@ import { Colors } from '../../shared/variables'
 
 import KeyboardAvoidingWrapper from '../../components/keyboardAvoidingWrapper'
 import Notice from '../../components/notice'
-import { apiURL } from '../../config/contants'
+import { apiURL } from '../../config/constants'
 
 import LogoImage from '../../images/logo/logo.svg'
 
-const ResetPasswordScreen = () => {
+const ResetPasswordScreen = ({ navigation, route }) => {
+    const option = route.params.query.person
     const RESET_NOTICE = { type: "", message: "" }
     const [notice, setNotice] = useState(RESET_NOTICE)
     const [hidePassword, setHidePassword] = useState(true)
-    const [password, setPassword] = useState('')
     const [isloading, setIsLoading] = useState(false)
+    const [identifier, setIdentifier] = useState({
+        password: "",
+    })
 
     const showToast = () => {
         if (Platform.OS === 'android') {
@@ -50,36 +53,46 @@ const ResetPasswordScreen = () => {
     }
 
     const handleSubmit = async () => {
-        if (password === '') {
+        if (identifier.password === '') {
+            setNotice({ type: "", message: "" })
             showToast()
         } else {
             setIsLoading(true)
-            // const res = await axios.post(`${apiURL}/${current}/api/auth/resetPassword`,
-            const res = await axios.post(`https://test-server-mcnj.onrender.com`,
-                {
-                    // password
-                    name: "nishank",
-                    password: "password"
-                }, {
-                headers: {
-                    "Content-Type": "application/json",
+            // a http post request to res password
+            try {
+                const res = await axios.post(`${apiURL}/${option}/resetPassword`, {
+                    password: identifier.password, token: route.params.query.token
                 },
-            })
-            // delete this line
-            console.log('Data is: ', res.data)
-            setIsLoading(false)
-            switch (res.data.type) {
-                case "success":
-                    // setTimeout(() => {
-                    //     option === "user"
-                    //         ? router.replace("/medicalHistory")
-                    //         : router.replace("/prescriptions")
-                    // }, 3000)
-                    setNotice({ type: "SUCCESS", message: res.data.message })
-                    break
-                case "error":
-                    setNotice({ type: "ERROR", message: res.data.message })
-                    break
+                    {
+                        "headers": {
+                            "content-type": "application/json",
+                        },
+                    }
+                )
+                setIsLoading(false)
+                switch (res?.data?.type) {
+                    case "success":
+                        setTimeout(() => {
+                            navigation.replace("Login")
+                        }, 3000)
+                        setNotice({ type: "SUCCESS", message: res.data.message })
+                        break
+                    case "error":
+                        // figure out this!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                        // setTimeout(() => {
+                        //     navigation.replace(`/ForgotPassword?person=${option}`);
+                        // }, 3000)
+                        setNotice({ type: "ERROR", message: res.data.message })
+                        setTimeout(() => {
+                            navigation.navigate('ForgotPassword', {
+                                query: { person: option }
+                            })
+                        }, 3000);
+                        break
+                }
+            } catch (error) {
+                setIsLoading(false)
+                setNotice({ type: "ERROR", message: error.response.data.message })
             }
         }
     }
@@ -100,8 +113,8 @@ const ResetPasswordScreen = () => {
                         <MyTextInput
                             label="Password"
                             icon="lock"
-                            onChangeText={(password) => setPassword(password)}
-                            value={password}
+                            onChangeText={(text) => setIdentifier({ ...identifier, password: text })}
+                            value={identifier.password}
                             secureTextEntry={hidePassword}
                             isPassword={true}
                             hidePassword={hidePassword}

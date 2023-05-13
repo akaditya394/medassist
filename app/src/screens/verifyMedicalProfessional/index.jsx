@@ -4,9 +4,7 @@ import { connect } from "react-redux"
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { ToastAndroid, Platform, Alert, ActivityIndicator } from 'react-native'
 import DropDownPicker from "react-native-dropdown-picker"
-
-import Notice from '../../components/notice'
-import { apiURL } from '../../config/contants'
+import axios from 'axios'
 
 import {
     StyledContainer,
@@ -24,6 +22,9 @@ import {
     BottomContainer,
     MsgBox
 } from './styles'
+
+import Notice from '../../components/notice'
+import { apiURL } from '../../config/constants'
 
 const data = [
     {
@@ -116,7 +117,7 @@ const data = [
     },
 ]
 
-const VerifyMedicalProfessionalScreen = ({ navigation }) => {
+const VerifyMedicalProfessionalScreen = ({ navigation, validate, loginError }) => {
     const RESET_NOTICE = { type: "", message: "" }
     const [notice, setNotice] = useState(RESET_NOTICE)
     const [name, setName] = useState('')
@@ -184,28 +185,34 @@ const VerifyMedicalProfessionalScreen = ({ navigation }) => {
 
                                 switch (_res.data.type) {
                                     case "success":
-                                        mapDispatch.validate(_res.data.token, "doctor", _res?.data?.doctor)
+                                        validate(_res.data.token, "doctor", _res?.data?.doctor)
                                         setTimeout(() => {
-                                            navigation.navigate('AllPrescriptions')
+                                            navigate('AllPrescriptions')
                                         }, 3000)
                                         setNotice({ type: "SUCCESS", message: _res.data.message })
                                         break
                                     case "error":
                                         setNotice({ type: "ERROR", message: _res.data.message })
-                                        mapDispatch.loginError()
+                                        loginError()
+                                        setTimeout(() => {
+                                            navigation.replace('SignUp')
+                                        }, 3000)
                                         break
                                 }
                             } catch (error) {
                                 setNotice({ type: "ERROR", message: error.response.data.message })
-                                mapDispatch.loginError()
+                                loginError()
+                                setTimeout(() => {
+                                    navigation.replace('SignUp')
+                                }, 3000)
                             }
                         } else {
                             setIsLoading(false)
-                            // AsyncStorage.removeItem("tempSignup")
+                            AsyncStorage.removeItem("tempSignup")
                             setNotice({ type: "ERROR", message: res.data.message })
-                            // setTimeout(() => {
-                            //   navigation.replace('SignUp')
-                            // }, 3000)
+                            setTimeout(() => {
+                                navigation.replace('SignUp')
+                            }, 3000)
                         }
                         break
                     case "error":
