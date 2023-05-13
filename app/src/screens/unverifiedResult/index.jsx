@@ -1,5 +1,7 @@
+import React, { useState } from 'react'
 import { StatusBar } from 'expo-status-bar'
 import { Table, Row, Rows } from 'react-native-table-component'
+import { ActivityIndicator } from 'react-native'
 
 import {
     StyledContainer,
@@ -21,7 +23,8 @@ import { Colors } from '../../shared/variables'
 import SettingsImage from '../../images/icons/settings.svg'
 
 const UnverifiedResultScreen = ({ navigation, route }) => {
-    const id = route.params.query.id
+    // const id = route.params.query.id
+    const [isLoading, setIsLoading] = useState(false)
     const tableHead = ['Drug name', 'Symptoms']
     const tableData = [
         ['Microcef CV 200 mg', 'Throat infections'],
@@ -45,29 +48,35 @@ const UnverifiedResultScreen = ({ navigation, route }) => {
                         </Icon>
                     </IconsContainer>
                 </UpperContainer>
-                <Notice>
-                    <StyledText>
-                        Your upload prescription has not yet been verified.
-                    </StyledText>
-                </Notice>
-                <ScrollableContainer>
-                    <SelectImage>
-                        <PrescriptionImage resizeMode="cover" source={require('../../images/test/prescription.jpg')} />
-                    </SelectImage>
-                    <TableContainer>
-                        <Table borderStyle={{ borderWidth: 1, borderColor: `${Colors.primary}` }}>
-                            <Row data={tableHead} style={{
-                                height: 50, backgroundColor: `${Colors.tertiary}`
-                            }} textStyle={{ margin: 6, fontWeight: 'bold' }} />
-                            <Rows data={tableData} textStyle={{ margin: 6 }} />
-                        </Table>
-                    </TableContainer>
-                </ScrollableContainer>
-                <Line />
-                <StyledText>
-                    Additonal info will be available as soon as your
-                    precription gets verified
-                </StyledText>
+                {isLoading ? (
+                    <ActivityIndicator size="large" color="#0F2E53" />
+                ) : (
+                    <>
+                        <Notice>
+                            <StyledText>
+                                Your upload prescription has not yet been verified.
+                            </StyledText>
+                        </Notice>
+                        <ScrollableContainer>
+                            <SelectImage>
+                                <PrescriptionImage resizeMode="cover" source={require('../../images/test/prescription.jpg')} />
+                            </SelectImage>
+                            <TableContainer>
+                                <Table borderStyle={{ borderWidth: 1, borderColor: `${Colors.primary}` }}>
+                                    <Row data={tableHead} style={{
+                                        height: 50, backgroundColor: `${Colors.tertiary}`
+                                    }} textStyle={{ margin: 6, fontWeight: 'bold' }} />
+                                    <Rows data={tableData} textStyle={{ margin: 6 }} />
+                                </Table>
+                            </TableContainer>
+                        </ScrollableContainer>
+                        <Line />
+                        <StyledText>
+                            Additonal info will be available as soon as your
+                            precription gets verified
+                        </StyledText>
+                    </>
+                )}
             </InnerContainer>
         </StyledContainer>
     )

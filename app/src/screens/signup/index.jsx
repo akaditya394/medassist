@@ -224,7 +224,7 @@ const SignUpScreen = ({ navigation, createUser, signupError }) => {
                         {!isLoading ? (
                             <StyledButton onPress={
                                 // handleSubmit
-                                () => navigation.navigate('Chatbot')
+                                () => navigation.navigate('VerifiedResult')
                             }>
                                 <ButtonText>Sign up</ButtonText>
                             </StyledButton>
