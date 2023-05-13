@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import { StatusBar } from 'expo-status-bar'
 import { ToastAndroid, Platform, Alert } from 'react-native'
-
 import { Ionicons } from '@expo/vector-icons'
+import axios from 'axios'
 
 import {
     StyledContainer,
@@ -19,33 +19,84 @@ import {
     RightIcon,
     SingleMessageContainer,
     MessageText,
-    SingleMessageWrapper
 } from './styles'
 import { Colors } from '../../shared/variables'
+
+import Notice from '../../components/notice'
+import { apiURL } from '../../config/constants'
 
 import SettingsImage from '../../images/icons/settings.svg'
 import UploadImage from '../../images/icons/upload.svg'
 
+const myMessages = [
+    {
+        id: 1,
+        text: "Hey, What do want to know?",
+        fromSelf: false,
+    },
+    {
+        id: 2,
+        text: "If you're looking for random paragraphs, you've come to the right place. When a random word or a random sentence isn't quite enough.",
+        fromSelf: true,
+    },
+    {
+        id: 3,
+        text: "If you're looking for random paragraphs, you've come to the right place. When a random word or a random sentence isn't quite enough.",
+        fromSelf: false,
+    },
+    {
+        id: 4,
+        text: "If you're looking for random paragraphs, you've come to the right place. When a random word or a random sentence isn't quite enough.",
+        fromSelf: true,
+    },
+    {
+        id: 5,
+        text: "If you're looking for random paragraphs, you've come to the right place. When a random word or a random sentence isn't quite enough.",
+        fromSelf: false,
+    },
+    {
+        id: 6,
+        text: "If you're looking for random paragraphs, you've come to the right place. When a random word or a random sentence isn't quite enough.",
+        fromSelf: true,
+    },
+];
+
 const ChatbotScreen = ({ navigation }) => {
-    const [message, setMessage] = useState('')
+    const RESET_NOTICE = { type: "", message: "" }
+    const [notice, setNotice] = useState(RESET_NOTICE)
+    const [value, setValue] = useState("")
+    const [messages, setMessages] = useState([])
 
     const showToast = () => {
         if (Platform.OS === 'android') {
             ToastAndroid.show(
-                "Cannot send a empty message",
+                "Cannot send an empty message",
                 ToastAndroid.SHORT,
                 ToastAndroid.BOTTOM
             )
         } else if (Platform.OS === 'ios') {
-            Alert.alert("Cannot send a empty message")
+            Alert.alert("Cannot send an empty message")
         }
     }
 
-    const handleSendMessage = () => {
-        if (message === '') {
+    const handleSendMessage = async (value) => {
+        if (value === '') {
             showToast()
         } else {
-            console.log('message is: ', message)
+            setMessages((prev) => [
+                ...prev,
+                { id: prev.length + 1, text: value, fromSelf: true },
+            ])
+            setValue("")
+            try {
+                const res = await axios.post(`${apiURL}/chat`, { value })
+                setMessages((prev) => [
+                    ...prev,
+                    { id: prev.length + 1, text: res.data.result, fromSelf: false },
+                ])
+            } catch (error) {
+                setNotice({ type: "ERROR", message: error.response.data.message })
+            }
         }
     }
 
@@ -67,50 +118,24 @@ const ChatbotScreen = ({ navigation }) => {
                     </IconsContainer>
                 </UpperContainer>
                 <MessagesArea>
-                    <SingleMessageContainer>
-                        <MessageText>
-                            Hey, What do want to know?
-                        </MessageText>
-                    </SingleMessageContainer>
-                    <SingleMessageContainer isSender={true}>
-                        <MessageText isSender={true}>
-                            What are the ideal amount of glasses of water in a day
-                        </MessageText>
-                    </SingleMessageContainer>
-                    <SingleMessageContainer>
-                        <MessageText>
-                            Here are some tips to help you make sure you are drinking
-                            enough fluids to maintain good levels of hydration. You
-                            are probably all aware of the “cardinal rule” that says
-                            adults should drink six to eight 8-ounce glasses of water
-                            per day.
-                        </MessageText>
-                    </SingleMessageContainer>
-                    <SingleMessageContainer isSender={true}>
-                        <MessageText isSender={true}>
-                            Another thing, what is the first aid in case of a fracture
-                        </MessageText>
-                    </SingleMessageContainer>
-                    <SingleMessageContainer>
-                        <MessageText>
-                            Cool the affected area by applying and ice pack or ice
-                            cubes wrapped in a clean cloth. Treat the patient's shock:
-                            help them get into a comfortable position, encourage them
-                            to rest, and reassure them. Cover them with a blanket or
-                            clothing to keep them warm.
-                        </MessageText>
-                    </SingleMessageContainer>
-                    <SingleMessageContainer isSender={true}>
-                        <MessageText isSender={true}>
-                            Thank you
-                        </MessageText>
-                    </SingleMessageContainer>
+                    {myMessages.map((item, index) => {
+                        <SingleMessageContainer key={index} isSender={item.fromSelf}>
+                            <MessageText>
+                                {item.text}
+                            </MessageText>
+                        </SingleMessageContainer>
+                    })}
                 </MessagesArea>
                 <BottomContainer>
+                    {notice.message && (
+                        <Notice status={notice.type}>
+                            {notice.message}
+                        </Notice>
+                    )}
                     <InputContainer>
                         <StyledTextInput
-                            onChangeText={(message) => setMessage(message)}
-                            value={message}
+                            onChangeText={(text) => setValue(text)}
+                            value={value}
                             keyboardType="default"
                         />
                         <RightIcon onPress={handleSendMessage}>

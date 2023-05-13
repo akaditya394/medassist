@@ -35,7 +35,7 @@ import { Colors } from '../../shared/variables'
 
 import KeyboardAvoidingWrapper from '../../components/keyboardAvoidingWrapper'
 import Notice from '../../components/notice'
-import { apiURL } from '../../config/contants'
+import { apiURL } from '../../config/constants'
 
 import LogoImage from '../../images/logo/logo.svg'
 
@@ -223,8 +223,8 @@ const SignUpScreen = ({ navigation, createUser, signupError }) => {
                         )}
                         {!isLoading ? (
                             <StyledButton onPress={
-                                handleSubmit
-                                // () => navigation.navigate('VerifyMedicalProfessional')
+                                // handleSubmit
+                                () => navigation.navigate('Chatbot')
                             }>
                                 <ButtonText>Sign up</ButtonText>
                             </StyledButton>

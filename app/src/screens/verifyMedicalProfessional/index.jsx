@@ -24,7 +24,7 @@ import {
 } from './styles'
 
 import Notice from '../../components/notice'
-import { apiURL } from '../../config/contants'
+import { apiURL } from '../../config/constants'
 
 const data = [
     {
