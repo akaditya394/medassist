@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import Modal from "react-modal";
 import axios from "axios";
 import styles from "./styles.module.scss";
@@ -10,31 +10,44 @@ const data = [
   { id: 3, text: "What to do when stung by a bee" },
 ];
 
-const messages = [
+const message = [
   {
-    id: 1, text: "If you're looking for random paragraphs, you've come to the right place. When a random word or a random sentence isn't quite enough.", fromSelf: false
+    id: 1,
+    text: "If you're looking for random paragraphs, you've come to the right place. When a random word or a random sentence isn't quite enough.",
+    fromSelf: false,
   },
   {
-    id: 2, text: "If you're looking for random paragraphs, you've come to the right place. When a random word or a random sentence isn't quite enough.", fromSelf: true
+    id: 2,
+    text: "If you're looking for random paragraphs, you've come to the right place. When a random word or a random sentence isn't quite enough.",
+    fromSelf: true,
   },
   {
-    id: 3, text: "If you're looking for random paragraphs, you've come to the right place. When a random word or a random sentence isn't quite enough.", fromSelf: false
+    id: 3,
+    text: "If you're looking for random paragraphs, you've come to the right place. When a random word or a random sentence isn't quite enough.",
+    fromSelf: false,
   },
   {
-    id: 4, text: "If you're looking for random paragraphs, you've come to the right place. When a random word or a random sentence isn't quite enough.", fromSelf: true
+    id: 4,
+    text: "If you're looking for random paragraphs, you've come to the right place. When a random word or a random sentence isn't quite enough.",
+    fromSelf: true,
   },
   {
-    id: 5, text: "If you're looking for random paragraphs, you've come to the right place. When a random word or a random sentence isn't quite enough.", fromSelf: false
+    id: 5,
+    text: "If you're looking for random paragraphs, you've come to the right place. When a random word or a random sentence isn't quite enough.",
+    fromSelf: false,
   },
   {
-    id: 6, text: "If you're looking for random paragraphs, you've come to the right place. When a random word or a random sentence isn't quite enough.", fromSelf: true
-  }
-]
+    id: 6,
+    text: "If you're looking for random paragraphs, you've come to the right place. When a random word or a random sentence isn't quite enough.",
+    fromSelf: true,
+  },
+];
 
 const ChatModal = () => {
   const [value, setValue] = useState("");
   const [modalIsOpen, setIsOpen] = useState(false);
-
+  const [messages, setMessages] = useState([]);
+  const messageRef = useRef();
   const openModal = () => {
     setIsOpen(true);
   };
@@ -42,14 +55,26 @@ const ChatModal = () => {
   const closeModal = () => {
     setIsOpen(false);
   };
-
+  useEffect(() => {
+    messageRef?.current?.scrollIntoView({ block: "end", inline: "nearest" });
+  }, [messages]);
   //   experimental
-  const submitHandler = async () => {
-    // const res = await axios.post("http://localhost:8000/chat", { value });
-    console.log('hello');
-  };
+  const submitHandler = async (value) => {
+    setMessages((prev) => [
+      ...prev,
+      { id: prev.length + 1, text: value, fromSelf: true },
+    ]);
+    setValue("");
+    try {
+      const res = await axios.post("/chat", { value });
 
-  console.log("value is", value);
+      setMessages((prev) => [
+        ...prev,
+        { id: prev.length + 1, text: res.data.result, fromSelf: false },
+      ]);
+    } catch (err) {}
+  };
+  console.log(messages, "Hey");
   return (
     <>
       <div className={styles.chatBubbleWrapper} onClick={openModal}>
@@ -90,18 +115,37 @@ const ChatModal = () => {
             onChange={(e) => {
               setValue(e.target.value);
             }}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                submitHandler(e.target.value);
+              }
+            }}
           />
         </div>
 
         <div className={styles.messageArea}>
           {messages.map((item, index) => {
             return (
-              <div className={`${item.fromSelf ? styles.senderSingleMessage : styles.singleMessage}`} key={index}>
-                <div className={`${item.fromSelf ? styles.senderMessageText : styles.messageText}`}>
+              <div
+                className={`${
+                  item.fromSelf
+                    ? styles.senderSingleMessage
+                    : styles.singleMessage
+                }`}
+                key={index}
+                ref={messageRef}
+              >
+                <div
+                  className={`${
+                    item.fromSelf
+                      ? styles.senderMessageText
+                      : styles.messageText
+                  }`}
+                >
                   {item.text}
                 </div>
               </div>
-            )
+            );
           })}
         </div>
 
@@ -117,7 +161,7 @@ const ChatModal = () => {
                     onClick={() => {
                       setValue(item.text);
                       //    experimental
-                      submitHandler();
+                      submitHandler(item.text);
                     }}
                   >
                     {item.text}?
