@@ -124,23 +124,26 @@ exports.addDrugs = async (req, res) => {
       "Abreva",
       "Carmex",
     ];
+    let medi = [];
     detections.forEach(async (i) => {
       // console.log(i);
       if (ans.includes(i)) {
-        const prescription = await Prescription.findByIdAndUpdate(
-          res.locals.presc._id,
-          {
-            $push: { drugs: i },
-          },
-          { new: true }
-        );
-        // console.log(i, " mine");
-        return res.status(200).json({
-          type: "success",
-          message: "Prescription uploaded successfully",
-          prescription,
-        });
+        medi.push(i);
       }
+    });
+    // console.log(medi);
+    const prescription = await Prescription.findByIdAndUpdate(
+      res.locals.presc._id,
+      {
+        $set: { drugs: medi },
+      },
+      { new: true }
+    );
+    // // console.log(i, " mine");
+    return res.status(200).json({
+      type: "success",
+      message: "Prescription uploaded successfully",
+      prescription,
     });
   } catch (error) {
     res.json({
