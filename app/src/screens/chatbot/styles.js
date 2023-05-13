@@ -34,7 +34,6 @@ export const Line = styled.View`
     width: 100%;
     background-color: ${Colors.primary};
     margin-top: 10px;
-    margin-bottom: 10px;
 `;
 
 export const BottomContainer = styled.View`
@@ -90,7 +89,6 @@ export const RightIcon = styled.TouchableOpacity`
 
 export const MessagesArea = styled.ScrollView`
     width: 100%;
-    border: 1px solid black;
 `;
 
 export const SingleMessageContainer = styled.View`
