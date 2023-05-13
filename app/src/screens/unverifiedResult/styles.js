@@ -99,14 +99,33 @@ export const PrescriptionImage = styled.Image`
 
 export const InputContainer = styled.View`
     width: 100%;
+    margin-top: 10px;
+    margin-bottom: 5px;
 `;
 
 export const StyledInputLabel = styled.Text`
     color: ${Colors.primary};
     font-size: 13px;
     text-align: left;
+    margin-bottom: 2px;
 `;
 
 export const DropDownContainer = styled.View`
     z-index: 1;
+`;
+
+export const StyledButton = styled.TouchableOpacity`
+    padding: 15px;
+    background-color: ${Colors.primary};
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    margin-top: 5px;
+    height: 60px;
+`;
+
+export const ButtonText = styled.Text`
+    color: white;
+    font-weight: 700;
+    font-size: 16px;
 `;

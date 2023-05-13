@@ -21,7 +21,9 @@ import {
     PrescriptionImage,
     InputContainer,
     StyledInputLabel,
-    DropDownContainer
+    DropDownContainer,
+    StyledButton,
+    ButtonText
 } from './styles'
 import { Colors } from '../../shared/variables'
 
@@ -30,13 +32,19 @@ import { apiURL } from '../../config/constants'
 
 import SettingsImage from '../../images/icons/settings.svg'
 
-const doctorData = [
-    { id: "1", name: "nishank" },
-    { id: "2", name: "rahul" },
-    { id: "3", name: "naman" },
-    { id: "4", name: "vansh" },
-    { id: "3", name: "aditya" },
-];
+const doctorsData = [
+    {
+        label: "Nishank Priydarshi",
+        value: "1",
+    },
+    {
+        label: "Rahul Kumar",
+        value: "2",
+    },
+    { label: "Puneet Sharma", value: "3" },
+    { label: "Priyanshu Jaiswal", value: "28" },
+    { label: "Aditya Kumar", value: "4" },
+]
 
 const UnverifiedResultScreen = ({ navigation, route }) => {
     const [isLoading, setIsLoading] = useState(false)
@@ -44,7 +52,7 @@ const UnverifiedResultScreen = ({ navigation, route }) => {
 
     const [doctorsListOpen, setDoctorsListOpen] = useState(false)
     const [doctorsListValue, setDoctorsListValue] = useState(null)
-    const [doctorsListData, setDoctorsListData] = useState(doctorData)
+    const [doctorsListData, setDoctorsListData] = useState(doctorsData)
     const [loading, setLoading] = useState(false)
 
     useEffect(() => {
@@ -94,31 +102,6 @@ const UnverifiedResultScreen = ({ navigation, route }) => {
                         </Icon>
                     </IconsContainer>
                 </UpperContainer>
-                <InputContainer>
-                    <StyledInputLabel>Choose a doctor to verify your prescription</StyledInputLabel>
-                    <DropDownContainer>
-                        <DropDownPicker
-                            style={{
-                                borderColor: "#F5F6FB",
-                                backgroundColor: "#F5F6FB"
-                            }}
-                            open={doctorsListOpen}
-                            value={doctorsListValue}
-                            items={doctorsListData}
-                            setOpen={setDoctorsListOpen}
-                            setValue={setDoctorsListValue}
-                            setItems={setDoctorsListData}
-                            placeholder="Select Medical Council"
-                            loading={loading}
-                            activityIndicatorColor="#F5F6FB"
-                            searchable={true}
-                            searchPlaceholder="Search..."
-                            onChangeValue={(doctorsListValue) => setDoctorsListValue(doctorsListValue)}
-                            zIndex={1000}
-                            zIndexInverse={3000}
-                        />
-                    </DropDownContainer>
-                </InputContainer>
                 {isLoading ? (
                     <ActivityIndicator size="large" color="#0F2E53" />
                 ) : (
@@ -131,8 +114,8 @@ const UnverifiedResultScreen = ({ navigation, route }) => {
                         <ScrollableContainer>
                             <SelectImage>
                                 <PrescriptionImage resizeMode="cover" source={
-                                    // require('../../images/test/prescription.jpg')
-                                    data?.image
+                                    require('../../images/test/prescription.jpg')
+                                    // data?.image
                                 } />
                             </SelectImage>
                             <TableContainer>
@@ -158,6 +141,34 @@ const UnverifiedResultScreen = ({ navigation, route }) => {
                                 </DataTable>
                             </TableContainer>
                         </ScrollableContainer>
+                        <InputContainer>
+                            <StyledInputLabel>Choose a doctor to verify your prescription</StyledInputLabel>
+                            <DropDownContainer>
+                                <DropDownPicker
+                                    style={{
+                                        borderColor: "#F5F6FB",
+                                        backgroundColor: "#F5F6FB"
+                                    }}
+                                    open={doctorsListOpen}
+                                    value={doctorsListValue}
+                                    items={doctorsListData}
+                                    setOpen={setDoctorsListOpen}
+                                    setValue={setDoctorsListValue}
+                                    setItems={setDoctorsListData}
+                                    placeholder="Select Doctor"
+                                    loading={loading}
+                                    activityIndicatorColor="#F5F6FB"
+                                    searchable={true}
+                                    searchPlaceholder="Search..."
+                                    onChangeValue={(doctorsListValue) => setDoctorsListValue(doctorsListValue)}
+                                    zIndex={1000}
+                                    zIndexInverse={3000}
+                                />
+                            </DropDownContainer>
+                        </InputContainer>
+                        <StyledButton onPress={() => { }}>
+                            <ButtonText>Approve</ButtonText>
+                        </StyledButton>
                         <Line />
                         <StyledText>
                             Additonal info will be available as soon as your
