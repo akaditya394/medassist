@@ -22,3 +22,11 @@
         background: $tertiary;
     }
 }
+.loader {
+  display: flex;
+  justify-content: center;
+  height: 300px;
+  svg {
+    align-self: center;
+  }
+}
