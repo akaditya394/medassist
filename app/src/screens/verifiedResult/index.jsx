@@ -1,6 +1,8 @@
+import React, { useState } from 'react'
 import { StatusBar } from 'expo-status-bar'
 import { Text } from 'react-native'
 import { Table, Row, Rows } from 'react-native-table-component'
+import { ActivityIndicator } from 'react-native'
 
 import {
     StyledContainer,
@@ -25,7 +27,8 @@ import SettingsImage from '../../images/icons/settings.svg'
 import { Colors } from '../../shared/variables'
 
 const VerifiedResultScreen = ({ navigation, route }) => {
-    const id = route.params.query.id
+    // const id = route.params.query.id
+    const [isLoading, setIsLoading] = useState(false)
     const tableHead = ['Drug name', 'Symptoms', 'Alternatives', 'Suggestions']
     const tableData = [
         ['Microcef CV 200 mg', 'Throat infections', 'Goodcif CV 200mg', '-'],
@@ -49,31 +52,37 @@ const VerifiedResultScreen = ({ navigation, route }) => {
                         </Icon>
                     </IconsContainer>
                 </UpperContainer>
-                <Notice>
-                    <StyledText>
-                        Your upload prescription has been verified by{' '}
-                        <Text style={{ fontWeight: 'bold' }}>Dr. Puneet Sharma</Text>
-                        , a trained medical professional.
-                    </StyledText>
-                </Notice>
-                <ScrollableContainer>
-                    <SelectImage>
-                        <PrescriptionImage resizeMode="cover" source={require('../../images/test/prescription.jpg')} />
-                    </SelectImage>
-                    <ListTitle>Drugs' alternatives and suggestions:</ListTitle>
-                    <TableContainer>
-                        <Table borderStyle={{ borderWidth: 1, borderColor: `${Colors.primary}` }}>
-                            <Row data={tableHead} style={{
-                                height: 50, backgroundColor: `${Colors.tertiary}`
-                            }} textStyle={{ margin: 4, fontWeight: 'bold' }} />
-                            <Rows data={tableData} textStyle={{ margin: 6 }} />
-                        </Table>
-                    </TableContainer>
-                </ScrollableContainer>
-                <Line />
-                <StyledButton onPress={() => navigation.goBack()}>
-                    <ButtonText>Continue</ButtonText>
-                </StyledButton>
+                {isLoading ? (
+                    <ActivityIndicator size="large" color="#0F2E53" />
+                ) : (
+                    <>
+                        <Notice>
+                            <StyledText>
+                                Your upload prescription has been verified by{' '}
+                                <Text style={{ fontWeight: 'bold' }}>Dr. Puneet Sharma</Text>
+                                , a trained medical professional.
+                            </StyledText>
+                        </Notice>
+                        <ScrollableContainer>
+                            <SelectImage>
+                                <PrescriptionImage resizeMode="cover" source={require('../../images/test/prescription.jpg')} />
+                            </SelectImage>
+                            <ListTitle>Drugs' alternatives and suggestions:</ListTitle>
+                            <TableContainer>
+                                <Table borderStyle={{ borderWidth: 1, borderColor: `${Colors.primary}` }}>
+                                    <Row data={tableHead} style={{
+                                        height: 50, backgroundColor: `${Colors.tertiary}`
+                                    }} textStyle={{ margin: 4, fontWeight: 'bold' }} />
+                                    <Rows data={tableData} textStyle={{ margin: 6 }} />
+                                </Table>
+                            </TableContainer>
+                        </ScrollableContainer>
+                        <Line />
+                        <StyledButton onPress={() => navigation.goBack()}>
+                            <ButtonText>Continue</ButtonText>
+                        </StyledButton>
+                    </>
+                )}
             </InnerContainer>
         </StyledContainer>
     )
