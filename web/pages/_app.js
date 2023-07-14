@@ -10,7 +10,7 @@ import "../shared/global.scss";
 //Context;
 import StateContext from "../Context/StateContext";
 import DispatchContext from "../Context/DispatchContext";
-axios.defaults.baseURL = "http://localhost:8000";
+axios.defaults.baseURL = "https://medassist-u2ae.onrender.com/";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 
