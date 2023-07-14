@@ -74,11 +74,6 @@ const Layout = ({ children }) => {
                   action: () => handleNavigation("/prescriptionUpload"),
                 },
                 {
-                  id: "account",
-                  label: "Account",
-                  action: () => handleNavigation("/account"),
-                },
-                {
                   id: "logout",
                   label: "Logout",
                   action: () => {

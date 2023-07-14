@@ -10,7 +10,7 @@ import "../shared/global.scss";
 //Context;
 import StateContext from "../Context/StateContext";
 import DispatchContext from "../Context/DispatchContext";
-axios.defaults.baseURL = "http://34.131.228.0";
+axios.defaults.baseURL = "http://localhost:8000";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 

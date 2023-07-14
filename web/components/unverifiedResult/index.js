@@ -87,6 +87,7 @@ const UnverifiedResult = () => {
             setDoctorData(
               res.data.doctors.map((doc) => ({ id: doc?._id, name: doc?.name }))
             );
+            setValue(res.data.doctors[0]._id);
             break;
           case "error":
             setDoctorLoading(false);
@@ -100,9 +101,10 @@ const UnverifiedResult = () => {
     }
     router?.query?.id && getPrescription() && getDoctors();
   }, [router?.query]);
-
+  console.log(value, "ddd");
   const handleSetDoc = async () => {
     console.log(value, "Yo");
+    // return;
     try {
       setAssignLoading(true);
       const token = appState.person.token;
@@ -152,7 +154,7 @@ const UnverifiedResult = () => {
                 value={value}
                 disabled={data?.doctor?.length !== 0}
                 required={true}
-                onChange={(e) => setValue(e.target.value)}
+                onChange={(e) => console.log(e)}
               >
                 {doctorData.map((item, index) => {
                   return (

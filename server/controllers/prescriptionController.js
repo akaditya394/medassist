@@ -178,7 +178,7 @@ exports.getSideEffects = async (req, res) => {
         return axios.get(request);
       })
     ).then(async (data) => {
-      sides = data.map((sideEffect) => sideEffect?.data?.reaction?.join(","));
+      sides = data.map((sideEffect) => sideEffect?.data?.reaction?.join(", "));
       console.log(data, sides, "Yo");
       const newPresc = await Prescription.findByIdAndUpdate(
         id,
