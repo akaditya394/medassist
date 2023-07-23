@@ -92,6 +92,10 @@ const LoginPage = () => {
         message: "Wait for few minutes, system is scanning your prescription.",
       });
       // a http post request to upload prescription
+      setNotice({
+        type: "SUCCESS",
+        message: "Wait for few minutes, system is scanning your prescription.",
+      });
       const res = await axios.post(
         "/prescription/uploadPrescription",
         { file: state.selectedPdfs, name: formData.name },
