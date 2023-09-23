@@ -1,7 +1,9 @@
 const express = require("express");
 const app = express();
+const fs = require("fs/promises");
 const path = require("path");
 require("dotenv").config();
+const cron = require("node-cron");
 const fileUpload = require("express-fileupload");
 const CookieSession = require("cookie-session");
 const cookieParser = require("cookie-parser");
@@ -12,17 +14,6 @@ const doctorRoutes = require("./routes/doctorRoutes");
 const chatRoutes = require("./routes/chatRoutes");
 const bookingRoutes = require("./routes/bookingRoutes");
 const morgan = require("morgan");
-
-// middleware
-// app.use(function (req, res, next) {
-//   res.header("Access-Control-Allow-Origin", "*"); // update to match
-//   // the domain you will make the request from
-//   res.header(
-//     "Access-Control-Allow-Headers",
-//     "Origin, X-Requested-With, Content-Type, Accept"
-//   );
-//   next();
-// });
 
 app.use(cors());
 // app.set("view engine", "pug");
@@ -49,6 +40,16 @@ app.use(
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
 }
+
+// cron job
+cron.schedule("0 */12 * * *", async function () {
+  let directory = "./tmp";
+  const files = await fs.readdir(directory);
+  if (files.length)
+    for (const file of files) {
+      await fs.unlink(path.join(directory, file));
+    }
+});
 
 //auth routes
 app.get("/", (req, res) => {

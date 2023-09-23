@@ -26,6 +26,7 @@
     "mongoose": "^7.0.2",
     "morgan": "^1.10.0",
     "neat-csv": "^5.2.0",
+    "node-cron": "^3.0.2",
     "nodemailer": "^6.9.1",
     "nodemon": "^2.0.21",
     "openai": "^3.2.1",

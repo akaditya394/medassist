@@ -8,6 +8,7 @@ import TestPrescription from "../../images/test/prescription.jpg";
 import Notice from "../notice";
 import LoaderDarkBig from "../loaderDarkBig";
 import Loader from "../loader";
+import PDF from "../pdfViewer";
 
 const doctorData = [
   { id: "1", name: "nishank" },
@@ -174,7 +175,9 @@ const UnverifiedResult = () => {
             </div>
           </div>
           <div className={styles.prescription}>
-            <img src={data.image} alt="Prescription" />
+            {/* <img src={data.image} alt="Prescription" /> */}
+            <PDF data={data.image} />
+            {/* <object data={data.image} width="400" height="300" /> */}
           </div>
           <div className={styles.table}>
             <table>

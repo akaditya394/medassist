@@ -171,7 +171,7 @@ const SignupPage = () => {
           {option === "user" && (
             <>
               <div className="inputWrapper">
-                <label>Weight in kg</label>
+                <label>Weight (in kg)</label>
                 <input
                   required={option === "user" ? true : false}
                   value={weight}
