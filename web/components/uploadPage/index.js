@@ -87,6 +87,10 @@ const LoginPage = () => {
     data.append("file", state.selectedPdfs);
     const token = appState.person.token;
     try {
+      setNotice({
+        type: "SUCCESS",
+        message: "Wait for few minutes, system is scanning your prescription.",
+      });
       // a http post request to upload prescription
       setNotice({
         type: "SUCCESS",
